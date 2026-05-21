@@ -68,15 +68,13 @@ def test_protocol_is_runtime_checkable_with_both_methods() -> None:
             self,
             profile: str,
             config: DetectionConfig,
-        ) -> Iterator[TrainingEvent]:
-            ...
+        ) -> Iterator[TrainingEvent]: ...
 
         def train_recognition(
             self,
             profile: str,
             config: RecognitionConfig,
-        ) -> Iterator[TrainingEvent]:
-            ...
+        ) -> Iterator[TrainingEvent]: ...
 
     assert isinstance(Stub(), ITrainingRunner)
 
@@ -89,8 +87,7 @@ def test_protocol_missing_method_not_instance() -> None:
             self,
             profile: str,
             config: DetectionConfig,
-        ) -> Iterator[TrainingEvent]:
-            ...
+        ) -> Iterator[TrainingEvent]: ...
 
     assert not isinstance(IncompleteStub(), ITrainingRunner)
 

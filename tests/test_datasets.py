@@ -22,7 +22,9 @@ def test_export_manager_discovers_profile_via_training_dir(tmp_path, monkeypatch
     # Use a non-existent shared-models dir so it contributes nothing
     monkeypatch.setattr(ds, "SHARED_MODELS_DIR", tmp_path / "no-models")
     # Override get_export_root so the export scan finds nothing
-    monkeypatch.setattr(ds.ExportManager, "get_export_root", staticmethod(lambda: tmp_path / "no-exports"))
+    monkeypatch.setattr(
+        ds.ExportManager, "get_export_root", staticmethod(lambda: tmp_path / "no-exports")
+    )
 
     profiles = ds.get_available_model_profiles()
     assert "demo" in profiles
@@ -40,7 +42,9 @@ def test_export_manager_constructs_without_errors(tmp_path, monkeypatch):
     monkeypatch.setattr(ds, "ML_TRAINING_DIR", train_dir)
     monkeypatch.setattr(ds, "ML_VALIDATION_DIR", val_dir)
     monkeypatch.setattr(ds, "SHARED_MODELS_DIR", models_dir)
-    monkeypatch.setattr(ds.ExportManager, "get_export_root", staticmethod(lambda: tmp_path / "no-exports"))
+    monkeypatch.setattr(
+        ds.ExportManager, "get_export_root", staticmethod(lambda: tmp_path / "no-exports")
+    )
 
     mgr = ds.ExportManager()
     # An empty export root means no assignments

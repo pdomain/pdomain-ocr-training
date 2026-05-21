@@ -58,7 +58,9 @@ def record_lr(
 ):
     """Gridsearch the optimal learning rate for the training."""
     if num_it > len(train_loader):
-        raise ValueError("the value of `num_it` needs to be lower than the number of available batches")
+        raise ValueError(
+            "the value of `num_it` needs to be lower than the number of available batches"
+        )
 
     model = model.train()
     optimizer.defaults["lr"] = start_lr
@@ -128,7 +130,11 @@ def fit_one_epoch(
 
     model.train()
     epoch_train_loss, batch_cnt = 0, 0
-    iterator = tqdm(train_loader, dynamic_ncols=True, disable=(rank != 0)) if progress_hook is None else train_loader
+    iterator = (
+        tqdm(train_loader, dynamic_ncols=True, disable=(rank != 0))
+        if progress_hook is None
+        else train_loader
+    )
     total_batches = len(train_loader)
     for batch_idx, (images, targets) in enumerate(iterator, start=1):
         if torch.cuda.is_available():
@@ -194,7 +200,11 @@ def evaluate(model, device, val_loader, batch_transforms, val_metric, amp=False,
         loc_preds = out["preds"]
         for target, loc_pred in zip(targets, loc_preds, strict=False):
             for boxes_gt, boxes_pred in zip(target.values(), loc_pred.values(), strict=False):
-                if isinstance(boxes_pred, np.ndarray) and boxes_pred.ndim == 2 and boxes_pred.shape[1] == 5:
+                if (
+                    isinstance(boxes_pred, np.ndarray)
+                    and boxes_pred.ndim == 2
+                    and boxes_pred.shape[1] == 5
+                ):
                     boxes_pred = boxes_pred[:, :4]
                 val_metric.update(
                     gts=boxes_gt,
@@ -241,7 +251,11 @@ def evaluate_with_progress(
         loc_preds = out["preds"]
         for target, loc_pred in zip(targets, loc_preds, strict=False):
             for boxes_gt, boxes_pred in zip(target.values(), loc_pred.values(), strict=False):
-                if isinstance(boxes_pred, np.ndarray) and boxes_pred.ndim == 2 and boxes_pred.shape[1] == 5:
+                if (
+                    isinstance(boxes_pred, np.ndarray)
+                    and boxes_pred.ndim == 2
+                    and boxes_pred.shape[1] == 5
+                ):
                     boxes_pred = boxes_pred[:, :4]
                 val_metric.update(
                     gts=boxes_gt,
@@ -299,7 +313,9 @@ def main(args, progress_hook: ProgressHook | None = None):
     if progress_hook is None:
         pbar = tqdm(disable=not ((slack_token and slack_channel) and (rank == 0)))
         if slack_token and slack_channel:
-            pbar.write = lambda msg: pbar.sio.client.chat_postMessage(channel=slack_channel, text=msg)
+            pbar.write = lambda msg: pbar.sio.client.chat_postMessage(
+                channel=slack_channel, text=msg
+            )
 
     def log_line(message: str) -> None:
         if pbar is not None:
@@ -325,13 +341,21 @@ def main(args, progress_hook: ProgressHook | None = None):
             label_path=os.path.join(args.val_path, "labels.json"),
             sample_transforms=T.SampleCompose(
                 [
-                    T.Resize((args.input_size, args.input_size), preserve_aspect_ratio=True, symmetric_pad=True),
+                    T.Resize(
+                        (args.input_size, args.input_size),
+                        preserve_aspect_ratio=True,
+                        symmetric_pad=True,
+                    ),
                 ]
                 if not args.rotation
                 else [
                     T.Resize(args.input_size, preserve_aspect_ratio=True),
                     T.RandomApply(T.RandomRotate(90, expand=True), 0.5),
-                    T.Resize((args.input_size, args.input_size), preserve_aspect_ratio=True, symmetric_pad=True),
+                    T.Resize(
+                        (args.input_size, args.input_size),
+                        preserve_aspect_ratio=True,
+                        symmetric_pad=True,
+                    ),
                 ]
             ),
             use_polygons=args.rotation,
@@ -431,10 +455,14 @@ def main(args, progress_hook: ProgressHook | None = None):
             T.OneOf(
                 [
                     T.RandomApply(T.RandomCrop(ratio=(0.6, 1.33)), 0.25),
-                    T.RandomResize(scale_range=(0.4, 0.9), preserve_aspect_ratio=0.5, symmetric_pad=0.5, p=0.25),
+                    T.RandomResize(
+                        scale_range=(0.4, 0.9), preserve_aspect_ratio=0.5, symmetric_pad=0.5, p=0.25
+                    ),
                 ]
             ),
-            T.Resize((args.input_size, args.input_size), preserve_aspect_ratio=True, symmetric_pad=True),
+            T.Resize(
+                (args.input_size, args.input_size), preserve_aspect_ratio=True, symmetric_pad=True
+            ),
         ]
         if not args.rotation
         else [
@@ -442,12 +470,16 @@ def main(args, progress_hook: ProgressHook | None = None):
             T.OneOf(
                 [
                     T.RandomApply(T.RandomCrop(ratio=(0.6, 1.33)), 0.25),
-                    T.RandomResize(scale_range=(0.4, 0.9), preserve_aspect_ratio=0.5, symmetric_pad=0.5, p=0.25),
+                    T.RandomResize(
+                        scale_range=(0.4, 0.9), preserve_aspect_ratio=0.5, symmetric_pad=0.5, p=0.25
+                    ),
                 ]
             ),
             T.Resize(args.input_size, preserve_aspect_ratio=True),
             T.RandomApply(T.RandomRotate(90, expand=True), 0.5),
-            T.Resize((args.input_size, args.input_size), preserve_aspect_ratio=True, symmetric_pad=True),
+            T.Resize(
+                (args.input_size, args.input_size), preserve_aspect_ratio=True, symmetric_pad=True
+            ),
         ]
     )
 
@@ -506,7 +538,9 @@ def main(args, progress_hook: ProgressHook | None = None):
         return
 
     if args.sched == "cosine":
-        scheduler = CosineAnnealingLR(optimizer, args.epochs * len(train_loader), eta_min=args.lr / 25e4)
+        scheduler = CosineAnnealingLR(
+            optimizer, args.epochs * len(train_loader), eta_min=args.lr / 25e4
+        )
     elif args.sched == "onecycle":
         scheduler = OneCycleLR(optimizer, args.lr, args.epochs * len(train_loader))
     elif args.sched == "poly":
@@ -556,21 +590,31 @@ def main(args, progress_hook: ProgressHook | None = None):
     if rank == 0 and args.clearml:
         from clearml import Logger, Task
 
-        task = Task.init(project_name="docTR/text-detection", task_name=exp_name, reuse_last_task_id=False)
+        task = Task.init(
+            project_name="docTR/text-detection", task_name=exp_name, reuse_last_task_id=False
+        )
         task.upload_artifact("config", config)
 
         def clearml_log_at_step(train_loss=None, val_loss=None, lr=None):
             logger = Logger.current_logger()
             if train_loss is not None:
                 logger.report_scalar(
-                    title="Training Step Loss", series="train_loss_step", iteration=global_step, value=train_loss
+                    title="Training Step Loss",
+                    series="train_loss_step",
+                    iteration=global_step,
+                    value=train_loss,
                 )
             if val_loss is not None:
                 logger.report_scalar(
-                    title="Validation Step Loss", series="val_loss_step", iteration=global_step, value=val_loss
+                    title="Validation Step Loss",
+                    series="val_loss_step",
+                    iteration=global_step,
+                    value=val_loss,
                 )
             if lr is not None:
-                logger.report_scalar(title="Step Learning Rate", series="step_lr", iteration=global_step, value=lr)
+                logger.report_scalar(
+                    title="Step Learning Rate", series="step_lr", iteration=global_step, value=lr
+                )
 
     def log_at_step(train_loss=None, val_loss=None, lr=None):
         global global_step
@@ -582,7 +626,9 @@ def main(args, progress_hook: ProgressHook | None = None):
 
     min_loss = np.inf
     if args.early_stop:
-        early_stopper = EarlyStopper(patience=args.early_stop_epochs, min_delta=args.early_stop_delta)
+        early_stopper = EarlyStopper(
+            patience=args.early_stop_epochs, min_delta=args.early_stop_delta
+        )
 
     for epoch in range(args.epochs):
         train_loss, actual_lr = fit_one_epoch(
@@ -599,7 +645,9 @@ def main(args, progress_hook: ProgressHook | None = None):
         )
 
         if rank == 0:
-            log_line(f"Epoch {epoch + 1}/{args.epochs} - Training loss: {train_loss:.6} | LR: {actual_lr:.6}")
+            log_line(
+                f"Epoch {epoch + 1}/{args.epochs} - Training loss: {train_loss:.6} | LR: {actual_lr:.6}"
+            )
 
             val_loss, recall, precision, mean_iou = evaluate_with_progress(
                 model,
@@ -612,7 +660,9 @@ def main(args, progress_hook: ProgressHook | None = None):
                 progress_hook=progress_hook,
             )
             if val_loss < min_loss:
-                log_line(f"Validation loss decreased {min_loss:.6} --> {val_loss:.6}: saving state...")
+                log_line(
+                    f"Validation loss decreased {min_loss:.6} --> {val_loss:.6}: saving state..."
+                )
                 params = model.module if hasattr(model, "module") else model
                 torch.save(params.state_dict(), Path(args.output_dir) / f"{exp_name}.pt")
                 # Persist the detection architecture name so downstream
@@ -656,12 +706,22 @@ def main(args, progress_hook: ProgressHook | None = None):
                 from clearml import Logger
 
                 logger = Logger.current_logger()
-                logger.report_scalar(title="Training Loss", series="train_loss", value=train_loss, iteration=epoch)
-                logger.report_scalar(title="Validation Loss", series="val_loss", value=val_loss, iteration=epoch)
-                logger.report_scalar(title="Learning Rate", series="lr", value=actual_lr, iteration=epoch)
+                logger.report_scalar(
+                    title="Training Loss", series="train_loss", value=train_loss, iteration=epoch
+                )
+                logger.report_scalar(
+                    title="Validation Loss", series="val_loss", value=val_loss, iteration=epoch
+                )
+                logger.report_scalar(
+                    title="Learning Rate", series="lr", value=actual_lr, iteration=epoch
+                )
                 logger.report_scalar(title="Recall", series="recall", value=recall, iteration=epoch)
-                logger.report_scalar(title="Precision", series="precision", value=precision, iteration=epoch)
-                logger.report_scalar(title="Mean IoU", series="mean_iou", value=mean_iou, iteration=epoch)
+                logger.report_scalar(
+                    title="Precision", series="precision", value=precision, iteration=epoch
+                )
+                logger.report_scalar(
+                    title="Mean IoU", series="mean_iou", value=mean_iou, iteration=epoch
+                )
 
             if args.early_stop and early_stopper.early_stop(val_loss):
                 log_line("Training halted early due to reaching patience limit.")
@@ -683,15 +743,23 @@ def parse_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
-    parser.add_argument("--backend", default="nccl", type=str, help="Backend to use for torch.distributed")
+    parser.add_argument(
+        "--backend", default="nccl", type=str, help="Backend to use for torch.distributed"
+    )
     parser.add_argument("arch", type=str, help="text-detection model to train")
-    parser.add_argument("--output_dir", type=str, default=".", help="path to save checkpoints and final model")
+    parser.add_argument(
+        "--output_dir", type=str, default=".", help="path to save checkpoints and final model"
+    )
     parser.add_argument("--train_path", type=str, required=True, help="path to train data folder")
     parser.add_argument("--val_path", type=str, required=True, help="path to val data folder")
     parser.add_argument("--name", type=str, default=None, help="Name of your training experiment")
-    parser.add_argument("--epochs", type=int, default=100, help="number of epochs to train the model on")
+    parser.add_argument(
+        "--epochs", type=int, default=100, help="number of epochs to train the model on"
+    )
     parser.add_argument("-b", "--batch_size", type=int, default=2, help="batch size for training")
-    parser.add_argument("--input_size", type=int, default=1024, help="input size H (and W) for the model")
+    parser.add_argument(
+        "--input_size", type=int, default=1024, help="input size H (and W) for the model"
+    )
     parser.add_argument(
         "--device",
         default=None,
@@ -699,8 +767,12 @@ def parse_args():
         help="Specify gpu device for single-gpu training",
     )
     parser.add_argument("--lr", type=float, default=0.002, help="learning rate for the optimizer")
-    parser.add_argument("--wd", "--weight-decay", default=0, type=float, help="weight decay", dest="weight_decay")
-    parser.add_argument("-j", "--workers", type=int, default=None, help="number of workers used for dataloading")
+    parser.add_argument(
+        "--wd", "--weight-decay", default=0, type=float, help="weight decay", dest="weight_decay"
+    )
+    parser.add_argument(
+        "-j", "--workers", type=int, default=None, help="number of workers used for dataloading"
+    )
     parser.add_argument("--resume", type=str, default=None, help="Path to your checkpoint")
     parser.add_argument(
         "--rotation",
@@ -708,31 +780,53 @@ def parse_args():
         action="store_true",
         help="Use rotated bounding boxes (polygons) and disable assume_straight_pages",
     )
-    parser.add_argument("--test-only", dest="test_only", action="store_true", help="Run the validation loop")
     parser.add_argument(
-        "--freeze-backbone", dest="freeze_backbone", action="store_true", help="freeze model backbone for fine-tuning"
+        "--test-only", dest="test_only", action="store_true", help="Run the validation loop"
     )
     parser.add_argument(
-        "--show-samples", dest="show_samples", action="store_true", help="Display unormalized training samples"
+        "--freeze-backbone",
+        dest="freeze_backbone",
+        action="store_true",
+        help="freeze model backbone for fine-tuning",
+    )
+    parser.add_argument(
+        "--show-samples",
+        dest="show_samples",
+        action="store_true",
+        help="Display unormalized training samples",
     )
     parser.add_argument("--wb", dest="wb", action="store_true", help="Log to Weights & Biases")
     parser.add_argument("--clearml", dest="clearml", action="store_true", help="Log to ClearML")
-    parser.add_argument("--push-to-hub", dest="push_to_hub", action="store_true", help="Push to Huggingface Hub")
+    parser.add_argument(
+        "--push-to-hub", dest="push_to_hub", action="store_true", help="Push to Huggingface Hub"
+    )
     parser.add_argument(
         "--pretrained",
         dest="pretrained",
         action="store_true",
         help="Load pretrained parameters before starting the training",
     )
-    parser.add_argument("--optim", type=str, default="adam", choices=["adam", "adamw"], help="optimizer to use")
     parser.add_argument(
-        "--sched", type=str, default="poly", choices=["cosine", "onecycle", "poly"], help="scheduler to use"
+        "--optim", type=str, default="adam", choices=["adam", "adamw"], help="optimizer to use"
     )
-    parser.add_argument("--amp", dest="amp", help="Use Automatic Mixed Precision", action="store_true")
+    parser.add_argument(
+        "--sched",
+        type=str,
+        default="poly",
+        choices=["cosine", "onecycle", "poly"],
+        help="scheduler to use",
+    )
+    parser.add_argument(
+        "--amp", dest="amp", help="Use Automatic Mixed Precision", action="store_true"
+    )
     parser.add_argument("--find-lr", action="store_true", help="Gridsearch the optimal LR")
     parser.add_argument("--early-stop", action="store_true", help="Enable early stopping")
-    parser.add_argument("--early-stop-epochs", type=int, default=5, help="Patience for early stopping")
-    parser.add_argument("--early-stop-delta", type=float, default=0.01, help="Minimum Delta for early stopping")
+    parser.add_argument(
+        "--early-stop-epochs", type=int, default=5, help="Patience for early stopping"
+    )
+    parser.add_argument(
+        "--early-stop-delta", type=float, default=0.01, help="Minimum Delta for early stopping"
+    )
     args = parser.parse_args()
 
     return args

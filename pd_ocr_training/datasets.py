@@ -17,7 +17,9 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 ML_TRAINING_DIR = Path(os.getenv("PD_OCR_TRAINER_ML_TRAINING_DIR", PROJECT_ROOT / "ml-training"))
-ML_VALIDATION_DIR = Path(os.getenv("PD_OCR_TRAINER_ML_VALIDATION_DIR", PROJECT_ROOT / "ml-validation"))
+ML_VALIDATION_DIR = Path(
+    os.getenv("PD_OCR_TRAINER_ML_VALIDATION_DIR", PROJECT_ROOT / "ml-validation")
+)
 APP_NAME = "pd-ocr-labeler"
 MODEL_STORE_DIRNAME = "pd-ml-models"
 MODEL_NAME_PREFIX = "pd"
@@ -43,7 +45,9 @@ def get_os_data_parent() -> Path:
 
 
 APP_DATA_ROOT = Path(os.getenv("PD_OCR_TRAINER_APP_DATA_ROOT", get_os_data_parent() / APP_NAME))
-SHARED_MODELS_DIR = Path(os.getenv("PD_OCR_TRAINER_SHARED_MODELS_DIR", get_os_data_parent() / MODEL_STORE_DIRNAME))
+SHARED_MODELS_DIR = Path(
+    os.getenv("PD_OCR_TRAINER_SHARED_MODELS_DIR", get_os_data_parent() / MODEL_STORE_DIRNAME)
+)
 TRAINER_SETTINGS_PATH = APP_DATA_ROOT / "trainer_settings.json"
 
 # Ensure directories exist at import time
@@ -279,13 +283,17 @@ class ExportManager:
             key = subfolder.relative_to(export_root).as_posix()
 
             export_pages = self.get_export_pages(key)
-            if export_pages and all(page_name in existing_image_names for page_name in export_pages):
+            if export_pages and all(
+                page_name in existing_image_names for page_name in export_pages
+            ):
                 continue
 
             new_assignments[key] = self.assignments.get(key)
             for task in DATASET_TASKS:
                 src_images = subfolder / task / "images"
-                if src_images.exists() and any(img.name in existing_image_names for img in src_images.iterdir()):
+                if src_images.exists() and any(
+                    img.name in existing_image_names for img in src_images.iterdir()
+                ):
                     new_changed.add(key)
                     break
 
@@ -293,7 +301,9 @@ class ExportManager:
         self.page_assignments = {
             (key, page): split
             for (key, page), split in self.page_assignments.items()
-            if key in self.assignments and page in set(self.get_export_pages(key)) and split in {"train", "val"}
+            if key in self.assignments
+            and page in set(self.get_export_pages(key))
+            and split in {"train", "val"}
         }
         self.changed_keys = new_changed
 
@@ -340,7 +350,9 @@ class ExportManager:
     def assign(self, key: str, target: str | None) -> None:
         if key in self.assignments:
             self.assignments[key] = target if target in {"train", "val"} else None
-            self.page_assignments = {(k, page): split for (k, page), split in self.page_assignments.items() if k != key}
+            self.page_assignments = {
+                (k, page): split for (k, page), split in self.page_assignments.items() if k != key
+            }
 
     def assign_page(self, key: str, page_name: str, target: str | None) -> None:
         if key not in self.assignments:
@@ -361,7 +373,9 @@ class ExportManager:
             if key.startswith(f"{project_id}/"):
                 self.assignments[key] = target if target in {"train", "val"} else None
                 self.page_assignments = {
-                    (k, page): split for (k, page), split in self.page_assignments.items() if k != key
+                    (k, page): split
+                    for (k, page), split in self.page_assignments.items()
+                    if k != key
                 }
 
     def assign_pages(self, pages: list[tuple[str, str]], target: str | None) -> None:
@@ -374,7 +388,9 @@ class ExportManager:
         for key in list(self.assignments):
             if self.assignments.get(key) == split:
                 self.assignments[key] = None
-        self.page_assignments = {(k, page): s for (k, page), s in self.page_assignments.items() if s != split}
+        self.page_assignments = {
+            (k, page): s for (k, page), s in self.page_assignments.items() if s != split
+        }
 
     def is_changed(self, key: str) -> bool:
         return key in self.changed_keys
@@ -435,7 +451,9 @@ class ExportManager:
                     src_labels = json.load(f)
             except Exception:
                 continue
-            to_move = {k: v for k, v in src_labels.items() if project_from_stem(Path(k).stem) == project_id}
+            to_move = {
+                k: v for k, v in src_labels.items() if project_from_stem(Path(k).stem) == project_id
+            }
             if not to_move:
                 continue
             dest_lp = dest_root / task / "labels.json"
@@ -519,7 +537,9 @@ class ExportManager:
         """Merge assigned DocTR exports into ML_TRAINING_DIR / ML_VALIDATION_DIR."""
         full_copy = [(k, v) for k, v in self.assignments.items() if v in {"train", "val"}]
         page_copy = [
-            ((k, page), split) for (k, page), split in self.page_assignments.items() if split in {"train", "val"}
+            ((k, page), split)
+            for (k, page), split in self.page_assignments.items()
+            if split in {"train", "val"}
         ]
         if not full_copy and not page_copy:
             return {"copied": 0}
@@ -578,7 +598,9 @@ class ExportManager:
             if copied_any_task:
                 if selected_pages is None:
                     self.assignments[key] = None
-                    self.page_assignments = {(k, page): s for (k, page), s in self.page_assignments.items() if k != key}
+                    self.page_assignments = {
+                        (k, page): s for (k, page), s in self.page_assignments.items() if k != key
+                    }
                 else:
                     for page_name in selected_pages:
                         self.page_assignments.pop((key, page_name), None)

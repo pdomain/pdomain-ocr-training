@@ -29,7 +29,9 @@ from pd_ocr_training.protocols import (
 def _make_noop_detect(*, emit_events: list[dict[str, Any]] | None = None) -> Callable[..., None]:
     """Return a fake detect_from_config that optionally fires progress_hook events."""
 
-    def fake_detect_from_config(*_args: Any, progress_hook: Callable[[dict[str, Any]], None] | None = None, **_kwargs: Any) -> None:
+    def fake_detect_from_config(
+        *_args: Any, progress_hook: Callable[[dict[str, Any]], None] | None = None, **_kwargs: Any
+    ) -> None:
         if progress_hook is not None and emit_events:
             for ev in emit_events:
                 progress_hook(ev)
@@ -40,7 +42,9 @@ def _make_noop_detect(*, emit_events: list[dict[str, Any]] | None = None) -> Cal
 def _make_noop_recog(*, emit_events: list[dict[str, Any]] | None = None) -> Callable[..., None]:
     """Return a fake train_from_config that optionally fires progress_hook events."""
 
-    def fake_train_from_config(*_args: Any, progress_hook: Callable[[dict[str, Any]], None] | None = None, **_kwargs: Any) -> None:
+    def fake_train_from_config(
+        *_args: Any, progress_hook: Callable[[dict[str, Any]], None] | None = None, **_kwargs: Any
+    ) -> None:
         if progress_hook is not None and emit_events:
             for ev in emit_events:
                 progress_hook(ev)
@@ -151,9 +155,11 @@ def test_train_detection_forwards_train_batch_as_metric(monkeypatch: pytest.Monk
     """'train_batch' hook events are forwarded as kind='metric' TrainingEvents."""
     monkeypatch.setattr(
         "pd_ocr_training.local.detect_from_config",
-        _make_noop_detect(emit_events=[
-            {"event": "train_batch", "loss": 0.5, "lr": 0.001, "batch": 1, "total_batches": 10},
-        ]),
+        _make_noop_detect(
+            emit_events=[
+                {"event": "train_batch", "loss": 0.5, "lr": 0.001, "batch": 1, "total_batches": 10},
+            ]
+        ),
     )
     cfg = DetectionConfig(train_path="/tmp/train", val_path="/tmp/val")
 
@@ -168,9 +174,11 @@ def test_train_detection_forwards_val_batch_as_metric(monkeypatch: pytest.Monkey
     """'val_batch' hook events are forwarded as kind='metric' TrainingEvents."""
     monkeypatch.setattr(
         "pd_ocr_training.local.detect_from_config",
-        _make_noop_detect(emit_events=[
-            {"event": "val_batch", "loss": 0.3, "batch": 1, "total_batches": 5},
-        ]),
+        _make_noop_detect(
+            emit_events=[
+                {"event": "val_batch", "loss": 0.3, "batch": 1, "total_batches": 5},
+            ]
+        ),
     )
     cfg = DetectionConfig(train_path="/tmp/train", val_path="/tmp/val")
 
@@ -184,10 +192,18 @@ def test_train_detection_forwards_epoch_end_as_epoch(monkeypatch: pytest.MonkeyP
     """'epoch_end' hook events are forwarded as kind='epoch' TrainingEvents."""
     monkeypatch.setattr(
         "pd_ocr_training.local.detect_from_config",
-        _make_noop_detect(emit_events=[
-            {"event": "epoch_end", "epoch": 1, "total_epochs": 10,
-             "train_loss": 0.4, "val_loss": 0.35, "lr": 0.001},
-        ]),
+        _make_noop_detect(
+            emit_events=[
+                {
+                    "event": "epoch_end",
+                    "epoch": 1,
+                    "total_epochs": 10,
+                    "train_loss": 0.4,
+                    "val_loss": 0.35,
+                    "lr": 0.001,
+                },
+            ]
+        ),
     )
     cfg = DetectionConfig(train_path="/tmp/train", val_path="/tmp/val")
 
@@ -203,10 +219,18 @@ def test_train_recognition_forwards_epoch_end_as_epoch(monkeypatch: pytest.Monke
     """'epoch_end' hook events for recognition are forwarded as kind='epoch'."""
     monkeypatch.setattr(
         "pd_ocr_training.local.train_from_config",
-        _make_noop_recog(emit_events=[
-            {"event": "epoch_end", "epoch": 2, "total_epochs": 10,
-             "train_loss": 0.6, "val_loss": 0.5, "lr": 0.001},
-        ]),
+        _make_noop_recog(
+            emit_events=[
+                {
+                    "event": "epoch_end",
+                    "epoch": 2,
+                    "total_epochs": 10,
+                    "train_loss": 0.6,
+                    "val_loss": 0.5,
+                    "lr": 0.001,
+                },
+            ]
+        ),
     )
     cfg = RecognitionConfig(train_path="/tmp/train", val_path="/tmp/val")
 
@@ -276,9 +300,30 @@ def test_two_runners_are_independent(monkeypatch: pytest.MonkeyPatch) -> None:
     # Emit a predictable sequence of 3 progress events per runner so we can
     # assert exact event counts/kinds across independent instances.
     shared_events: list[dict[str, Any]] = [
-        {"event": "epoch_end", "epoch": 1, "total_epochs": 3, "train_loss": 0.9, "val_loss": 0.8, "lr": 0.001},
-        {"event": "epoch_end", "epoch": 2, "total_epochs": 3, "train_loss": 0.7, "val_loss": 0.6, "lr": 0.001},
-        {"event": "epoch_end", "epoch": 3, "total_epochs": 3, "train_loss": 0.5, "val_loss": 0.4, "lr": 0.001},
+        {
+            "event": "epoch_end",
+            "epoch": 1,
+            "total_epochs": 3,
+            "train_loss": 0.9,
+            "val_loss": 0.8,
+            "lr": 0.001,
+        },
+        {
+            "event": "epoch_end",
+            "epoch": 2,
+            "total_epochs": 3,
+            "train_loss": 0.7,
+            "val_loss": 0.6,
+            "lr": 0.001,
+        },
+        {
+            "event": "epoch_end",
+            "epoch": 3,
+            "total_epochs": 3,
+            "train_loss": 0.5,
+            "val_loss": 0.4,
+            "lr": 0.001,
+        },
     ]
     monkeypatch.setattr(
         "pd_ocr_training.local.detect_from_config",
@@ -307,7 +352,9 @@ def test_two_runners_are_independent(monkeypatch: pytest.MonkeyPatch) -> None:
     for idx in range(3):
         runner_events = results[idx]
         epoch_events = [e for e in runner_events if e.kind == "epoch"]
-        assert len(epoch_events) == 3, f"runner {idx}: expected 3 epoch events, got {len(epoch_events)}"
+        assert len(epoch_events) == 3, (
+            f"runner {idx}: expected 3 epoch events, got {len(epoch_events)}"
+        )
         assert runner_events[-1].kind == "done", f"runner {idx}: last event should be 'done'"
         # Verify progress values are in order (epoch 1→3 out of 3).
         progresses = [e.progress for e in epoch_events]
@@ -321,7 +368,9 @@ def test_two_runners_are_independent(monkeypatch: pytest.MonkeyPatch) -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_detection_events_arrive_in_order_under_concurrency(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_detection_events_arrive_in_order_under_concurrency(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """Progress events arrive in order when worker and consumer genuinely interleave.
 
     Uses a threading.Barrier to force the worker to wait mid-stream until the
@@ -341,12 +390,39 @@ def test_detection_events_arrive_in_order_under_concurrency(monkeypatch: pytest.
         if progress_hook is None:
             return
         # Emit epoch 1 before the barrier.
-        progress_hook({"event": "epoch_end", "epoch": 1, "total_epochs": 3, "train_loss": 0.9, "val_loss": 0.8, "lr": 0.001})
+        progress_hook(
+            {
+                "event": "epoch_end",
+                "epoch": 1,
+                "total_epochs": 3,
+                "train_loss": 0.9,
+                "val_loss": 0.8,
+                "lr": 0.001,
+            }
+        )
         # Sync with the consumer — both must reach this point.
         barrier.wait()
         # Emit epochs 2 and 3 after the barrier.
-        progress_hook({"event": "epoch_end", "epoch": 2, "total_epochs": 3, "train_loss": 0.7, "val_loss": 0.6, "lr": 0.001})
-        progress_hook({"event": "epoch_end", "epoch": 3, "total_epochs": 3, "train_loss": 0.5, "val_loss": 0.4, "lr": 0.001})
+        progress_hook(
+            {
+                "event": "epoch_end",
+                "epoch": 2,
+                "total_epochs": 3,
+                "train_loss": 0.7,
+                "val_loss": 0.6,
+                "lr": 0.001,
+            }
+        )
+        progress_hook(
+            {
+                "event": "epoch_end",
+                "epoch": 3,
+                "total_epochs": 3,
+                "train_loss": 0.5,
+                "val_loss": 0.4,
+                "lr": 0.001,
+            }
+        )
 
     monkeypatch.setattr("pd_ocr_training.local.detect_from_config", slow_detect)
     cfg = DetectionConfig(train_path="/tmp/train", val_path="/tmp/val")
@@ -374,7 +450,9 @@ def test_detection_events_arrive_in_order_under_concurrency(monkeypatch: pytest.
     for i in range(1, len(progresses)):
         assert progresses[i] is not None
         assert progresses[i - 1] is not None
-        assert progresses[i] > progresses[i - 1], f"progress not increasing at index {i}: {progresses}"  # type: ignore[operator]
+        assert progresses[i] > progresses[i - 1], (
+            f"progress not increasing at index {i}: {progresses}"
+        )  # type: ignore[operator]
 
 
 # ---------------------------------------------------------------------------
@@ -388,6 +466,7 @@ def test_train_detection_with_delay_still_yields_done(monkeypatch: pytest.Monkey
     This test exercises the ``queue.Empty`` / ``worker.is_alive()`` poll path
     in ``_drain_queue`` without actually needing the abnormal-exit branch.
     """
+
     def slow_detect(
         *_args: Any,
         progress_hook: Callable[[dict[str, Any]], None] | None = None,
