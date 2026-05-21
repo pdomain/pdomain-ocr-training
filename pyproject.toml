@@ -43,7 +43,7 @@ Source = "https://github.com/ConcaveTrillion/pd-ocr-training"
 packages = ["pd_ocr_training"]
 
 [tool.uv.sources]
-pd-book-tools = { git = "https://github.com/ConcaveTrillion/pd-book-tools.git" }
+pd-book-tools = { path = "../pd-book-tools", editable = true }
 
 [dependency-groups]
 # The dev group installs the `train` extra so the full test suite (which
