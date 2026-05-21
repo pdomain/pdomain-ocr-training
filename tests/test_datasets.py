@@ -2,8 +2,6 @@
 
 import json
 
-import pytest
-
 import pd_ocr_training.datasets as ds
 
 

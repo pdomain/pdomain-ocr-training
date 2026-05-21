@@ -151,10 +151,11 @@ known-first-party = ["pd_ocr_training"]
 # Private modules: internal convention, no docstrings required.
 "**/_*.py" = ["D"]
 # Legacy modules moved verbatim from pd-ocr-trainer — annotation/docstring debt tracked for a follow-up pass; do not rewrite as part of the move.
-"pd_ocr_training/utils.py" = ["ANN", "D"]
-"pd_ocr_training/datasets.py" = ["ANN", "D"]
-"pd_ocr_training/detect.py" = ["ANN", "D"]
-"pd_ocr_training/recog.py" = ["ANN", "D"]
+# BLE/S also suppressed: broad-except and bandit patterns are pre-existing debt in the verbatim-moved code.
+"pd_ocr_training/utils.py" = ["ANN", "D", "BLE", "S"]
+"pd_ocr_training/datasets.py" = ["ANN", "D", "BLE", "S"]
+"pd_ocr_training/detect.py" = ["ANN", "D", "BLE", "S"]
+"pd_ocr_training/recog.py" = ["ANN", "D", "BLE", "S"]
 
 [tool.basedpyright]
 include = ["pd_ocr_training", "tests"]
