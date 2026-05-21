@@ -30,15 +30,18 @@ can consume events synchronously via a ``for`` loop.  ``LocalTrainingRunner``
 (Task 6) will implement this by bridging the existing callback-style
 ``progress_hook`` into a thread-safe queue and draining it as a generator.
 
-The ``from __future__ import annotations`` import is intentionally absent here
-because ``runtime_checkable`` Protocol isinstance() checks require the method
-names to be inspectable at runtime without string-form annotations.
+``from __future__ import annotations`` is present and safe here.  Structural
+``runtime_checkable`` Protocol ``isinstance()`` checks inspect method *names*
+only — not their annotations — so converting annotations to string-form via
+the future import does not affect isinstance() behaviour.
 """
 
 from __future__ import annotations
 
-from pathlib import Path  # noqa: TC003 — pydantic requires Path at model-build time
-from typing import TYPE_CHECKING, runtime_checkable
+from pathlib import (
+    Path,  # noqa: TC003 — keep Path importable at runtime; pydantic resolves the annotation at model-build time
+)
+from typing import TYPE_CHECKING, Literal, runtime_checkable
 
 from pydantic import BaseModel, Field
 from typing_extensions import Protocol
@@ -56,15 +59,19 @@ class TrainingEvent(BaseModel):
     """A single progress event emitted during a training run.
 
     Attributes:
-        kind: Event category.  One of ``"log"``, ``"epoch"``, ``"metric"``,
-            ``"done"``, or ``"error"``.
+        kind: Public/normalised event category — one of ``"log"``,
+            ``"epoch"``, ``"metric"``, ``"done"``, or ``"error"``.  Raw
+            internal events emitted by ``detect.py``/``recog.py`` progress
+            hooks (e.g. ``"train_batch"``, ``"val_batch"``, ``"epoch_end"``)
+            are translated into these kinds by the runner implementation
+            (Task 6).
         message: Human-readable description of the event.
         progress: Optional normalized progress in ``[0.0, 1.0]``; present on
             ``"epoch"`` and ``"done"`` events.
         data: Optional structured payload (e.g. loss, lr, recall values).
     """
 
-    kind: str
+    kind: Literal["log", "epoch", "metric", "done", "error"]
     message: str
     progress: float | None = None
     data: dict[str, object] | None = None

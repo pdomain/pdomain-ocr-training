@@ -1,5 +1,7 @@
 """Tests for pd_ocr_training.protocols — ITrainingRunner structural protocol."""
 
+from collections.abc import Iterator
+
 from pd_ocr_training.protocols import (
     DetectionConfig,
     ITrainingRunner,
@@ -24,6 +26,13 @@ def test_training_event_with_progress() -> None:
     """TrainingEvent accepts an optional progress float."""
     event = TrainingEvent(kind="epoch", message="epoch 1/10", progress=0.1)
     assert event.progress == 0.1
+
+
+def test_training_event_data_round_trips() -> None:
+    """TrainingEvent.data round-trips a plain dict payload."""
+    payload = {"loss": 0.42, "lr": 0.001}
+    event = TrainingEvent(kind="metric", message="metrics", data=payload)
+    assert event.data == payload
 
 
 # ---------------------------------------------------------------------------
@@ -59,14 +68,14 @@ def test_protocol_is_runtime_checkable_with_both_methods() -> None:
             self,
             profile: str,
             config: DetectionConfig,
-        ) -> None:
+        ) -> Iterator[TrainingEvent]:
             ...
 
         def train_recognition(
             self,
             profile: str,
             config: RecognitionConfig,
-        ) -> None:
+        ) -> Iterator[TrainingEvent]:
             ...
 
     assert isinstance(Stub(), ITrainingRunner)
@@ -80,7 +89,7 @@ def test_protocol_missing_method_not_instance() -> None:
             self,
             profile: str,
             config: DetectionConfig,
-        ) -> None:
+        ) -> Iterator[TrainingEvent]:
             ...
 
     assert not isinstance(IncompleteStub(), ITrainingRunner)
