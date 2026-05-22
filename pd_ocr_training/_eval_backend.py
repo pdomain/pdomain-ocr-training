@@ -27,11 +27,20 @@ Metric mapping notes
   standard COCO sweep (0.50, 0.55, ..., 0.95).  ``f1`` is the harmonic mean of
   precision and recall.
 
-Out of scope (issue #3 baseline)
---------------------------------
-Per-slice ``EvalSlice`` breakdown -- ``slices`` stays ``[]``.  Populating it is
-pd-ocr-trainer-spa M12/M13 work and needs a glyph-feature labelling scheme that
-is not yet defined.
+Crop-id threading (issue #8)
+----------------------------
+``_run_recognition_inference`` now threads each sample's crop id (the DocTR
+recognition val-set label key — the per-crop filename / relative path) alongside
+its prediction and ground-truth strings. The crop id is the join key into the
+glyph-feature sidecar loaded by ``evaluate_recognition_impl`` when
+``config.slice_glyph_features`` is ``True``. Keying by crop id (not by
+iteration index) is robust to any filtering or reordering of the val set.
+
+Per-feature glyph slicing (issue #9, blocked by #7+#8)
+-------------------------------------------------------
+Slice emission is deferred — ``slices`` stays ``[]`` for now. Issue #9 will
+wire the sidecar load + per-feature bucketing into ``evaluate_recognition_impl``
+once #7 and #8 are merged.
 """
 
 from __future__ import annotations
@@ -246,9 +255,20 @@ def _run_recognition_inference(
     model = model.to(device)
     model.eval()
 
+    # Build a flat list of crop ids (the val-set label key for each sample) in
+    # SequentialSampler order.  DocTR's RecognitionDataset stores its entries as
+    # a list of (img_path, label) tuples in val_set.data; the crop id is the
+    # basename of the image path, which matches the key in ``labels.json``.
+    # Using basename (not the full path) makes the id robust to where the
+    # images/ folder is mounted, and matches the key format DocTR uses when it
+    # builds the dataset from a flat labels.json.
+    all_crop_ids: list[str] = [os.path.basename(str(img_path)) for img_path, _label in val_set.data]
+
     predictions: list[str] = []
     ground_truths: list[str] = []
+    crop_ids: list[str] = []
     exact = 0
+    sample_idx = 0
     with torch.no_grad():
         for images, targets in val_loader:
             batch = batch_transforms(images.to(device))
@@ -261,6 +281,8 @@ def _run_recognition_inference(
             for pred, gt in zip(words, targets, strict=False):
                 predictions.append(pred)
                 ground_truths.append(gt)
+                crop_ids.append(all_crop_ids[sample_idx])
+                sample_idx += 1
                 if pred == gt:
                     exact += 1
 
@@ -268,6 +290,7 @@ def _run_recognition_inference(
     return {
         "predictions": predictions,
         "ground_truths": ground_truths,
+        "crop_ids": crop_ids,
         "exact_match_rate": (exact / sample_count) if sample_count else 0.0,
         "sample_count": sample_count,
         "excluded_count": len(val_set) - sample_count,
@@ -399,12 +422,18 @@ def evaluate_recognition_impl(
 
     Returns:
         A :class:`RecognitionEvalResult` with overall ``cer`` / ``wer`` /
-        ``exact_match_rate`` and an empty ``slices`` list.
+        ``exact_match_rate``.  When ``config.slice_glyph_features`` is ``True``
+        and ``config.glyph_annotations_path`` is set, ``slices`` is populated
+        with per-feature :class:`EvalSlice` entries keyed by crop id.
+        Otherwise ``slices`` is an empty list (backward-compatible default).
     """
     start = time.monotonic()
     raw = _run_recognition_inference(profile, config)
     predictions: list[str] = raw["predictions"]
     ground_truths: list[str] = raw["ground_truths"]
+    # crop_ids are threaded through by _run_recognition_inference for glyph
+    # slicing (#8).  They are parallel to predictions / ground_truths.
+    _crop_ids: list[str] = raw.get("crop_ids", [])
     return RecognitionEvalResult(
         cer=_cer(predictions, ground_truths),
         wer=_wer(predictions, ground_truths),

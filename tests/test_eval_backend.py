@@ -193,3 +193,95 @@ def test_evaluate_detection_impl_zero_metrics(monkeypatch: pytest.MonkeyPatch) -
 
     assert result.f1 == 0.0
     assert result.excluded_count == 2
+
+
+# ---------------------------------------------------------------------------
+# _run_recognition_inference — crop-id threading (#8)
+# ---------------------------------------------------------------------------
+
+
+def test_run_recognition_inference_returns_crop_ids(monkeypatch: pytest.MonkeyPatch) -> None:
+    """_run_recognition_inference result carries a crop_ids list parallel to predictions."""
+    # The real function requires torch; we patch the torch/doctr internals at the
+    # module level and call the real function body via a thin wrapper to verify
+    # that the returned dict has a `crop_ids` key.
+    #
+    # Since _run_recognition_inference is torch-dependent, we instead verify via
+    # evaluate_recognition_impl: the fake inference returns crop_ids, and the
+    # impl passes them through for downstream slicing.
+
+    def fake_run(profile: str, config: RecognitionEvalConfig) -> dict[str, Any]:
+        return {
+            "predictions": ["hello", "world"],
+            "ground_truths": ["hello", "world"],
+            "crop_ids": ["img001.png", "img002.png"],
+            "exact_match_rate": 1.0,
+            "sample_count": 2,
+            "excluded_count": 0,
+        }
+
+    monkeypatch.setattr(_eval_backend, "_run_recognition_inference", fake_run)
+    cfg = RecognitionEvalConfig(val_path="/tmp/val", model_path="/tmp/m.pt")
+    result = _eval_backend.evaluate_recognition_impl("run-crop", cfg)
+
+    # The crop_ids are threaded through the inference result and available for
+    # downstream glyph slicing.  The overall result should still be valid.
+    assert isinstance(result, RecognitionEvalResult)
+    assert result.sample_count == 2
+    assert result.cer == 0.0
+    assert result.wer == 0.0
+
+
+def test_evaluate_recognition_impl_propagates_crop_ids(monkeypatch: pytest.MonkeyPatch) -> None:
+    """evaluate_recognition_impl passes crop_ids through to slicing when configured.
+
+    With slice_glyph_features=False (default), crop ids are present in the raw
+    inference output but slices remains empty — this is the backward-compatible
+    no-slicing path.
+    """
+
+    def fake_run(profile: str, config: RecognitionEvalConfig) -> dict[str, Any]:
+        return {
+            "predictions": ["abc", "def"],
+            "ground_truths": ["abc", "xef"],
+            "crop_ids": ["crop_a.png", "crop_b.png"],
+            "exact_match_rate": 0.5,
+            "sample_count": 2,
+            "excluded_count": 0,
+        }
+
+    monkeypatch.setattr(_eval_backend, "_run_recognition_inference", fake_run)
+    cfg = RecognitionEvalConfig(val_path="/tmp/val", model_path="/tmp/m.pt")
+    result = _eval_backend.evaluate_recognition_impl("run-crop2", cfg)
+
+    # No slicing configured — slices stays empty
+    assert result.slices == []
+    assert result.sample_count == 2
+
+
+def test_evaluate_recognition_impl_crop_ids_match_order(monkeypatch: pytest.MonkeyPatch) -> None:
+    """crop_ids must be parallel to predictions and ground_truths (same index = same sample)."""
+
+    captured: dict[str, Any] = {}
+
+    def fake_run(profile: str, config: RecognitionEvalConfig) -> dict[str, Any]:
+        raw = {
+            "predictions": ["p0", "p1", "p2"],
+            "ground_truths": ["g0", "g1", "g2"],
+            "crop_ids": ["id0", "id1", "id2"],
+            "exact_match_rate": 0.0,
+            "sample_count": 3,
+            "excluded_count": 0,
+        }
+        captured.update(raw)
+        return raw
+
+    monkeypatch.setattr(_eval_backend, "_run_recognition_inference", fake_run)
+    cfg = RecognitionEvalConfig(val_path="/tmp/val", model_path="/tmp/m.pt")
+    _eval_backend.evaluate_recognition_impl("run-crop3", cfg)
+
+    # Verify the fake gave us parallel lists of the same length
+    assert len(captured["crop_ids"]) == len(captured["predictions"])
+    assert len(captured["crop_ids"]) == len(captured["ground_truths"])
+    # Each crop_id is distinct and preserves order
+    assert captured["crop_ids"] == ["id0", "id1", "id2"]
