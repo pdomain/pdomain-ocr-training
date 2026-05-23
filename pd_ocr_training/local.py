@@ -81,6 +81,8 @@ ProgressHook = Callable[[RawEvent], None]
 
 
 class _DetectionKwargs(TypedDict):
+    """Typed keyword arguments for :func:`detect_from_config`."""
+
     train_path: str
     val_path: str
     arch: str
@@ -105,6 +107,8 @@ class _DetectionKwargs(TypedDict):
 
 
 class _RecognitionKwargs(TypedDict):
+    """Typed keyword arguments for :func:`train_from_config`."""
+
     train_path: str
     val_path: str
     arch: str
@@ -129,7 +133,11 @@ class _RecognitionKwargs(TypedDict):
 
 
 class _TrainingCallable(Protocol):
-    def __call__(self, **kwargs: object) -> None: ...
+    """Protocol for a training entrypoint callable (detect or recog main)."""
+
+    def __call__(self, **kwargs: object) -> None:
+        """Invoke the training entrypoint with keyword arguments."""
+        ...
 
 
 def _get_str(raw: RawEvent, key: str, default: str = "") -> str:
