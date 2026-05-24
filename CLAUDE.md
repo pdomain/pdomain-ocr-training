@@ -77,6 +77,12 @@ make test           # uv run pytest -n auto
 make ci             # setup → pre-commit → lint-check → typecheck → test
 make build          # uv build
 make clean          # rm dist .venv .pytest_cache .ruff_cache .ci-ai.log htmlcov
+
+# local-dev workflow (spec #362) — see ../docs/process/local-dev.md
+make local-setup        # clone any missing sibling pd-* repos
+make local-dev          # switch to local-dev mode (editable ../pd-book-tools + marker)
+make local-check        # print local-dev mode + per-sibling resolution
+make local-upgrade-deps # upgrade deps then restore editables (local-mode only)
 ```
 
 Run any command with `uv run` directly if preferred:
