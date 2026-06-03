@@ -50,13 +50,46 @@ def test_base_import_succeeds_without_torch() -> None:
     """``import pdomain_ocr_training`` works and does not pull torch into sys.modules."""
     result = _run(
         """
+        from importlib.metadata import PackageNotFoundError, version
+
         import pdomain_ocr_training
 
         assert "torch" not in sys.modules, "torch was imported by base package"
         assert "doctr" not in sys.modules, "doctr was imported by base package"
-        assert pdomain_ocr_training.__version__
-        assert isinstance(pdomain_ocr_training.__version__, str)
-        assert pdomain_ocr_training.__version__ != "0.2.1"
+        try:
+            metadata_version = version("pdomain-ocr-training")
+        except PackageNotFoundError:
+            assert pdomain_ocr_training.__version__ == "0.0.0+unknown"
+        else:
+            assert pdomain_ocr_training.__version__ == metadata_version
+        print("OK")
+        """
+    )
+    assert result.returncode == 0, result.stderr
+    assert "OK" in result.stdout
+
+
+def test_base_import_uses_fallback_version_without_metadata() -> None:
+    """Missing dist-info still keeps the base package importable without torch."""
+    result = _run(
+        """
+        import importlib.metadata
+        from importlib.metadata import PackageNotFoundError
+
+        real_version = importlib.metadata.version
+
+        def missing_version(distribution_name):
+            if distribution_name == "pdomain-ocr-training":
+                raise PackageNotFoundError
+            return real_version(distribution_name)
+
+        importlib.metadata.version = missing_version
+
+        import pdomain_ocr_training
+
+        assert "torch" not in sys.modules, "torch was imported by base package"
+        assert "doctr" not in sys.modules, "doctr was imported by base package"
+        assert pdomain_ocr_training.__version__ == "0.0.0+unknown"
         print("OK")
         """
     )
