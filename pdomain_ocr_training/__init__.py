@@ -28,6 +28,7 @@ not actually require torch (its stub entry points raise ``NotImplementedError``)
 
 from __future__ import annotations
 
+from importlib.metadata import PackageNotFoundError, version
 from typing import TYPE_CHECKING
 
 from pdomain_ocr_training.protocols import (
@@ -48,7 +49,11 @@ if TYPE_CHECKING:
     from pdomain_ocr_training.local import LocalTrainingRunner
     from pdomain_ocr_training.local_eval import LocalEvalRunner
 
-__version__ = "0.2.1"
+try:
+    __version__ = version("pdomain-ocr-training")
+except PackageNotFoundError:
+    __version__ = "0.0.0+unknown"
+
 __all__ = [
     "DetectionConfig",
     "DetectionEvalConfig",
