@@ -18,7 +18,8 @@ else
         local-setup local-dev local-check local-upgrade-deps \
         dev-local \
         update-pdomain-deps \
-        release-patch release-minor release-major _do-release ci-slow
+        release-patch release-minor release-major _do-release ci-slow \
+        ci-against-main
 
 help: ## Show this help message
 	@echo "Available commands:"
@@ -94,6 +95,9 @@ local-check: ## Print local-dev mode status + per-sibling resolution
 
 local-upgrade-deps: ## Upgrade deps then restore editable siblings (local-mode only)
 	@./scripts/local-upgrade-deps.sh
+
+ci-against-main: ## Validate against pd-* siblings' latest main, then revert (transient)
+	@./scripts/ci-against-main.sh
 
 clean: ## Clean cache and temporary files
 	rm -rf dist .venv .pytest_cache .ruff_cache .ci-ai.log htmlcov
