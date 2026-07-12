@@ -19,7 +19,7 @@ else
         dev-local \
         update-pdomain-deps \
         release-patch release-minor release-major _do-release ci-slow \
-        ci-against-main
+        ci-against-master
 
 help: ## Show this help message
 	@echo "Available commands:"
@@ -96,8 +96,8 @@ local-check: ## Print local-dev mode status + per-sibling resolution
 local-upgrade-deps: ## Upgrade deps then restore editable siblings (local-mode only)
 	@./scripts/local-upgrade-deps.sh
 
-ci-against-main: ## Validate against pd-* siblings' latest main, then revert (transient)
-	@./scripts/ci-against-main.sh
+ci-against-master: ## Validate against pd-* siblings' latest master, then revert (transient)
+	@./scripts/ci-against-master.sh
 
 clean: ## Clean cache and temporary files
 	rm -rf dist .venv .pytest_cache .ruff_cache .ci-ai.log htmlcov
@@ -116,7 +116,7 @@ release-major: ## Release: bump major, run ci-slow, tag, push (e.g. v0.2.0 → v
 	@$(MAKE) --no-print-directory _do-release BUMP=major
 
 # scripts/do-release.sh handles repo-state guards, runs the ci-slow pre-flight,
-# creates a three-component tag, pushes main + tag.
+# creates a three-component tag, pushes master + tag.
 # Pass FORCE=1 to skip the repo-state guards (pre-flight still runs).
 # Pass SKIP_PUSH=1 to create the tag locally without pushing.
 _do-release:
