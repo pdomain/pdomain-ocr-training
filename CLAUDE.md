@@ -28,9 +28,9 @@ The base install exposes `DetectionConfig`, `RecognitionConfig`,
 `LocalTrainingRunner` is exported lazily via `__init__.__getattr__` — `import
 pdomain_ocr_training` never imports torch. Accessing `LocalTrainingRunner` without
 the `[train]` extra raises a helpful `ImportError`. `LocalEvalRunner` is
-torch-free (its stub impl raises `NotImplementedError`) and importable without
-the extra. The `dev` dependency-group pulls in `[train]` so `make ci` exercises
-the full stack; the torch-free contract is covered separately by
+importable without the extra; its evaluation backend loads torch and DocTR only
+when evaluation runs. The `dev` dependency-group pulls in `[train]` so `make ci`
+exercises the full stack; the torch-free import contract is covered separately by
 `tests/test_torch_free_import.py` (subprocess with torch hidden).
 
 ## Package layout

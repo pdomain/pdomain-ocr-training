@@ -1,10 +1,4 @@
-"""Tests that local_eval stubs delegate to the real _eval_backend.
-
-These verify the wiring added by issue #3: ``evaluate_detection_from_config`` /
-``evaluate_recognition_from_config`` are no longer ``NotImplementedError``
-stubs -- they delegate to ``_eval_backend.evaluate_*_impl``.  The backend impls
-are monkeypatched so no GPU is required.
-"""
+"""Verify that local evaluation entry points delegate to the lazy backend."""
 
 from __future__ import annotations
 

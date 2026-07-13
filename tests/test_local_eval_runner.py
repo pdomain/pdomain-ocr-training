@@ -68,7 +68,7 @@ def _make_det_result(**kwargs: Any) -> DetectionEvalResult:
 
 
 def test_evaluate_recognition_returns_result() -> None:
-    """evaluate_recognition returns a RecognitionEvalResult from the stub."""
+    """evaluate_recognition returns the backend RecognitionEvalResult."""
     expected = _make_recog_result()
 
     with patch(
@@ -147,7 +147,7 @@ def test_evaluate_recognition_raises_on_error() -> None:
 
 
 def test_evaluate_detection_returns_result() -> None:
-    """evaluate_detection returns a DetectionEvalResult from the stub."""
+    """evaluate_detection returns the backend DetectionEvalResult."""
     expected = _make_det_result()
 
     with patch(
@@ -225,7 +225,7 @@ def test_evaluate_detection_raises_on_error() -> None:
 
 
 def test_evaluate_recognition_duration_is_positive() -> None:
-    """duration_seconds in the result is > 0 when the stub takes time."""
+    """duration_seconds is positive when the patched backend takes time."""
 
     def fake_eval(**kwargs: Any) -> RecognitionEvalResult:
         time.sleep(0.01)

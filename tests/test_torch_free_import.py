@@ -161,14 +161,7 @@ def test_local_runner_access_raises_helpful_error_without_torch() -> None:
 
 
 def test_local_eval_runner_importable_without_torch() -> None:
-    """LocalEvalRunner resolves without torch -- its stub impl is torch-free.
-
-    Unlike ``LocalTrainingRunner`` (which imports ``detect.py``/``recog.py``
-    and therefore torch/DocTR), ``LocalEvalRunner`` only imports from
-    ``protocols.py``.  The stub entry points raise ``NotImplementedError``
-    rather than requiring torch.  This means the class can be imported in a
-    base install; the real eval implementation is a follow-up task.
-    """
+    """LocalEvalRunner resolves before its lazy evaluation backend needs torch."""
     result = _run(
         """
         import pdomain_ocr_training

@@ -22,8 +22,9 @@ attribute access. Accessing it without the ``[train]`` extra installed
 raises an ``ImportError`` with install guidance rather than a raw
 ``ModuleNotFoundError`` at package import time.
 
-``LocalEvalRunner`` is also exported lazily for consistency, though it does
-not actually require torch (its stub entry points raise ``NotImplementedError``).
+``LocalEvalRunner`` is also exported lazily for consistency. Resolving the
+class does not import torch; its evaluation backend loads the training stack
+only when evaluation runs.
 """
 
 from __future__ import annotations
@@ -80,8 +81,8 @@ def __getattr__(name: str) -> object:
     the package importable and turns a missing training stack into a clear,
     actionable error.
 
-    ``LocalEvalRunner`` is torch-free (its stub entry points raise
-    ``NotImplementedError``) but is also resolved lazily for consistency.
+    ``LocalEvalRunner`` resolves without torch and loads its heavy evaluation
+    backend only when evaluation runs.
     """
     if name == "LocalTrainingRunner":
         try:

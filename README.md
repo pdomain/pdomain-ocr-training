@@ -29,13 +29,13 @@ Two sibling Protocols, each with a concrete implementation:
 | Protocol | Concrete | Install mode |
 |---|---|---|
 | `ITrainingRunner` | `LocalTrainingRunner` | `[train]` extra required |
-| `IEvalRunner` | `LocalEvalRunner` | base (torch-free); real DocTR eval stubs pending |
+| `IEvalRunner` | `LocalEvalRunner` | base API; `[train]` dependencies required when evaluation runs |
 
 `LocalTrainingRunner` is exported lazily — importing `pdomain_ocr_training` does
 **not** pull in torch. Accessing it without the `[train]` extra raises a clear
-`ImportError`. `LocalEvalRunner` is torch-free and importable in the base
-install; its underlying eval entry points currently raise `NotImplementedError`
-pending the real DocTR eval backend implementation.
+`ImportError`. `LocalEvalRunner` is importable in the base install. Its real
+evaluation entry points load DocTR only when evaluation runs, so callers need
+the `[train]` dependencies for an actual evaluation.
 
 ### Torch-free usage (config models + Protocols)
 
@@ -72,13 +72,16 @@ for event in runner.train_detection("my-run", cfg):
     print(event.kind, event.message)
 ```
 
-### Eval usage (torch-free; real impl pending)
+### Eval usage
 
 ```python
 from pdomain_ocr_training import IEvalRunner, LocalEvalRunner, RecognitionEvalConfig
 
 runner: IEvalRunner = LocalEvalRunner()
 cfg = RecognitionEvalConfig(val_path="data/val", model_path="checkpoints/best.pt")
-# NOTE: raises NotImplementedError until the real DocTR eval backend is wired in.
 result = runner.evaluate_recognition("eval-001", cfg)
 ```
+
+Recognition evaluation also supports an optional glyph-feature sidecar. It
+emits typed slices for ligatures, long s, and swashes without importing torch
+into the protocol models.

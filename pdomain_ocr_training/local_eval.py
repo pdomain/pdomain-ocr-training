@@ -205,8 +205,8 @@ def _build_detection_eval_kwargs(
     """Build the kwargs dict for ``evaluate_detection_from_config``.
 
     Args:
-        profile: Logical run identifier (currently passed through for
-            logging; unused by the stub but reserved for the real impl).
+        profile: Logical run identifier passed through to the evaluation
+            backend for result metadata.
         config: Typed detection eval configuration.
 
     Returns:
@@ -294,9 +294,7 @@ class LocalEvalRunner:
             ``DetectionEvalResult`` with overall metrics and slices.
 
         Raises:
-            NotImplementedError: When the stub eval function has not been
-                replaced with a real implementation.
-            Any other exception raised by the underlying eval function.
+            Any exception raised by the evaluation backend.
         """
         kwargs = _build_detection_eval_kwargs(profile, config)
         return evaluate_detection_from_config(**kwargs)
@@ -320,9 +318,7 @@ class LocalEvalRunner:
             ``RecognitionEvalResult`` with overall metrics and slices.
 
         Raises:
-            NotImplementedError: When the stub eval function has not been
-                replaced with a real implementation.
-            Any other exception raised by the underlying eval function.
+            Any exception raised by the evaluation backend.
         """
         kwargs = _build_recognition_eval_kwargs(profile, config)
         return evaluate_recognition_from_config(**kwargs)

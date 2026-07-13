@@ -1,13 +1,15 @@
 # Architecture: pdomain-ocr-training
 
-**Status:** Current as of 2026-05-22 (IEvalRunner + LocalEvalRunner shipped).
+**Status:** Current as of 2026-07-13.
 
 ## Purpose
 
-`pdomain-ocr-training` owns all torch/DocTR OCR model-training and evaluation code
-for the `pdomain-*` suite. No other `pdomain-*` repo imports torch. Consumers (currently
-the future `pdomain-ocr-trainer-spa`) depend only on the typed Protocols, never on
-concrete training modules.
+`pdomain-ocr-training` owns the reusable torch/DocTR OCR model-training and
+evaluation implementation for the `pdomain-*` suite. It keeps configuration,
+event, and runner contracts torch-free while isolating the heavy runtime behind
+the training extra. Consumers use those typed contracts at their boundaries.
+The trainer SPA's worker also instantiates `LocalTrainingRunner` as its concrete
+local implementation; torch remains outside the long-lived web process.
 
 ## Module layout
 
@@ -16,7 +18,8 @@ pdomain_ocr_training/
     __init__.py      Public API re-exports (lazy for LocalTrainingRunner)
     protocols.py     ITrainingRunner + IEvalRunner Protocols; all config + result models
     local.py         LocalTrainingRunner — callback→generator bridge
-    local_eval.py    LocalEvalRunner — synchronous eval wrapper (stub entry points)
+    local_eval.py    LocalEvalRunner — synchronous eval wrapper
+    _eval_backend.py Real DocTR detection and recognition evaluation
     detect.py        Verbatim-moved DocTR detection training (legacy; per-file-ignores)
     recog.py         Verbatim-moved DocTR recognition training (legacy; per-file-ignores)
     datasets.py      ExportManager — on-disk dataset layout manager (legacy)
@@ -62,15 +65,15 @@ Supported methods:
 
 Eval is a single synchronous forward pass — no epoch loop, no progress stream.
 The Protocol returns result objects directly. `LocalEvalRunner` delegates to
-module-level stub entry points that can be monkeypatched in tests.
+real DocTR evaluation entry points that remain replaceable in tests.
 
 ```text
 pdomain-ocr-trainer-spa                pdomain-ocr-training
 ─────────────────       inject        ─────────────────────
 IEvalRunner      ◄──────────────── LocalEvalRunner
                                         │
-                                   evaluate_detection_from_config()  [stub]
-                                   evaluate_recognition_from_config() [stub]
+                                   evaluate_detection_from_config()
+                                   evaluate_recognition_from_config()
 ```
 
 Supported methods:
@@ -78,8 +81,9 @@ Supported methods:
 - `evaluate_detection(profile, config) -> DetectionEvalResult`
 - `evaluate_recognition(profile, config) -> RecognitionEvalResult`
 
-The stub entry points raise `NotImplementedError`. The real DocTR eval backend
-is tracked by GH issue #3.
+The entry points load DocTR predictors, evaluate detection or recognition data,
+and return typed results. Recognition evaluation can load a glyph-feature JSON
+sidecar and emit one `EvalSlice` per ligature, long-s, or swash feature.
 
 ## Config and result models
 
@@ -98,6 +102,16 @@ All models live in `protocols.py` and are Pydantic v2 `BaseModel`s.
 - `DetectionEvalResult` — precision, recall, f1, IoU metrics, slices
 - `RecognitionEvalResult` — CER, WER, exact-match rate, slices
 - `EvalSlice` — per-feature breakdown (for M12/M13 slicing; empty list in M7)
+- `GlyphFeatureSet` — torch-free recognition-crop metadata for glyph slicing
+
+## Shipped evaluation evidence
+
+- Code: `pdomain_ocr_training/local_eval.py`,
+  `pdomain_ocr_training/_eval_backend.py`,
+  `pdomain_ocr_training/protocols.py`
+- Tests: `tests/test_eval_backend_wiring.py`,
+  `tests/test_glyph_slice_emission.py`, `tests/test_eval_protocols.py`
+- Verified: 2026-07-13 against the current source and tests
 
 ## Legacy modules
 
