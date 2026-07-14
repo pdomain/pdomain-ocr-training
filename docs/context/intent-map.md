@@ -45,7 +45,10 @@ Last verified: 2026-07-14
   source and `pyproject.toml`.
 - `docs/process/writing-style.md`: still active; referenced by `CLAUDE.md` and
   `CONVENTIONS.md`.
-- `docs/archive/plans/2026-05-22-doctr-eval-backend.md`: can retire; commit
-  `5960fc9` and current tests prove implementation.
-- `docs/specs/2026-05-22-glyph-feature-eval-slicing-design.md`: can retire;
-  commits `ee08319`, `fccc594`, and `ad904c3` prove implementation.
+- The DocTR evaluation backend plan was implemented by commit `5960fc9` and
+  retired during the 2026-07-14 migration. Current truth is in
+  [`docs/architecture/00-overview.md`](../architecture/00-overview.md).
+- The glyph-feature slicing design was implemented by commits `ee08319`,
+  `fccc594`, and `ad904c3`, then retired during the 2026-07-14 migration.
+  Current truth is in
+  [`docs/architecture/00-overview.md`](../architecture/00-overview.md).

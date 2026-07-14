@@ -23,8 +23,8 @@ runner contracts remain torch-free. See
 
 ## In-flight work
 
-No product implementation is recorded as in flight. The local docgraph
-migration establishes lifecycle metadata and retrieval governance.
+No product implementation is recorded as in flight. Documentation lifecycle
+metadata and retrieval governance are active.
 
 ## Test health
 

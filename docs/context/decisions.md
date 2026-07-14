@@ -49,3 +49,40 @@ Last verified: 2026-07-14
   boundary, basename crop-id join, and slice semantics.
 - **Remaining work:** Sidecar-writer ownership remains a needs-owner-decision
   item in [`intent-map.md`](intent-map.md).
+
+### 2026-07-14 — Retirement completed: Real DocTR eval backend plan
+
+- **Context:** The prior entry recorded verified implementation while the
+  retirement gate was pending. This entry supersedes that pending state.
+- **Old path:** `docs/archive/plans/2026-05-22-doctr-eval-backend.md`
+- **Outcome:** Implemented and deleted after promotion.
+- **Replacement:** [`docs/architecture/00-overview.md`](../architecture/00-overview.md)
+- **Removal commit:** The retirement commit containing this entry; use
+  `git log -- docs/archive/plans/2026-05-22-doctr-eval-backend.md`.
+- **Retained rationale:** The current architecture and the evaluation-deviation
+  decision above preserve the torch-free boundary and true COCO sweep.
+- **Rationale:** The plan contained no other unique durable content; its
+  execution checklist would add stale retrieval noise.
+- **Evidence:** Commit `5960fc9`; [`docs/architecture/00-overview.md`](../architecture/00-overview.md);
+  `tests/test_eval_backend.py`; `tests/test_eval_backend_wiring.py`.
+- **Remaining work:** Optional GPU smoke testing remains deferred.
+
+### 2026-07-14 — Retirement completed: Glyph-feature eval slicing design
+
+- **Context:** The prior entry recorded verified implementation while the
+  retirement gate was pending. This entry supersedes that pending state.
+- **Old path:** `docs/specs/2026-05-22-glyph-feature-eval-slicing-design.md`
+- **Outcome:** Implemented and deleted after promotion.
+- **Replacement:** [`docs/architecture/00-overview.md`](../architecture/00-overview.md)
+- **Removal commit:** The retirement commit containing this entry; use
+  `git log -- docs/specs/2026-05-22-glyph-feature-eval-slicing-design.md`.
+- **Retained rationale:** A serialized sidecar avoids a direct
+  `pdomain-book-tools` dependency, and basename crop-id keying prevents slice
+  misalignment when validation samples are filtered or reordered. The intent
+  map preserves the unresolved upstream writer ownership.
+- **Rationale:** Code, tests, and current architecture preserve the shipped
+  contract without retaining speculative design scaffolding.
+- **Evidence:** Commits `ee08319`, `fccc594`, and `ad904c3`;
+  [`docs/architecture/00-overview.md`](../architecture/00-overview.md);
+  `tests/test_glyph_slice_emission.py`.
+- **Remaining work:** Decide upstream glyph sidecar writer ownership.
