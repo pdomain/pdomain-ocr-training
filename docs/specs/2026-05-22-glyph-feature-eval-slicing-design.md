@@ -1,4 +1,23 @@
+---
+Status: implemented
+Owner: CT
+Created: 2026-05-22
+Last verified: 2026-07-14
+Kind: spec
+Supersedes: N/A
+Promotes to: docs/architecture/00-overview.md
+Disposition: Implemented by ee08319, fccc594, and ad904c3; retire after preserving residual intent.
+---
+
 # Glyph-feature eval slicing for recognition eval
+
+## Agent Index
+
+- **Kind:** spec
+- **Status:** implemented
+- **Last verified:** 2026-07-14
+- **Read when:** auditing the implemented glyph-feature evaluation design.
+- **Search terms:** glyph slices, sidecar, ligature metrics, crop ids.
 
 > **Status**: Draft
 > **Last updated**: 2026-05-22
@@ -213,6 +232,23 @@ The generic `feature: str` field already accommodates the parameterized
   To be pinned against the DocTR recognition val-set label format during
   implementation; the contract above only requires it to match the val-set
   label key.
+
+## Adversarial Review
+
+- **Stage:** Post-implementation migration review on 2026-07-14.
+- **Source:** Read-only agent review of the spec, current code and tests, and
+  commits `ee08319`, `fccc594`, `ad904c3`, and `4ab9a0e`.
+- **Accepted findings:** The implementation preserved the dependency boundary,
+  optional sidecar gate, per-kind ligature slices, excluded-sample semantics,
+  nullable deltas, and low-support threshold. It resolved the crop-id question
+  to basename keys from DocTR validation labels.
+- **How findings changed the result:** The review classified the draft as
+  implemented and routed current behavior to `docs/architecture/00-overview.md`.
+- **Implementation deviations:** Sidecar-writer ownership remains upstream and
+  was not implemented in this package. Crop-id format is no longer open here.
+- **Residual risks:** An upstream writer must use basenames that match validation
+  labels. No end-to-end GPU dataset smoke test is part of this repository's
+  current automated gate.
 
 ## References
 

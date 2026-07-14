@@ -1,4 +1,23 @@
+---
+Status: implemented
+Owner: CT
+Created: 2026-05-22
+Last verified: 2026-07-14
+Kind: plan
+Supersedes: N/A
+Promotes to: docs/architecture/00-overview.md
+Disposition: Implemented by 5960fc9; retire after preserving deviations and residual intent.
+---
+
 # Plan: Real DocTR eval backend for LocalEvalRunner
+
+## Agent Index
+
+- **Kind:** plan
+- **Status:** implemented
+- **Last verified:** 2026-07-14
+- **Read when:** auditing the completed DocTR evaluation backend migration.
+- **Search terms:** evaluation backend plan, CER WER, COCO IoU sweep.
 
 **Issue:** ConcaveTrillion/pdomain-ocr-training#3
 **Date:** 2026-05-22

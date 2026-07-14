@@ -1,4 +1,16 @@
+---
+Status: active
+Owner: CT
+Created: 2026-05-21
+Last verified: 2026-07-14
+---
+
 # pdomain-ocr-training
+
+Repository guidance starts at [`AGENTS.md`](AGENTS.md). Current system behavior
+is in [`docs/architecture/00-overview.md`](docs/architecture/00-overview.md),
+with documentation navigation in [`docs/README.md`](docs/README.md) and release
+history in [`CHANGELOG.md`](CHANGELOG.md).
 
 DocTR OCR model training and evaluation pipeline for the `pdomain-*` OCR suite.
 

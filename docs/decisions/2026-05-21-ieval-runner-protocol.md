@@ -1,4 +1,20 @@
+---
+Status: active
+Owner: CT
+Created: 2026-05-21
+Last verified: 2026-07-14
+Kind: decision
+---
+
 # ADR: Add IEvalRunner -- sibling Protocol to ITrainingRunner
+
+## Agent Index
+
+- **Kind:** decision
+- **Status:** active
+- **Last verified:** 2026-07-14
+- **Read when:** evaluating why training and evaluation use separate protocols.
+- **Search terms:** IEvalRunner rationale, synchronous evaluation, torch-free eval.
 
 **Date:** 2026-05-21
 **Status:** Accepted
@@ -47,9 +63,10 @@ shapes so the adapter mapping is trivial:
 - **`DetectionEvalResult`**: `precision`, `recall`, `f1`, `iou_50`,
   `iou_50_95`, `slices`, `sample_count`, `excluded_count`, `duration_seconds`.
 - **`EvalSlice`**: `feature`, `n_pos`, `n_neg`, `n_excluded`, `cer_pos`,
-  `cer_neg`, `wer_pos`, `wer_neg`, `delta_cer`, `low_support`.
+  `cer_neg`, `wer_pos`, `wer_neg`, `delta_cer`, `delta_wer`, `low_support`.
 
-`slices: []` by default -- M7 keeps an empty list; M12/M13 will populate it.
+`slices: []` remains the default. Recognition evaluation can populate glyph
+feature slices when a caller enables slicing and supplies a JSON sidecar.
 
 ## Error handling
 
@@ -59,13 +76,10 @@ handle (log, surface in the API response, etc.).
 
 ## Torch-free contract
 
-`LocalEvalRunner` imports only from `pdomain_ocr_training.protocols` (via
-`TYPE_CHECKING`) -- no torch/DocTR at module import time.  The two stub entry
-points (`evaluate_detection_from_config` / `evaluate_recognition_from_config`)
-raise `NotImplementedError` as placeholders until the real DocTR eval wrappers
-are implemented.  Tests monkeypatch these stubs.  The class is importable in
-the base (torch-free) install, unlike `LocalTrainingRunner` which drags in
-`detect.py` / `recog.py`.
+`LocalEvalRunner` imports no torch or DocTR module at module import time. Its
+entry points load `_eval_backend` lazily and remain replaceable in tests. The
+class is importable in the base install, unlike `LocalTrainingRunner`, whose
+runtime implementation requires the training extra.
 
 ## Consequences
 
@@ -77,3 +91,9 @@ the base (torch-free) install, unlike `LocalTrainingRunner` which drags in
 - The torch-free base install now exports all eval config / result models and
   `IEvalRunner`, enabling the SPA web process to type-check eval results
   without pulling in the training stack.
+
+## Supersedes / Superseded-by
+
+This decision supersedes the absence of an evaluation runner contract. It has
+not been superseded; current shipped behavior is documented in the
+[`pdomain-ocr-training` architecture](../architecture/00-overview.md).

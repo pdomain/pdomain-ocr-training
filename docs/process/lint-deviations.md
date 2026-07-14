@@ -1,4 +1,20 @@
+---
+Status: active
+Owner: CT
+Created: 2026-05-22
+Last verified: 2026-07-14
+Kind: process
+---
+
 # Lint-rule Deviations — pdomain-ocr-training
+
+## Agent Index
+
+- **Kind:** process
+- **Status:** active
+- **Last verified:** 2026-07-14
+- **Read when:** adding, removing, or auditing a Ruff or basedpyright suppression.
+- **Search terms:** lint suppressions, noqa, pyright ignore, per-file ignores.
 
 Standing suppressions and per-file rule overrides in this repo.
 Each entry records: the rule, the tool, the file(s) affected, and
@@ -245,7 +261,7 @@ reason (see `[tool.basedpyright] exclude` in `pyproject.toml`).
 
 ## Python — ruff (inline noqa)
 
-### 20. `BLE001` — `pdomain_ocr_training/local.py:158`
+### 20. `BLE001` — `pdomain_ocr_training/local.py:248`
 
 **Suppression:** `# noqa: BLE001 — must capture *all* exceptions from worker thread`
 
@@ -301,56 +317,10 @@ renaming it would diverge from all DocTR examples and documentation.
 
 ---
 
-## Python — basedpyright (tests)
+### 25. `S603` — `scripts/update_github_actions.py:49`
 
-### 25. `type: ignore[index]` — `tests/test_local_runner.py:445`
+**Suppression:** `# noqa: S603 - resolved executable and fixed argument structure`
 
-**Suppression:** `# type: ignore[index]`
-
-**Note.** This uses mypy-style suppression syntax. The suppression targets
-`e.data["epoch"]` where `e.data` is typed `dict[str, object] | None`; the
-`if e.data is not None` list-comprehension guard narrows the list but
-basedpyright cannot narrow the indexing into a `dict[str, object]` to
-`int` without a cast. A `# pyright: ignore[reportIndexIssue]` would be
-the tool-native form — tracked for cleanup in the annotation follow-up pass.
-
-**Justification.** The guard ensures `data` is not `None`; the `int(...)`
-cast is explicit. No runtime error is possible.
-
----
-
-### 26. `type: ignore[operator]` — `tests/test_local_runner.py:455`
-
-**Suppression:** `# type: ignore[operator]`
-
-**Note.** Same mypy-style syntax note as §25. The suppression covers
-`progresses[i] > progresses[i - 1]` where progress values are
-`float | None`; the explicit `assert progresses[i] is not None` guards
-above do not narrow the type within the same assert chain.
-`# pyright: ignore[reportOperatorIssue]` would be the correct form —
-tracked for cleanup.
-
-**Justification.** Both `progresses[i]` and `progresses[i - 1]` are
-guarded non-None before the comparison. The suppression silences a
-false-positive narrowing gap.
-
----
-
-## Python — basedpyright (source: DocTR stub gaps)
-
-### 27. `reportArgumentType` — `pdomain_ocr_training/_eval_backend.py`
-
-**Suppression:** `# pyright: ignore[reportArgumentType]` on the `val_set`
-argument to `DataLoader(...)` and on the `SequentialSampler(val_set)` argument,
-in both `_run_recognition_inference` and `_run_detection_inference` (4 sites).
-
-**Justification.** DocTR's `RecognitionDataset` / `DetectionDataset` are
-torch-compatible map-style datasets at runtime (they implement `__len__` /
-`__getitem__` and a `collate_fn`), but DocTR's bundled type stubs derive them
-from an internal `AbstractDataset` that does not declare the
-`torch.utils.data.Dataset` base class. basedpyright therefore cannot prove the
-assignment to `DataLoader`'s `dataset` parameter. This is a third-party stub
-gap, not a real type error — the legacy verbatim-moved `detect.py` / `recog.py`
-use the identical pattern but are excluded from basedpyright entirely. The
-tool-native `# pyright: ignore[reportArgumentType]` form is used (not a
-mypy-style `# type: ignore`). Remove if DocTR ships corrected stubs.
+**Justification.** The function resolves `gh` to an absolute executable path
+and constructs the remaining arguments internally. It never invokes a shell or
+accepts an executable from user input, so the list-form subprocess call is safe.

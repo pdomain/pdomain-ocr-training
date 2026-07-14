@@ -1,3 +1,11 @@
+---
+Status: active
+Owner: CT
+Created: 2026-05-21
+Last verified: 2026-07-14
+Kind: process
+---
+
 # CLAUDE — pdomain-ocr-training
 
 DocTR OCR model training pipeline (detection + recognition) for the `pdomain-*`

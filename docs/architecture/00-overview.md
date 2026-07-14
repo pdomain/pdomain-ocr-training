@@ -1,6 +1,22 @@
+---
+Status: active
+Owner: CT
+Created: 2026-05-21
+Last verified: 2026-07-14
+Kind: architecture
+---
+
 # Architecture: pdomain-ocr-training
 
-**Status:** Current as of 2026-07-13.
+## Agent Index
+
+- **Kind:** architecture
+- **Status:** active
+- **Last verified:** 2026-07-14
+- **Read when:** understanding shipped training, evaluation, and torch-free boundaries.
+- **Search terms:** OCR training architecture, DocTR evaluation, runner protocols, glyph slices.
+
+**Status:** Current as of 2026-07-14.
 
 ## Purpose
 
@@ -83,7 +99,12 @@ Supported methods:
 
 The entry points load DocTR predictors, evaluate detection or recognition data,
 and return typed results. Recognition evaluation can load a glyph-feature JSON
-sidecar and emit one `EvalSlice` per ligature, long-s, or swash feature.
+sidecar when the caller enables slicing. It joins sidecar entries to validation
+samples by basename crop id and emits one `EvalSlice` for `long_s`, `swash`,
+and each distinct `ligature:<kind>`. Samples without sidecar data are excluded
+from positive and negative denominators. CER and WER deltas are null when
+either side is empty, and a slice has low support when its positive count is
+less than 30.
 
 ## Config and result models
 
@@ -101,7 +122,7 @@ All models live in `protocols.py` and are Pydantic v2 `BaseModel`s.
 - `RecognitionEvalConfig` — val path, model checkpoint path
 - `DetectionEvalResult` — precision, recall, f1, IoU metrics, slices
 - `RecognitionEvalResult` — CER, WER, exact-match rate, slices
-- `EvalSlice` — per-feature breakdown (for M12/M13 slicing; empty list in M7)
+- `EvalSlice` — per-feature recognition breakdown; detection slices remain empty
 - `GlyphFeatureSet` — torch-free recognition-crop metadata for glyph slicing
 
 ## Shipped evaluation evidence
@@ -111,7 +132,7 @@ All models live in `protocols.py` and are Pydantic v2 `BaseModel`s.
   `pdomain_ocr_training/protocols.py`
 - Tests: `tests/test_eval_backend_wiring.py`,
   `tests/test_glyph_slice_emission.py`, `tests/test_eval_protocols.py`
-- Verified: 2026-07-13 against the current source and tests
+- Verified: 2026-07-14 against the current source and tests
 
 ## Legacy modules
 
@@ -130,5 +151,5 @@ of unrelated tasks.
 
 ## ADRs
 
-- `docs/decisions/2026-05-21-ieval-runner-protocol.md` — rationale for
-  sibling `IEvalRunner` Protocol rather than extending `ITrainingRunner`.
+- [`IEvalRunner` protocol decision](../decisions/2026-05-21-ieval-runner-protocol.md)
+  — rationale for a sibling Protocol rather than extending `ITrainingRunner`.
