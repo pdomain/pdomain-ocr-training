@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-14
-Last verified: 2026-07-14
+Last verified: 2026-08-08
 ---
 
 # Current state
@@ -10,7 +10,7 @@ Last verified: 2026-07-14
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-07-14
+- **Last verified:** 2026-08-08
 - **Read when:** starting repository work or checking current operational risk.
 - **Search terms:** current state, CI, OCR training, active risks.
 
@@ -35,3 +35,8 @@ The 2026-07-14 baseline `make ci` run passed all hooks, Ruff, basedpyright, and
 
 The upstream owner of the glyph-feature sidecar remains undecided. The contract
 and required key format are recorded in [`intent-map.md`](intent-map.md).
+
+Master branch protection requires status contexts that predate the repo's
+rename from `pd-ocr-training` to `pdomain-ocr-training`, so no pull request —
+including the weekly `dep-refresh` PR — can merge. See
+[dep-refresh cannot auto-land](../issues/2026-08-08-dep-refresh-cannot-auto-land.md).
