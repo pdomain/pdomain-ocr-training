@@ -14,7 +14,7 @@ else
 
 
 .PHONY: help setup lint lint-check format format-check typecheck test ci build clean \
-        pre-commit-check upgrade-deps \
+        pre-commit-check update-hooks upgrade-deps \
         local-setup local-dev local-check local-upgrade-deps \
         dev-local \
         update-pdomain-deps \
@@ -53,6 +53,13 @@ test: ## Run tests with parallelization
 pre-commit-check: ## Run all pre-commit hooks against all files (read-only check)
 	uv run pre-commit run --all-files
 
+update-hooks: ## Bump pinned pre-commit hook revisions in .pre-commit-config.yaml
+	@echo "⬆️  Updating pinned pre-commit hook revisions..."
+	@# The hook exits non-zero when it rewrites the config, which is the success
+	@# case here, so its status is not the target's status.
+	-@uv run pre-commit run pre-commit-update --all-files --hook-stage manual
+	@echo "✅ Hook revisions updated — review the .pre-commit-config.yaml diff."
+
 ci: ## Run complete CI pipeline (setup, pre-commit, lint-check, format-check, typecheck, test)
 	@$(MAKE) --no-print-directory setup
 	@$(MAKE) --no-print-directory pre-commit-check
@@ -71,6 +78,7 @@ upgrade-deps: ## Upgrade dependencies and sync local environment
 	uv lock --upgrade
 	@echo "Syncing upgraded dependencies..."
 	uv sync --group dev
+	@$(MAKE) --no-print-directory update-hooks
 	@echo "Dependencies upgraded and environment synced."
 
 dev-local: ## DEPRECATED: use local-dev
