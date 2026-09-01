@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-08-21
-Last verified: 2026-08-21
+Last verified: 2026-09-01
 Kind: research
 ---
 
@@ -15,7 +15,7 @@ The available corpora can support a fine-grained typography model, but F2 must b
 - **Kind:** research
 - **Status:** active
 - **Owner:** CT
-- **Last verified:** 2026-08-21
+- **Last verified:** 2026-09-01
 - **Read when:** designing or auditing typography labels, corpus matching, weak supervision, or model choices.
 - **Search terms:** typography, F2, italics, small caps, superscript, grapheme spans, Gutenberg, Standard Ebooks.
 
@@ -39,31 +39,31 @@ The audit inspected the three mounted corpora, applicable repositories, current 
 
 ## Corpus snapshot is large enough for targeted experiments
 
-All three requested mounts were available on 2026-08-21 UTC.
+All three requested mounts were available. The counts below describe the 2026-08-31 UTC snapshot. Re-verified on 2026-08-31; see [the corpus re-verification](2026-08-31-typography-corpus-reverification.md).
 
 | Corpus | Mounted path | Snapshot size | Available records |
 | --- | --- | ---: | ---: |
-| PGDP | `/workspaces/pdomain-data/pgdp-corpus` | 3.3 GiB | 80 projects, 79 F2 files, 21,353 F2 pages and matching root page PNGs |
-| Project Gutenberg | `/workspaces/gutenberg-corpus` | 48 GiB | 61,679 ebook directories, 61,482 text files, 56,195 HTML files |
-| Standard Ebooks | `/workspaces/standardebooks-corpus` | 34 GiB | 1,504 Git repositories and `content.opf` files, 53,911 XHTML files |
+| PGDP | `/workspaces/pdomain-data/pgdp-corpus` | 11 GiB | 286 projects, 285 F2 files, 73,103 F2 pages, 73,241 root page PNGs |
+| Project Gutenberg | `/workspaces/gutenberg-corpus` | 48 GiB | 61,750 ebook directories |
+| Standard Ebooks | `/workspaces/standardebooks-corpus` | 34 GiB | 1,511 Git repositories, 52,620 XHTML files |
 
 The 79 F2 files contain 30,191,475 Unicode code points and 5,020,667 whitespace-delimited tokens before linguistic tokenization. Removing known inline tags and `[** ...]` notes leaves 29,812,369 visible code points. It leaves 23,712,617 non-whitespace code points. These are parser-audit counts, not final training counts.
 
-Every PGDP metadata record has a Project Gutenberg ebook number. All 80 numbers match a local Gutenberg directory with plain text. None of those 80 directories contains HTML in this snapshot. Standard Ebooks metadata contains 1,786 unique Gutenberg source IDs, but none intersects the 80 PGDP numbers. The current corpora therefore support PGDP-to-Gutenberg text matching for all projects. They do not yet support three-way matched-book evaluation.
+Every PGDP metadata record has a Project Gutenberg ebook number, and all 286 match a local Gutenberg directory. Those directories do contain HTML: 93 percent of matched books carry `<i>`, 87 percent carry small-caps spans with supporting CSS, and 89 percent carry `id="Page_N"` page anchors. Gutenberg is therefore a candidate typography source, though the anchors have not been tested against scan-image page boundaries. Standard Ebooks cites 1,792 distinct Gutenberg source IDs, of which exactly one intersects a PGDP project. Three-way matched-book evaluation remains unsupported.
 
 ## F2 contains useful labels and measurable noise
 
-The live F2 snapshot contains these balanced opening-tag counts before validation:
+The F2 snapshot contains these opening-tag counts before validation. Re-verified on 2026-08-31; see [the corpus re-verification](2026-08-31-typography-corpus-reverification.md).
 
 | F2 tag | Opening tags | Projects | Initial interpretation |
 | --- | ---: | ---: | --- |
-| `<i>` | 27,460 | 79 | italic or underlining normalized to italic |
-| `<sc>` | 10,090 | 73 | PGDP small-cap transcription rule |
-| `<b>` | 1,958 | 11 | bold |
-| `<f>` | 35 | 2 | project-defined font change; reject unless comments resolve it |
-| `<g>` | 0 | 0 | letter spacing label exists in the rules but has no positive examples here |
+| `<i>` | 102,393 | 283 | italic or underlining normalized to italic; also letter spacing before March 2007 |
+| `<sc>` | 30,008 | 252 | PGDP small-cap transcription rule |
+| `<b>` | 20,734 | 66 | bold; headings are deliberately left untagged |
+| `<f>` | 1,138 | 11 | project-defined font change, with mutually inverse uses; reject unless comments resolve it |
+| `<g>` | 9 | 5 | letter spacing; too few positives to train |
 
-The audit found 101,618 whitespace tokens with at least one styled visible character. It found 22,164 mixed-style tokens whose active label mask changes within the token. This includes punctuation immediately outside tags. It also found 57 nested opening events, so the representation must permit overlapping labels.
+The audit found 399,260 whitespace tokens with at least one styled visible character, of which 318,522 are uniformly styled. Mixed-style counts depend on where the boundary may fall: 80,738 tokens change label anywhere, 14,639 change among their word characters, and 3,999 change between two adjacent letters with no punctuation at the seam. Nested openings occur, so the representation must permit overlapping labels.
 
 One page has an unclosed `<sc>` at end of page: `projectID62930b71a45bb/p3640.png`. The remaining known inline tags balance globally. The parser must still validate each page independently because PGDP requires page-local closure.
 
@@ -105,6 +105,8 @@ Required audit outputs are:
 ## Official PGDP rules make F2 strong but selective evidence
 
 F1 adds formatting after proofreading. F2 reviews and corrects F1 and is the final formatting round before post-processing. The [official F1 welcome documentation](https://www.pgdp.net/wiki/DP_Official_Documentation%3AFormatting/Welcome_Email_to_new_F1s) states this division.
+
+That division is not guaranteed. Since June 2005 a project needs only one formatting round, so F2 is sometimes the sole pass rather than a review of F1. The corpus stores 286 P3 rounds, 285 F2 rounds, and no F1 round, so it cannot distinguish the two cases. Each parsed page should carry its round history as evidence rather than assume a review occurred.
 
 Formatting matches printed appearance while proofreading matches content. Each page is a separate unit, so inline tags must open and close on the same page. Project Comments override the defaults, and Project Discussion resolves unclear cases. These rules come from the [official Formatting Guidelines](https://www.pgdp.net/wiki/DP_Official_Documentation%3AFormatting/Formatting_Guidelines).
 

@@ -2,7 +2,7 @@
 Status: draft
 Owner: CT
 Created: 2026-08-21
-Last verified: 2026-08-21
+Last verified: 2026-09-01
 Kind: spec
 ---
 
@@ -15,7 +15,7 @@ The system should add a typography task beside OCR recognition and page-region l
 - **Kind:** spec
 - **Status:** draft
 - **Owner:** CT
-- **Last verified:** 2026-08-21
+- **Last verified:** 2026-09-01
 - **Read when:** implementing fine-grained typography parsing, datasets, training, inference, or evaluation.
 - **Search terms:** typography model, grapheme styles, F2 parser, alignment, split manifest, weak supervision.
 
@@ -31,7 +31,7 @@ Drop caps remain structural `word_components` evidence. The initial model uses t
 
 ### Text-conditioned grapheme queries are the recommended system
 
-A compact visual encoder produces patch features from a word or short-line crop. Grapheme identity, position, OCR confidence, word geometry, and optional neighbor context form queries. Two to four cross-attention layers bind the queries to image features.
+A compact visual encoder produces patch features from a word or short-line crop. Grapheme identity, position, OCR confidence, word geometry, and optional neighbor context form queries. The alignment from queries to image features is explicitly monotonic and warm-started from forced alignment off the existing recognizer, rather than free cross-attention, because attention drift on degraded scans is a measured effect and every part-of-word span depends on the alignment holding.
 
 Independent sigmoid heads predict each style at each grapheme. A pooled head predicts whole-word labels. An optional boundary head predicts begin, inside, and end evidence per label. Attention summaries are audit evidence, not character boxes.
 
@@ -60,9 +60,9 @@ The first production taxonomy uses independent labels. `regular` is the absence 
 | Canonical label | Kind | Initial training status | Strong sources | Important exclusions |
 | --- | --- | --- | --- | --- |
 | `italic` | visible style | active | resolved F2 `<i>` | underlining is indistinguishable in default F2 |
-| `bold` | visible style | active | F2 `<b>` | Standard Ebooks `<b>` often means small caps |
+| `bold` | visible style | active | F2 `<b>` | headings are deliberately untagged, so they must not supply negatives; Standard Ebooks `<b>` renders as small caps, never bold |
 | `small_caps` | visible style | active | F2 `<sc>` with rule-aware case handling | chapter-opening normalization and relative-size headings |
-| `letter_spaced` | visible style | deferred until real positives | F2 `<g>`, computed CSS, manual audit | no positives in current F2 snapshot |
+| `letter_spaced` | visible style | deferred on volume | F2 `<g>`, computed CSS, manual audit | nine positives across five projects, too few to train |
 | `superscript` | position/style | active after syntax audit | validated F2 caret syntax, matched HTML | footnote semantics stored separately |
 | `subscript` | position/style | active after syntax audit | validated F2 underscore syntax, matched HTML | formula ambiguity |
 | `underline` | visible style | weak/manual only | explicit project `<u>`, matched CSS | default F2 maps underline to `<i>` |
@@ -76,6 +76,8 @@ Semantic reasons use a separate vocabulary such as `emphasis`, `foreign_phrase`,
 Structural context uses existing or extended page and word components: `heading`, `caption`, `table`, `poetry`, `block_quote`, `drop_cap`, `drop_cap_unrecovered`, `footnote_marker`, and `decorative_initial`. These fields drive context, hard-negative sampling, and slices.
 
 Every label has one of four knowledge states: `positive`, `verified_negative`, `unknown`, or `conflict`. Missing markup defaults to `unknown` when the source rules intentionally omit the feature.
+
+Guideline era is a required field, not an optional one. Before March 2007 `<i>` also covered letter-spaced text, so an italic span from an unknown era must record `unknown` for `letter_spaced` rather than a confident negative. The parser already rejects an empty guideline version, but its callers currently pass a producing-pipeline name instead of a PGDP guideline revision, so the era is not yet recorded anywhere.
 
 ## The canonical record preserves bytes, spans, evidence, and versions
 
@@ -210,7 +212,7 @@ Line alignment uses dynamic programming with word-box reading order, line breaks
 
 Gutenberg and Standard Ebooks use global monotonic sequence alignment across the full book. The state machine permits `1:0`, `0:1`, `1:1`, `1:N`, and `N:1` page or section transitions. Costs explicitly allow blank pages, plates, moved footnotes, merged or split pages, and joined page-break words.
 
-No external label is projected until edition identity passes a separate gate. The gate requires the identifier relationship and at least two independent signals among edition matter, DP credit, scan source, distinctive-text anchors, and high-margin global alignment. A low-margin alternate alignment forces `conflict` or `unknown`.
+No external label is projected until edition identity passes a separate gate. The gate requires the identifier relationship and at least two independent signals among edition matter, DP credit, scan source, distinctive-text anchors, and high-margin global alignment. Distributed Proofreaders credit is absent from every matched book in the current corpus, because the modern Project Gutenberg template omits it, so this corpus must reach two signals from the remaining four. A low-margin alternate alignment forces `conflict` or `unknown`.
 
 Every projected span records the exact source range, target range, operations, score, runner-up margin, artifact hashes, and confidence tier. Rebuilding with unchanged inputs must produce byte-identical records.
 
@@ -392,9 +394,9 @@ pdomain-ocr-synth/
   tests/typography/
 ```
 
-The synthetic output implements the same canonical labels and grapheme indexing from `pdomain-book-tools`. It adds `render_method`, `font_lineage_id`, axes, feature ranges, stage seeds, clean-render hash, and final-image hash. Font binaries remain user-provided or separately fetched under reviewed licenses. The repository never bundles an unreviewed font.
+The synthetic output implements the same canonical labels and grapheme indexing as `pdomain-book-tools`, through a torch-free local mirror rather than a dependency, because that package requires a full training stack. It adds `render_method`, `font_lineage_id`, axes, feature ranges, stage seeds, clean-render hash, and final-image hash. Font binaries remain user-provided or separately fetched under reviewed licenses. The repository never bundles an unreviewed font.
 
-Model inference should later enter `pdomain-book-tools` through a provider protocol. The heavy Torch implementation remains in a deployment package or optional adapter. This preserves the existing torch-free base boundaries.
+Model inference should later enter `pdomain-book-tools` through a provider protocol. The heavy Torch implementation remains in a deployment package or optional adapter. This preserves the torch-free public contracts of `pdomain-ocr-training`. It does not make `pdomain-book-tools` torch-free: that package already requires torch, torchvision, torchaudio, transformers, and python-doctr.
 
 ## Failure handling and rollback preserve source truth
 
@@ -413,6 +415,8 @@ Phase 2, matching and splits, passes when every candidate match has evidence; no
 Phase 3, whole-word baseline, is a required comparison. It passes when it beats majority and rule-only baselines on book-grouped test data, emits calibrated probabilities, and produces complete error artifacts. It does not gate contextual training. A human must set the numeric quality and latency thresholds after Phase 0 establishes support.
 
 Phase 4, contextual grapheme model, is the first production experiment. It passes when the two-view target-word and short-line model improves mixed-style exact accuracy and per-label grapheme F1 over the image-only, word-only, and equal-slice baselines, while whole-word performance does not regress beyond the agreed margin.
+
+Mixed-style exact accuracy is measured over the 14,639 words whose style differs among their word characters. It excludes the 66,099 words separated only by trailing punctuation, which a parser rule resolves. The 3,999 words that change style between two adjacent letters are reported separately, because no word-level model with a punctuation rule can reach them.
 
 Phase 5, weak supervision and contextual stress testing, passes only when each source addition improves a locked target metric or a declared rare-label slice without worsening calibration, leakage checks, or strong-label performance beyond agreed margins. Full, masked, misleading, and missing context are reported separately.
 
