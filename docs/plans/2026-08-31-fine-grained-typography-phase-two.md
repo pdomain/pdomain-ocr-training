@@ -131,6 +131,21 @@ Run: `cd /workspaces/pdomain/pdomain-source-data && make ci`
 Expected: geometry records for one book with hashes and model versions. Rollback removes the
 geometry output directory; nothing else consumes it yet.
 
+Two environment facts, recorded because each cost an hour to find.
+
+Every GPU run needs `LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu` prefixed. The container ships two
+cuDNN 9 installations: the venv's `nvidia-cudnn-cu13==9.20.0.48`, which Torch links against, and the
+system's 9.25.1. The pip package omits `libcudnn_engines_tensor_ir`, so that one sublibrary falls
+through to the system copy while the rest load at 9.20.0, and cuDNN rejects the mix with
+`CUDNN_STATUS_SUBLIBRARY_VERSION_MISMATCH`. Only convolution fails, so matrix multiplication still
+works and the fault looks like a broken model rather than a broken library path. Putting the system
+directory first makes every engine sublibrary resolve to 9.25.1 and the GPU works. The lasting fix
+is to stop shipping two copies.
+
+The GPU is roughly seven times faster, at 0.20 seconds per page against 1.40 on CPU, so the full
+corpus is about four hours rather than a day. Both devices agree on text and boxes but differ in the
+last decimals of confidence, which is why the device belongs in the configuration hash.
+
 ### Task A2: Project F2 spans onto OCR tokens and cut crops
 
 **Files:**

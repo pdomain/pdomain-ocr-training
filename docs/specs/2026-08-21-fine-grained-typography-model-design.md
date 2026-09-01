@@ -329,7 +329,7 @@ pdomain-ocr-training/
   tests/formatting/
 ```
 
-A new `pdomain-source-data` repository should own shared corpus inventory, artifact hashing, identity, cross-source matching, canonical record materialization, corrections, audits, split manifests, and task exports. Typography, recognition, detection, glyph forms, and page regions share these concerns. Task modules retain separate taxonomies, validation, and materializers. These jobs are neither an OCR runtime concern nor source acquisition. `pdomain-pgdp-api-client` remains PGDP byte acquisition only.
+A new `pdomain-source-data` repository should own shared corpus inventory, artifact hashing, identity, cross-source matching, canonical record materialization, corrections, audits, split manifests, and task exports. Typography, recognition, detection, glyph forms, and page regions share these concerns. Task modules retain separate taxonomies, validation, and materializers. These jobs are not source acquisition. They include batch recognition for unreviewed silver-tier geometry, but no interactive or reviewed OCR. `pdomain-pgdp-api-client` remains PGDP byte acquisition only.
 
 ```text
 pdomain-source-data/
@@ -377,7 +377,9 @@ Ground truth is fused per field and grapheme rather than selected from one prefe
 
 Inbound labeling bundles may contain images and matched source evidence without OCR geometry. The SPA runs the existing recognition and page-region models, records their versions and configurations, and creates page, line, word, and optional character geometry. It then aligns source evidence to those OCR anchors and lets a human correct text, geometry, and typography.
 
-The SPA returns an immutable correction bundle tied to the inbound bundle ID and artifact hashes. `pdomain-source-data` validates and imports it, then materializes a new versioned `PageGroundTruth`. The source-data repository may cache reviewed OCR output, but it does not run OCR itself.
+The SPA returns an immutable correction bundle tied to the inbound bundle ID and artifact hashes. `pdomain-source-data` validates and imports it, then materializes a new versioned `PageGroundTruth`.
+
+Amended on 2026-09-01. The source-data repository may also run batch recognition to produce unreviewed geometry for silver-tier dataset production. That is the only OCR it runs. Reviewed geometry remains the labeler's responsibility, and geometry produced this way can never be promoted to gold. The reason is scale: a first typography dataset needs geometry over tens of thousands of pages, and routing that through an application built for interactive human review would serve no one. Batch recognition and reviewed geometry stay separate paths with separate confidence tiers.
 
 `pdomain-ocr-synth` owns synthetic typography generation because it already owns HarfBuzz and FreeType shaping, font recipes, glyph-cluster geometry, deterministic sampling, degradations, and OCR dataset output.
 
