@@ -1,0 +1,17 @@
+core-mixed words, total                       14,639
+  boundary falls between two letters           3,999
+  boundary only across interior punctuation   10,640
+
+audit agent reported 1,541 for its 'strictly inside the token' rule
+
+letter-to-letter combos:
+   i|plain                    2,235
+   plain|sup                  1,364
+   plain|sub                    192
+   b|b+sub                       62
+   b|plain                       57
+   i|i+sup                       55
+   plain|sc                      13
+   sc|sc+sup                      4
+
+examples: "'kakukaka", 'kakukaka', "kakukaka.'", 'Xme', 'nth', 'yt', 'yt', 'yt', 'yt', 'ro).]'

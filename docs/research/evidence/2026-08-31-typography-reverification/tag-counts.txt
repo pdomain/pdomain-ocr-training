@@ -1,0 +1,7 @@
+F2 files parsed: 285
+<i>  opening=  102393  projects= 283
+<sc>  opening=   30008  projects= 252
+<b>  opening=   20734  projects=  66
+<f>  opening=    1138  projects=  11
+<g>  opening=       9  projects=   5
+<u>  opening=       0  projects=   0

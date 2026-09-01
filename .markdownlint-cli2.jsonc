@@ -12,5 +12,11 @@
     // longer than others). The "compact" / "aligned" enforcement adds a
     // lot of churn for no reader benefit.
     "MD060": false
-  }
+  },
+
+  // Verbatim evidence artifacts under `docs/research/evidence/` are kept
+  // exactly as produced, so they are not linted or reformatted.
+  "ignores": [
+    "docs/research/evidence/**"
+  ]
 }

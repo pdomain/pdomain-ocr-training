@@ -1,0 +1,2579 @@
+{
+  "structure": {
+    "num_projects": 286,
+    "field_presence": {
+      "projectid": 286,
+      "title": 286,
+      "author": 286,
+      "languages": 286,
+      "character_suites": 286,
+      "genre": 286,
+      "difficulty": 286,
+      "state": 286,
+      "pages_total": 286,
+      "pages_available": 286,
+      "last_state_change_time": 286,
+      "pg_ebook_number": 286,
+      "image_source": 285,
+      "comments": 285,
+      "forum_url": 285
+    },
+    "field_examples": {
+      "projectid": "projectID3fc3d7d03c613",
+      "title": "Designs on prehistoric Hopi pottery {R}",
+      "author": "Fewkes, Jesse Walter",
+      "languages": "['English']",
+      "character_suites": "['basic-latin']",
+      "genre": "Non-Fiction",
+      "difficulty": "easy",
+      "state": "proj_submit_pgposted",
+      "pages_total": 98,
+      "pages_available": 0,
+      "last_state_change_time": "2026-07-10T21:15:15-04:00",
+      "pg_ebook_number": 79063,
+      "image_source": "TIA",
+      "comments": "\r\n\r\nSource: [TIA](https://archive.org/details/designsonprehist00fewk_0/page/n3/mode/2up).\r\n\r\nThis project was previously run as a chapter out of a larger Bureau of American Ethnology volume. It was also published as a standalone volume, which is this project. (A page by page overlay proved they were exact matches: not that it matters since this is being rerun through the rounds. The only difference was the title page/chapter title page.) \r\n\r\nNote: Because the standalone reprint was taken from the larger volume, the Government Printing Office did ***not*** do any new typesetting to renumber the pages. The Table of Contents starts on book page 209.\r\n\r\nProofers, because this is a retreaded* project, you may find some formatting markup in the project. Feel free to remove all the formatting so you can accurately proof around it. \r\n\r\nPost Processor: [The large plate at the end of the book is color](https://www.pgdp.net/projects/projectID3fc3d7d03c613/facing276b.jpg), please take care in processing it.\r\n\r\n*Retread means this project started life in the early days of DP when formatting and proofing were done in the same rounds. There were issues such as the missing images and some poor proofing images which left it parked and unable to be Post Processed at that time.\r\n\r\n",
+      "forum_url": "https://www.pgdp.net/phpBB3/viewtopic.php?t=5490"
+    },
+    "pg_ebook_number_present": 286,
+    "pages_total_sum": 73241,
+    "pages_json_keys_sum": 73229,
+    "f2_json_keys_sum": 73103,
+    "p3_json_keys_sum": 73229,
+    "projects_missing_project_json": [],
+    "projects_missing_pages_json": [],
+    "projects_missing_rounds_dir": [],
+    "projects_missing_f2": [
+      "projectID408c1dd9b9318"
+    ],
+    "projects_missing_p3": [],
+    "projects_missing_images_dir": [
+      "projectID53e7cec23db22",
+      "projectID5844552f5801c",
+      "projectID61d34678514ba",
+      "projectID6952c8634d86a"
+    ],
+    "top_level_png_count_sum": 73241,
+    "images_subdir_file_count_sum": 6377,
+    "image_filename_patterns": {
+      "numeric": 58221,
+      "letter+digits": 14245,
+      "other": 629,
+      "split-suffix (_l/_r/_N)": 139,
+      "NNN-NNN": 7
+    },
+    "f2_key_image_mismatches": [],
+    "languages": {
+      "English": 286
+    },
+    "genres": {
+      "General Fiction": 31,
+      "Travel": 18,
+      "Juvenile": 17,
+      "Poetry": 16,
+      "Instructional": 15,
+      "Mystery": 14,
+      "History": 12,
+      "Non-Fiction": 10,
+      "Drama": 9,
+      "Romance": 8,
+      "Art": 6,
+      "Historical Fiction": 6,
+      "Science Fiction & Fantasy": 6,
+      "Short Story": 6,
+      "Medicine": 6,
+      "Cooking": 6,
+      "Humor": 6,
+      "Biography": 6,
+      "Philosophy": 5,
+      "Nature": 4,
+      "Autobiography": 4,
+      "Literature": 4,
+      "Political Science": 4,
+      "Military": 4,
+      "Reference": 3,
+      "Zoology": 3,
+      "Agriculture": 3,
+      "Health": 3,
+      "Sociology": 3,
+      "Other": 3,
+      "Adventure": 3,
+      "Education": 3,
+      "Horticulture": 2,
+      "Western": 2,
+      "Religious": 2,
+      "Law": 2,
+      "Periodical": 2,
+      "Mixed Form": 2,
+      "Essay": 2,
+      "Psychology": 2,
+      "Archaeology": 2,
+      "Science": 2,
+      "Biology": 1,
+      "Recreation": 1,
+      "Mythology": 1,
+      "Spirituality": 1,
+      "Bibliography": 1,
+      "Satire": 1,
+      "Collection": 1,
+      "Music": 1,
+      "Geography": 1,
+      "Architecture": 1,
+      "Technology": 1,
+      "Geology": 1,
+      "Astronomy": 1,
+      "Anthropology": 1,
+      "Grammar": 1,
+      "Crafts": 1,
+      "Linguistics": 1,
+      "Mathematics": 1,
+      "Chemistry": 1
+    },
+    "difficulties": {
+      "average": 250,
+      "easy": 29,
+      "hard": 5,
+      "beginner": 2
+    },
+    "states": {
+      "proj_submit_pgposted": 286
+    },
+    "image_sources": {
+      "TIA": 146,
+      "TIA_AL": 48,
+      "HATHITRUST": 41,
+      "_internal": 33,
+      "TIA_CAN": 6,
+      "DL_VILL_U": 3,
+      "ICE": 2,
+      "GOOGLE": 2,
+      "BHL": 1,
+      "NLS": 1,
+      "AUSTLIB": 1,
+      "MJP": 1
+    },
+    "character_suites": {
+      "basic-latin": 286,
+      "polytonic-greek": 15,
+      "basic-greek": 8,
+      "symbols-collection": 6,
+      "extended-european-latin-b": 4,
+      "medievalist-supplement": 3,
+      "extended-european-latin-a": 2,
+      "basic-cyrillic": 2,
+      "extended-european-latin-c": 1,
+      "semitic-and-indic": 1,
+      "math-symbols": 1
+    }
+  },
+  "markup": {
+    "total_pages_with_f2_text": 73103,
+    "tag_totals_open": {
+      "i": 102350,
+      "sc": 29988,
+      "g": 9,
+      "b": 20733,
+      "f": 1138
+    },
+    "tag_totals_close": {
+      "i": 102350,
+      "sc": 29985,
+      "g": 9,
+      "b": 20733,
+      "f": 1138
+    },
+    "pages_with_tag_gt0": {
+      "i": 24814,
+      "sc": 7150,
+      "g": 7,
+      "b": 2357,
+      "f": 471
+    },
+    "per_page_tag_count_histogram": {
+      "i": {
+        "0": 48289,
+        "1": 11016,
+        "2": 4822,
+        "3": 2390,
+        "4": 1464,
+        "5": 960,
+        "6": 701,
+        "7": 446,
+        "8": 380,
+        "9": 298,
+        "10": 249,
+        "11": 208,
+        "12": 162,
+        "13": 165,
+        "14": 141,
+        "15": 143,
+        "16": 107,
+        "17": 112,
+        "18": 87,
+        "19": 78,
+        "20": 57,
+        "21": 50,
+        "22": 49,
+        "23": 49,
+        "24": 37,
+        "25": 39,
+        "26": 37,
+        "27": 30,
+        "28": 34,
+        "29": 28,
+        "30": 26,
+        "31": 34,
+        "32": 32,
+        "33": 19,
+        "34": 22,
+        "35": 29,
+        "36": 18,
+        "37": 12,
+        "38": 14,
+        "39": 21,
+        "40": 18,
+        "41": 27,
+        "42": 16,
+        "43": 9,
+        "44": 14,
+        "45": 12,
+        "46": 14,
+        "47": 10,
+        "48": 10,
+        "49": 6,
+        "50": 8,
+        "51": 8,
+        "52": 11,
+        "53": 5,
+        "54": 4,
+        "55": 6,
+        "56": 4,
+        "57": 3,
+        "58": 3,
+        "60": 2,
+        "62": 3,
+        "63": 2,
+        "65": 1,
+        "66": 2,
+        "67": 4,
+        "68": 5,
+        "69": 3,
+        "70": 3,
+        "74": 2,
+        "75": 5,
+        "76": 2,
+        "77": 2,
+        "78": 3,
+        "79": 1,
+        "81": 1,
+        "82": 1,
+        "83": 4,
+        "86": 1,
+        "87": 1,
+        "90": 1,
+        "91": 2,
+        "96": 1,
+        "97": 1,
+        "101": 1,
+        "118": 3,
+        "139": 1,
+        "212": 1,
+        "254": 1
+      },
+      "b": {
+        "0": 70746,
+        "1": 421,
+        "2": 223,
+        "3": 197,
+        "4": 159,
+        "5": 59,
+        "6": 42,
+        "7": 22,
+        "8": 54,
+        "9": 55,
+        "10": 124,
+        "11": 165,
+        "12": 195,
+        "13": 150,
+        "14": 138,
+        "15": 107,
+        "16": 74,
+        "17": 39,
+        "18": 15,
+        "19": 7,
+        "20": 6,
+        "21": 2,
+        "22": 4,
+        "23": 2,
+        "24": 4,
+        "25": 1,
+        "26": 3,
+        "27": 1,
+        "28": 2,
+        "29": 3,
+        "30": 1,
+        "31": 4,
+        "32": 4,
+        "33": 5,
+        "34": 10,
+        "35": 7,
+        "36": 7,
+        "37": 3,
+        "38": 5,
+        "39": 6,
+        "40": 4,
+        "41": 6,
+        "43": 4,
+        "44": 2,
+        "46": 4,
+        "47": 2,
+        "48": 4,
+        "51": 2,
+        "52": 2,
+        "53": 1
+      },
+      "sc": {
+        "0": 65953,
+        "1": 3368,
+        "2": 1200,
+        "3": 552,
+        "4": 322,
+        "5": 233,
+        "6": 221,
+        "7": 157,
+        "8": 149,
+        "9": 135,
+        "10": 90,
+        "11": 77,
+        "12": 50,
+        "13": 45,
+        "14": 56,
+        "15": 41,
+        "16": 42,
+        "17": 35,
+        "18": 37,
+        "19": 38,
+        "20": 40,
+        "21": 38,
+        "22": 25,
+        "23": 26,
+        "24": 27,
+        "25": 23,
+        "26": 14,
+        "27": 10,
+        "28": 9,
+        "29": 9,
+        "30": 7,
+        "31": 6,
+        "32": 7,
+        "33": 9,
+        "34": 3,
+        "35": 9,
+        "36": 3,
+        "37": 2,
+        "38": 6,
+        "39": 4,
+        "40": 3,
+        "41": 2,
+        "42": 1,
+        "43": 2,
+        "44": 1,
+        "45": 2,
+        "46": 2,
+        "49": 1,
+        "50": 2,
+        "51": 1,
+        "52": 1,
+        "56": 1,
+        "57": 1,
+        "59": 1,
+        "61": 2,
+        "84": 1,
+        "91": 1
+      },
+      "g": {
+        "0": 73096,
+        "1": 5,
+        "2": 2
+      },
+      "f": {
+        "0": 72632,
+        "1": 73,
+        "2": 272,
+        "3": 47,
+        "4": 53,
+        "5": 12,
+        "6": 3,
+        "7": 6,
+        "8": 2,
+        "9": 1,
+        "11": 1,
+        "12": 1
+      }
+    }
+  },
+  "superscript_subscript": {
+    "sup_brace_total": 227,
+    "sup_char_shorthand_total": 1476,
+    "sub_brace_total": 346,
+    "sub_char_shorthand_total": 0
+  },
+  "block_markers": {
+    "star_open_slash_star": 24701,
+    "star_close_star_slash": 24696,
+    "hash_open_slash_hash": 11250,
+    "hash_close_hash_slash": 11252,
+    "examples": [
+      {
+        "project": "projectID3fc3d7d03c613",
+        "page": "303.png",
+        "snippet": "IONS\r\n\r\n\r\n/*\r\nPLATES\r\n\r\n                                                               Page\r\n76. Various forms of conventionalized"
+      },
+      {
+        "project": "projectID3fc3d7d03c613",
+        "page": "327.png",
+        "snippet": "ation:\r\n\r\n/#\r\n<sc>Fig. 54.</sc>--Lateral view of bird\r\nwith twisted tail and wing\r\nfeathers.\r\n#/\r\n]\r\n\r\nThe design shown in figure "
+      },
+      {
+        "project": "projectID3fc3d7d03c613",
+        "page": "329.png",
+        "snippet": "ation:\r\n\r\n/#\r\n<sc>Fig. 57.</sc>--Feather\r\nsymbol with black\r\nnotch.\r\n#/\r\n]\r\n\r\nFrom the above pictures of birds and many others it "
+      },
+      {
+        "project": "projectID3fc3d7d03c613",
+        "page": "337.png",
+        "snippet": "ation:\r\n\r\n/#\r\n<sc>Fig. 62.</sc>--Parallel\r\nlines representing\r\nfeathers.\r\n#/\r\n]\r\n\r\nIn one of the simplest forms of the stringed-fe"
+      },
+      {
+        "project": "projectID3fc3d7d03c613",
+        "page": "350.png",
+        "snippet": "ation:\r\n\r\n/*\r\nBUREAU OF AMERICAN ETHNOLOGY      THIRTY-THIRD ANNUAL REPORT PLATE 81[**P2 . missing/as on 349.png]\r\n*/\r\n\r\nGEOMETRIC"
+      },
+      {
+        "project": "projectID3fc3d7d03c613",
+        "page": "351.png",
+        "snippet": "ation:\r\n\r\n/*\r\nBUREAU OF AMERICAN ETHNOLOGY      THIRTY-THIRD ANNUAL REPORT PLATE 82[**P2 . missing]\r\n*/\r\n\r\nGEOMETRICAL FIGURES ON "
+      },
+      {
+        "project": "projectID3fc3d7d03c613",
+        "page": "393.png",
+        "snippet": "ation:\r\n\r\n/#\r\n<sc>Fig. 111.</sc>--Ladle with clown carved\r\non handle and Earth woman on\r\nbowl.\r\n#/\r\n]\r\n\r\n\r\n\r\n\r\nCONCLUSION\r\n\r\n\r\nIn "
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "012.png",
+        "snippet": "words:\r\n\r\n/#\r\nThe two first of these birds were seen in the neighbourhood of Philadelphia,\r\nbetween thirty and forty years ago. Th"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "014.png",
+        "snippet": "\nsays:\r\n\r\n/#\r\nThe stacks of grain put up in the field are resorted to by flocks of these\r\nbirds, which frequently cover them so en"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "023.png",
+        "snippet": "rites:\r\n\r\n/#\r\nThe preference, however, which this bird gives to the western countries,\r\nlying in the same parallel of latitude wit"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "024.png",
+        "snippet": "/#\r\nthis way. Corn in the milk was also sometimes injured, but not extensively.\r\nOther favorite items of food were the s"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "026.png",
+        "snippet": "/#\r\nWoodpecker (<i>Campophilus[**wikipedia spells it Campephilus] imperialis</i>), for this splendid woodpecker is relat"
+      }
+    ]
+  },
+  "proofreader_notes": {
+    "double_star_note_total": 13814,
+    "double_star_note_ending_in_question_mark": 4313,
+    "examples": [
+      {
+        "project": "projectID49869a80942c1",
+        "page": "007.png",
+        "note": "new para?//F2:yes"
+      },
+      {
+        "project": "projectID49869a80942c1",
+        "page": "013.png",
+        "note": "occurrence"
+      },
+      {
+        "project": "projectID49869a80942c1",
+        "page": "022.png",
+        "note": "musical score"
+      },
+      {
+        "project": "projectID49869a80942c1",
+        "page": "024.png",
+        "note": "musical score/notation"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "026.png",
+        "note": "typo for measurements"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "028.png",
+        "note": "Ciudad"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "page": "172.png",
+        "note": "."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0045.png",
+        "note": "$?"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0053.png",
+        "note": " reconciliation"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0264.png",
+        "note": " unclear"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0284.png",
+        "note": " n assumed"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0457.png",
+        "note": "?: -sion's"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0508.png",
+        "note": "typo: -encies"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0720.png",
+        "note": " . elsewhere"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0726.png",
+        "note": "."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0751.png",
+        "note": "."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0811.png",
+        "note": ".?"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0831.png",
+        "note": " .?"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0837.png",
+        "note": " ."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0840.png",
+        "note": "presented as \"Le Roy\" in above entry"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0857.png",
+        "note": " ."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0932.png",
+        "note": " ."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0934.png",
+        "note": "P2:typo? ."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0952.png",
+        "note": "P1: unbalanced '"
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "page": "0967.png",
+        "note": " I only count 19"
+      }
+    ],
+    "other_bracket_notes_total": 29115,
+    "other_bracket_notes_top": {
+      "1": 2482,
+      "Blank Page": 2353,
+      "A": 1999,
+      "Illustration": 1314,
+      "2": 1185,
+      "3": 655,
+      "B": 463,
+      "5": 446,
+      "+": 406,
+      "4": 390,
+      "Cyrillic": 346,
+      "12": 322,
+      "6": 318,
+      "11": 305,
+      "10": 268,
+      "7": 250,
+      "8": 244,
+      "Illustration: Fig. 1": 228,
+      "9": 208,
+      "vj": 203,
+      "M": 199,
+      "Illustration:\r\n\r\n/#\r": 193,
+      "=o": 190,
+      "C": 156,
+      "=e": 154,
+      "=a": 132,
+      "Illustration:\r\n\r\n/*\r": 122,
+      "a": 118,
+      "vJ": 98,
+      "t": 95
+    }
+  },
+  "labeled_content_brackets": {
+    "note": "Brackets whose content carries real page text plus its own style tags (footnote bodies, illustration captions, sidenotes, bare stage directions) -- parsed into the main markup/word streams rather than stripped opaquely.",
+    "total_instances": 8383,
+    "by_category": {
+      "Footnote": 4619,
+      "bare": 2408,
+      "Illustration": 1353,
+      "Sidenote": 3
+    },
+    "examples": {
+      "Footnote": {
+        "project": "projectID3fc3d7d03c613",
+        "page": "310.png",
+        "raw": "Footnote 1: A report on the field work at Sikyatki will be f"
+      },
+      "Illustration": {
+        "project": "projectID3fc3d7d03c613",
+        "page": "313.png",
+        "raw": "Illustration: <sc>Fig. 12.</sc>--Human head with hair in\r\nch"
+      },
+      "bare": {
+        "project": "projectID4c4faab3b47a2",
+        "page": "051.png",
+        "raw": "<sc>Author's note</sc>: The measurements of 55 eggs average "
+      },
+      "Sidenote": {
+        "project": "projectID63d85a522ca1f",
+        "page": "p75.png",
+        "raw": "Sidenote: <i>Here the Archbishop\r\nlays his\r\nhand upon the</i"
+      }
+    }
+  },
+  "thought_breaks_tb_tag_total": 4686,
+  "malformed": {
+    "pages_seen": 73103,
+    "unclosed_open_tag_instances": 3,
+    "unmatched_close_tag_instances": 0,
+    "crossed_nesting_instances": 0,
+    "max_nesting_depth_observed": 3,
+    "unclosed_examples": [
+      {
+        "project": "projectID62930b71a45bb",
+        "page": "p3640.png",
+        "still_open": [
+          "sc"
+        ],
+        "tail": "ssion) from the \"Proceedings of the\r\nZoological Society, 1884-5\"--in some cases with a few additions on my\r\nown part.]\r\n"
+      },
+      {
+        "project": "projectID6644d7736baab",
+        "page": "190.png",
+        "still_open": [
+          "sc",
+          "sc"
+        ],
+        "tail": "ote 5: High and Middle schools which have a Primary Department are included again in\r\nthe returns of Primary schools.]\r\n"
+      }
+    ],
+    "unmatched_examples": [],
+    "crossed_nesting_examples": []
+  },
+  "nesting": {
+    "nested_pairs_total": {
+      "i>f": 69,
+      "b>i": 50,
+      "i>sc": 16,
+      "sc>i": 16,
+      "i>b": 10,
+      "i>i": 6,
+      "sc>sc": 3
+    },
+    "examples": {
+      "i>f": {
+        "project": "projectID5dc798788ade0",
+        "page": "063.png",
+        "snippet": "a sort of <i>pectinated</i> lateral crest, from which circumstance it has\r\nderived its nam"
+      },
+      "i>sc": {
+        "project": "projectID5dc798788ade0",
+        "page": "098.png",
+        "snippet": "dus.</sc> <i>Wagler.</i>\r\n\r\n<sc>Cyclodus Casuarin\u00e6.</sc> <i>Bibr.</i>\r\n\r\n<sc>Plate XV.--Fi"
+      },
+      "b>i": {
+        "project": "projectID5eb6b77f15498",
+        "page": "059.png",
+        "snippet": "ng equals <b>Hair Cloth Crinoline</b>, since, after it\r\nis properly shrunk, it is not affe"
+      },
+      "i>i": {
+        "project": "projectID5fa44b0308ca9",
+        "page": "401.png",
+        "snippet": "A Certain <i>\u00c6gyptian King</i> Endow'd a <i>Dancing-School</i>\r\nfor the Institution of <i>"
+      },
+      "sc>i": {
+        "project": "projectID61f4ebf03555e",
+        "page": "038.png",
+        "snippet": "s.</i>\r\n\r\n<sc><i>Sheweth</i></sc>:\r\n#/\r\n\r\n<i>That the said ----, having been disordered in"
+      },
+      "i>b": {
+        "project": "projectID6265ffcaf301a",
+        "page": "057.png",
+        "snippet": "b>\r\n\r\n/*\r\n<i>\"My supper's cold!\"\r\n  He swore with vim,\r\nAnd then she made it\r\n  Hot for hi"
+      },
+      "sc>sc": {
+        "project": "projectID6644d7736baab",
+        "page": "120.png",
+        "snippet": "\r\n<sc>Management of Schools for Indian Girls in Bengal, 1909-1910</sc>\r\n\r\n/*\r\n+---"
+      }
+    }
+  },
+  "mixed_style_words": {
+    "total_word_tokens": 17068296,
+    "mixed_style_word_count": 1541,
+    "mixed_style_fraction": 9.028434941601669e-05,
+    "mixed_style_combo_counts": {
+      "i+plain": 897,
+      "plain+sup": 495,
+      "b+plain": 62,
+      "i+sup": 50,
+      "plain+sc": 14,
+      "f+plain": 9,
+      "i+plain+sc": 5,
+      "sc+sup": 4,
+      "i+sc": 2,
+      "plain+sub": 2,
+      "f+sup": 1
+    },
+    "examples": [
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "037.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "037.png",
+        "word": "Maties",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "051.png",
+        "word": "wth",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "052.png",
+        "word": "sd",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "052.png",
+        "word": "abovesd",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "053.png",
+        "word": "Plt",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "053.png",
+        "word": "Plt",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "105.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "125.png",
+        "word": "yor",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "178.png",
+        "word": "Peticonr",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "182.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "186.png",
+        "word": "Parliamt",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "230.png",
+        "word": "Corts",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "262.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "262.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "262.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "265.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "266.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "266.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5f9f054f45df1",
+        "page": "266.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "042.png",
+        "word": "Ennus's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "113.png",
+        "word": "Lyon's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "279.png",
+        "word": "Then's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "290.png",
+        "word": "Pigeon's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "291.png",
+        "word": "Spider's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "296.png",
+        "word": "Fox's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "316.png",
+        "word": "Tortoise's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "370.png",
+        "word": "Father's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "377.png",
+        "word": "Fox's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "413.png",
+        "word": "Ignoramus's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "430.png",
+        "word": "Innuendo's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa44b0308ca9",
+        "page": "491.png",
+        "word": "Minerva's",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa97671babcf",
+        "page": "481.png",
+        "word": "Dr",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa97671babcf",
+        "page": "483.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa97671babcf",
+        "page": "486.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID5fa97671babcf",
+        "page": "487.png",
+        "word": "ye",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID605740c77a3f4",
+        "page": "164.png",
+        "word": "n-dimensional",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID621f34b7446cc",
+        "page": "f006.png",
+        "word": "Xe",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "sup"
+          ]
+        ]
+      },
+      {
+        "project": "projectID62930b71a45bb",
+        "page": "p4110.png",
+        "word": "inverted",
+        "states": [
+          [
+            "i"
+          ],
+          [
+            "plain"
+          ]
+        ]
+      },
+      {
+        "project": "projectID62930b71a45bb",
+        "page": "p4590.png",
+        "word": "ki-\u0161am-ole",
+        "states": [
+          [
+            "plain"
+          ],
+          [
+            "i"
+          ]
+        ]
+      }
+    ]
+  },
+  "visible_text_totals": {
+    "word_tokens_total": 17068296,
+    "char_count_visible_total": 102263377,
+    "label_word_counts": {
+      "plain": 16672688,
+      "i": 281761,
+      "sc": 64935,
+      "b": 47050,
+      "f": 1388,
+      "sup": 917,
+      "g": 10,
+      "sub": 2
+    },
+    "label_char_counts": {
+      "plain": 79158019,
+      "i": 1447358,
+      "sc": 355362,
+      "b": 251166,
+      "f": 7592,
+      "sup": 2003,
+      "sub": 357,
+      "g": 79
+    }
+  },
+  "project_formatting_instructions": {
+    "num_projects_with_comments_field": 283,
+    "num_projects_total_with_f2": 285,
+    "examples": [
+      {
+        "project": "projectID3fc3d7d03c613",
+        "comments": "\r\n\r\nSource: [TIA](https://archive.org/details/designsonprehist00fewk_0/page/n3/mode/2up).\r\n\r\nThis project was previously run as a chapter out of a larger Bureau of American Ethnology volume. It was also published as a standalone volume, which is this project. (A page by page overlay proved they were exact matches: not that it matters since this is being rerun through the rounds. The only difference was the title page/chapter title page.) \r\n\r\nNote: Because the standalone reprint was taken from the larger volume, the Government Printing Office did ***not*** do any new typesetting to renumber the"
+      },
+      {
+        "project": "projectID49869a80942c1",
+        "comments": "<h2>This project is a Second Pass project, meaning it is being cycled through\r\nP1 a second time.</h2>\r\n<p>{P1->P1} has been added to the title&mdash;all P1ers are\r\nwelcome to work on either pass but please work in only one of them so that\r\neach page gets seen by two individuals for the round. Give particular attention to\r\nsubtle errors, such as stealth scannos and comma/period errors.</p>\r\n<p style='color: red;'><b>Please use WordCheck on every page!</b></p>\r\n\r\n<hr />\r\n\r\n<div style=\"margin: 0.5em;\">\r\n<p><b>Copyright information</b>:<br />\r\nAuthor unknown.</p>\r\n\r\n<p>Now under new management! Th"
+      },
+      {
+        "project": "projectID4c4faab3b47a2",
+        "comments": "<p>This is another volume of the Bent \"Life Histories of North American Birds\" Uberproject.\r\n\r\n<p>Proofing:\r\n\r\n<p>In some quoted passages the author uses three spaced asterisks to show a deleted section. Please proof these as * * * with a single space between the asterisks and a space before and after.\r\n\r\n<p>Otherwise normal Proofing Guidelines apply."
+      },
+      {
+        "project": "projectID5844552f5801c",
+        "comments": "<p>Some useful links:<br>\r\n<a href=\"https://www.pgdp.net/c/tools/project_manager/displayimage.php?project=projectID5844552f5801c&imagefile=0004.png\">Abbreviations.</a></p>\r\n\r\n<p>The page images were harvested from <a href=\"https://archive.org/details/bookreviewdigest19095hwwi\">here.</a></p>\r\n\r\n<hr>\r\n\r\n<h3>Everyone:</h3>\r\n<p>Most are two-column pages that have been split into one column per proofing page. The entries are ordered by the author's last name. The structure is a) information about the book, b) publisher's blurb (if any), c) excerpt from a review, and d) review information including "
+      },
+      {
+        "project": "projectID5bfdc3b87e7d7",
+        "comments": "<b>2020-Sep-17:</b> Edited for non Latin-1 characters.<br />\r\n<b>2021-Jan-06</b>: Project comments reformatted to comply with new PC standards. No substantive changes were made to the comments.\r\n\r\n<!-- Project Notes -->\r\n<table style=\"background:#FFFFCC; color:#000000;\">\r\n  <tr>\r\n    <td colspan=\"5\"\r\n        style=\"background: #000099;\r\n          color: #FFFF66;\r\n          text-align: center;\r\n          padding: .5em;\">\r\n      <b>About the Book</b></td></tr>\r\n  <tr>\r\n    <td\r\n        style=\"background: #663300;\r\n          color: #FFFF66;\r\n          vertical-align: top;\r\n          padding: .5em"
+      },
+      {
+        "project": "projectID5bfdc3e1493a0",
+        "comments": "<b>2020-Sep-17:</b> Edited for non Latin-1 characters.\r\n<br />\r\n<b>2021-Jan-07</b>: Project comments reformatted to comply with new PC standards. No substantive changes were made to the comments.\r\n\r\n<!-- Project Notes -->\r\n<table style=\"background:#FFFFCC; color:#000000;\">\r\n  <tr>\r\n    <td colspan=\"5\"\r\n        style=\"background: #000099;\r\n          color: #FFFF66;\r\n          text-align: center;\r\n          padding: .5em;\">\r\n      <b>About the Book</b></td></tr>\r\n  <tr>\r\n    <td\r\n        style=\"background: #663300;\r\n          color: #FFFF66;\r\n          vertical-align: top;\r\n          padding: .5"
+      },
+      {
+        "project": "projectID5bfdc3f7260a7",
+        "comments": "<br />\r\n<b>2021-Jan-07</b>: Project comments reformatted to comply with new PC standards. No substantive changes were made to the comments.\r\n\r\n<!-- Project Notes -->\r\n<table style=\"background:#FFFFCC; color:#000000;\">\r\n  <tr>\r\n    <td colspan=\"5\"\r\n        style=\"background: #000099;\r\n          color: #FFFF66;\r\n          text-align: center;\r\n          padding: .5em;\">\r\n      <b>About the Book</b></td></tr>\r\n  <tr>\r\n    <td\r\n        style=\"background: #663300;\r\n          color: #FFFF66;\r\n          vertical-align: top;\r\n          padding: .5em;\">\r\n      <b>About the author:</b></td>\r\n    <td cols"
+      },
+      {
+        "project": "projectID5bfdc4091e596",
+        "comments": "<b>2020-Sep-17:</b> Edited for non Latin-1 characters.\r\n<br />\r\n<b>2021-Jan-07</b>: Project comments reformatted to comply with new PC standards. No substantive changes were made to the comments.\r\n\r\n<!-- Project Notes -->\r\n<table style=\"background:#FFFFCC; color:#000000;\">\r\n  <tr>\r\n    <td colspan=\"5\"\r\n        style=\"background: #000099;\r\n          color: #FFFF66;\r\n          text-align: center;\r\n          padding: .5em;\">\r\n      <b>About the Book</b></td></tr>\r\n  <tr>\r\n    <td\r\n        style=\"background: #663300;\r\n          color: #FFFF66;\r\n          vertical-align: top;\r\n          padding: .5"
+      },
+      {
+        "project": "projectID5ce3bb4460afc",
+        "comments": "<div style=\"text-align:center\"><h2>LITERATURE OF 1923 - NEWLY IN THE PUBLIC DOMAIN!</h2></div>\r\n\r\n<hr />\r\n\r\n<div style=\"text-align:center\"><h3>ABOUT THE BOOK</h3></div>\r\n\r\n<h4>Author</h4>\r\n\r\n<p><a href=\"https://en.wikipedia.org/wiki/William_Le_Queux\">William Le Queux</a> (1864-1927).</p>\r\n\r\n<h4>Synopsis</h4>\r\n\r\n<p>Le Queux's autobiography, probably a bit exaggerated in places.</p>\r\n\r\n<h4>Book structure</h4>\r\n<p>\r\n<a href=\"https://www.pgdp.net/c/tools/project_manager/displayimage.php?project=projectID5ce3bb4460afc&imagefile=009.png\">Table of Contents</a>.<br>\r\n<a href=\"https://www.pgdp.net/c/to"
+      },
+      {
+        "project": "projectID5d19bdb214911",
+        "comments": "<div style=\"text-align:center\"><h3>ABOUT THE BOOK</h3></div>\r\n\r\n<h4>Author</h4>\r\n\r\n<p><a href=\"https://en.wikipedia.org/wiki/W._G._Collingwood\">W. G. Collingwood</a> (1854-1932).</p>\r\n\r\n<h4>Publication date</h4>\r\n\r\n<p>1895.</p>\r\n\r\n<h4>Synopsis</h4>\r\n\r\n<p>A story of the Northmen in England.</p>\r\n\r\n<h4>Source.</h4>\r\n\r\n<p> The page images were  <a href=\"https://archive.org/details/thorsteinofmeres00colluoft/page/n7\"> taken from here</a>.</p>\r\n\r\n<hr />\r\n\r\n<div style=\"text-align:center\"><h3>PROOFING</h3></div>\r\n\r\n<p><b>Difficulty level:</b> Average.</p>\r\n\r\n<p>Wordcheck is <b>mandatory</b> in the P2"
+      },
+      {
+        "project": "projectID5d20119c29920",
+        "comments": "<p>Celia Thaxter 1835&ndash;1894</p>\r\n\r\n<p>Childe Hassam 1859&ndash;1935</p>\r\n\r\n<hr />\r\n\r\n<p>Original scans <a href=\"https://archive.org/details/islandgarden00thax/\">here</a></p>\r\n\r\n<hr />\r\n\r\n<p><strong>Proofreading rounds</strong></p> \r\n\r\n<p>Please follow the <a href=\"https://www.pgdp.net/c/faq/proofreading_guidelines.php\">Proofreading Guidelines</a> and ask in the project forum if you have any queries.</p> \r\n\r\n<hr /> \r\n\r\n<p><strong>Formatting rounds</strong></p> \r\n\r\n<p>Please ask in the project discussion if there is anything not covered in the <a href=\"https://www.pgdp.net/c/faq/document.ph"
+      },
+      {
+        "project": "projectID5dc798788ade0",
+        "comments": "<p>Some useful links:<br />\r\n<a href=\"https://www.pgdp.net/c/tools/project_manager/displayimage.php?project=projectID5dc798788ade0&imagefile=007.png\">List of Species.</a><br />\r\n<a href=\"https://www.pgdp.net/c/tools/project_manager/displayimage.php?project=projectID5dc798788ade0&imagefile=008.png\">List of Illustrations.</a><br />\r\n</p>\r\n\r\n<p><a href=\"https://www.biodiversitylibrary.org/ia/NHM_UK_L_3967753001#page/309\">The page images were harvested from here.</a></p>\r\n\r\n<hr />\r\n\r\n<p><b>Author information</b>:<br />\r\nEditor <a href=\"https://en.wikipedia.org/wiki/Charles_Darwin\">Charles Robert D"
+      },
+      {
+        "project": "projectID5dd0f5632612c",
+        "comments": "<div style=\"text-align:center\"><h3>ABOUT THE BOOK</h3></div>\r\n\r\n<h4>Author</h4>\r\n\r\n<p><a href=\"https://en.wikipedia.org/wiki/Eugene_Manlove_Rhodes\">Eugene Manlove Rhodes</a> (1869-1934).</p>\r\n\r\n<h4>Publication date</h4>\r\n\r\n<p>1914.</p>\r\n\r\n<h4>Book structure</h4>\r\n<p>\r\n<a href=\"https://www.pgdp.net/c/tools/project_manager/displayimage.php?project=projectID5dd0f5632612c&imagefile=006.png\">Table of Contents</a>.\r\n</p>\r\n\r\n<h4>Source.</h4>\r\n\r\n<p> The page images were  <a href=\"https://hdl.handle.net/2027/osu.32435017728098\"> taken from here</a>.</p>\r\n\r\n<hr />\r\n\r\n<div style=\"text-align:center\"><h3>P"
+      },
+      {
+        "project": "projectID5e2a9d2282633",
+        "comments": "<div style=\"text-align:center\"><h3>ABOUT THE BOOK</h3></div>\r\n\r\n<h4>Author</h4>\r\n\r\n<p><a href=\"https://en.wikipedia.org/wiki/Herbert_Thurston\">Herbert Thurston</a> (1856-1939).</p>\r\n\r\n<h4>Publication date</h4>\r\n\r\n<p>1914.</p>\r\n\r\n<h4>Synopsis</h4>\r\n\r\n<p>A history and description of the <a href=\"https://en.wikipedia.org/wiki/Stations_of_the_Cross\">Stations of the Cross</a>.</p>\r\n\r\n<h4>Book structure</h4>\r\n<p>\r\n<a href=\"https://www.pgdp.net/c/tools/project_manager/displayimage.php?project=projectID5e2a9d2282633&imagefile=011.png\">Table of Contents</a>.<br>\r\n<a href=\"https://www.pgdp.net/c/tools/p"
+      },
+      {
+        "project": "projectID5e6dec548a3fb",
+        "comments": "<div style=\"text-align:center\"><h3>ABOUT THE BOOK</h3></div>\r\n\r\n<h4>Author</h4>\r\n\r\n<p><a href=\"https://teara.govt.nz/en/biographies/2h10/hamilton-browne-george\">George Hamilton-Browne</a> (1848? - 1916).</p>\r\n\r\n<h4>Illustrator</h4>\r\n\r\n<p>S. Valda (? - ?).</p>\r\n\r\n<h4>Publication date</h4>\r\n\r\n<p>1911.</p>\r\n\r\n<h4>Synopsis</h4>\r\n\r\n<p>Ficional \"memoir\" of a white soldier in the <a href=\"https://en.wikipedia.org/wiki/New_Zealand_Wars\">New Zealand Wars</a>.</p>\r\n\r\n<h4>Book structure</h4>\r\n<p>\r\n<a href=\"https://www.pgdp.net/c/tools/project_manager/displayimage.php?project=projectID5e6dec548a3fb&imagef"
+      }
+    ]
+  },
+  "per_project_tag_counts": {
+    "projectID3fc3d7d03c613": {
+      "i": 240,
+      "sc": 141,
+      "g": 3,
+      "b": 1
+    },
+    "projectID49869a80942c1": {
+      "i": 19,
+      "sc": 25
+    },
+    "projectID4c4faab3b47a2": {
+      "i": 785,
+      "sc": 75,
+      "b": 193
+    },
+    "projectID53e7cec23db22": {
+      "sc": 9,
+      "i": 55,
+      "g": 1
+    },
+    "projectID5844552f5801c": {
+      "b": 12175,
+      "i": 7
+    },
+    "projectID5bfdc3b87e7d7": {
+      "i": 1068,
+      "sc": 37
+    },
+    "projectID5bfdc3e1493a0": {
+      "i": 1095,
+      "sc": 13,
+      "b": 1
+    },
+    "projectID5bfdc3f7260a7": {
+      "i": 832
+    },
+    "projectID5bfdc4091e596": {
+      "i": 1246,
+      "sc": 66
+    },
+    "projectID5ce3bb4460afc": {
+      "i": 449,
+      "sc": 19,
+      "b": 1
+    },
+    "projectID5d19bdb214911": {
+      "sc": 47,
+      "i": 168
+    },
+    "projectID5d20119c29920": {
+      "i": 27,
+      "sc": 24
+    },
+    "projectID5dc798788ade0": {
+      "i": 474,
+      "sc": 191,
+      "f": 64
+    },
+    "projectID5dd0f5632612c": {
+      "i": 130,
+      "sc": 35
+    },
+    "projectID5e2a9d2282633": {
+      "i": 324,
+      "b": 1,
+      "sc": 428
+    },
+    "projectID5e6dec548a3fb": {
+      "i": 100,
+      "sc": 58
+    },
+    "projectID5e9463a203379": {
+      "i": 101,
+      "sc": 14
+    },
+    "projectID5e947ffbdb8c7": {
+      "sc": 25,
+      "i": 53
+    },
+    "projectID5eb6b77f15498": {
+      "b": 45,
+      "i": 57,
+      "sc": 16
+    },
+    "projectID5ec94e571536a": {
+      "i": 532,
+      "sc": 7
+    },
+    "projectID5f09fa6d48bb1": {
+      "i": 108,
+      "sc": 40
+    },
+    "projectID5f23c394ae138": {
+      "sc": 10,
+      "i": 284
+    },
+    "projectID5f26058369f66": {
+      "i": 76,
+      "sc": 53
+    },
+    "projectID5f261fd0baa14": {
+      "i": 169,
+      "sc": 3
+    },
+    "projectID5f3853f43f4fb": {
+      "i": 6,
+      "sc": 3
+    },
+    "projectID5f5f9b40ee07a": {
+      "i": 303,
+      "sc": 43
+    },
+    "projectID5f6e15da7bcb3": {
+      "i": 462
+    },
+    "projectID5f917af49e169": {
+      "sc": 842,
+      "i": 328
+    },
+    "projectID5f951c42847dc": {
+      "i": 507,
+      "sc": 42
+    },
+    "projectID5f9f054f45df1": {
+      "sc": 9,
+      "i": 359
+    },
+    "projectID5fa44b0308ca9": {
+      "f": 993,
+      "i": 8021,
+      "sc": 995
+    },
+    "projectID5fa97671babcf": {
+      "i": 2513,
+      "sc": 58
+    },
+    "projectID5fb93b465aba5": {
+      "sc": 100,
+      "i": 7
+    },
+    "projectID600ea405c39dc": {
+      "i": 253,
+      "sc": 119,
+      "b": 1
+    },
+    "projectID60214f04ef677": {
+      "i": 112,
+      "sc": 10
+    },
+    "projectID602ce856921f7": {
+      "i": 115,
+      "sc": 41
+    },
+    "projectID603d7d5e04ca0": {
+      "i": 653,
+      "sc": 248,
+      "f": 3
+    },
+    "projectID604e52c556689": {
+      "i": 995,
+      "sc": 67,
+      "b": 3
+    },
+    "projectID605740c77a3f4": {
+      "i": 537,
+      "sc": 15
+    },
+    "projectID60579ff9521e3": {
+      "sc": 21,
+      "i": 106
+    },
+    "projectID605af232d8c23": {
+      "sc": 1919,
+      "i": 226
+    },
+    "projectID609bfa0449bdf": {
+      "i": 77,
+      "sc": 51
+    },
+    "projectID609ec6922f462": {
+      "i": 39,
+      "sc": 24
+    },
+    "projectID609ec6c0654dd": {
+      "i": 34,
+      "sc": 44
+    },
+    "projectID60bed8e6d14f3": {
+      "i": 29,
+      "b": 641
+    },
+    "projectID60c5e4cab3392": {
+      "i": 88,
+      "sc": 59
+    },
+    "projectID60cb22dca3272": {
+      "i": 382,
+      "sc": 9,
+      "b": 3
+    },
+    "projectID60cd0275be0de": {
+      "sc": 10,
+      "i": 172,
+      "b": 209
+    },
+    "projectID60d4726bbaba5": {
+      "i": 165,
+      "sc": 6
+    },
+    "projectID60d7b6848530b": {
+      "i": 372,
+      "sc": 31
+    },
+    "projectID60da6e0f35953": {
+      "sc": 22,
+      "i": 291,
+      "b": 1
+    },
+    "projectID60e8bb8eb8f50": {
+      "i": 276,
+      "sc": 31
+    },
+    "projectID610a79135ca89": {
+      "i": 212,
+      "sc": 22
+    },
+    "projectID611a6c05a7327": {
+      "i": 71,
+      "sc": 3
+    },
+    "projectID611e973b9e1fd": {
+      "sc": 26,
+      "i": 16
+    },
+    "projectID612850c7a7317": {
+      "i": 15,
+      "sc": 4
+    },
+    "projectID6133a0b4ae329": {
+      "i": 47,
+      "sc": 7
+    },
+    "projectID6133a1c6c9da9": {
+      "i": 26,
+      "sc": 1
+    },
+    "projectID61549b7b828e2": {
+      "i": 160,
+      "sc": 292,
+      "b": 1
+    },
+    "projectID615b801fe103e": {
+      "i": 1080,
+      "sc": 46,
+      "b": 16
+    },
+    "projectID615bb00c9e646": {
+      "sc": 38,
+      "i": 9
+    },
+    "projectID61674096e250a": {
+      "sc": 178,
+      "i": 14,
+      "b": 1
+    },
+    "projectID6167baafefdd5": {
+      "i": 5,
+      "sc": 1
+    },
+    "projectID616f55a978f38": {
+      "i": 17,
+      "sc": 12
+    },
+    "projectID617a05acb9d93": {
+      "i": 127,
+      "sc": 4
+    },
+    "projectID617d4c4d4ae8a": {
+      "i": 15,
+      "sc": 1,
+      "b": 1
+    },
+    "projectID618e1dda047fa": {
+      "i": 587,
+      "sc": 644,
+      "b": 259
+    },
+    "projectID61bb7160bd056": {
+      "i": 76,
+      "sc": 146
+    },
+    "projectID61c67ef78e15c": {
+      "sc": 797,
+      "i": 693
+    },
+    "projectID61d34678514ba": {
+      "i": 1698,
+      "sc": 7
+    },
+    "projectID61d40a7122e47": {
+      "sc": 25,
+      "i": 197,
+      "b": 1
+    },
+    "projectID61f4ebf03555e": {
+      "i": 192,
+      "sc": 188
+    },
+    "projectID61f8a50869170": {
+      "sc": 29,
+      "i": 726,
+      "f": 1
+    },
+    "projectID621f34b7446cc": {
+      "sc": 264,
+      "i": 2065
+    },
+    "projectID622135813ad40": {
+      "sc": 20,
+      "i": 79
+    },
+    "projectID6223afd8b8fc4": {
+      "i": 206,
+      "sc": 193,
+      "b": 2
+    },
+    "projectID6234cebeb27a3": {
+      "sc": 109,
+      "i": 26
+    },
+    "projectID625376590dbb6": {
+      "sc": 3,
+      "i": 27
+    },
+    "projectID625385237dac1": {
+      "i": 122,
+      "sc": 30
+    },
+    "projectID6265ffcaf301a": {
+      "i": 89,
+      "sc": 41,
+      "b": 74
+    },
+    "projectID62930b71a45bb": {
+      "i": 3945,
+      "sc": 1370
+    },
+    "projectID62a57a5d9113f": {
+      "i": 22,
+      "b": 15,
+      "sc": 856
+    },
+    "projectID62af734d25155": {
+      "sc": 34,
+      "i": 107
+    },
+    "projectID62e173ee993c7": {
+      "i": 695,
+      "sc": 43
+    },
+    "projectID62e40d920c7f5": {
+      "i": 678,
+      "sc": 157,
+      "f": 27
+    },
+    "projectID62f951b9d2aae": {
+      "sc": 71,
+      "i": 74
+    },
+    "projectID63003e1c52730": {
+      "i": 8,
+      "sc": 50
+    },
+    "projectID63161caf7eafa": {
+      "i": 1692,
+      "sc": 788,
+      "b": 1078
+    },
+    "projectID6338455f5aa13": {
+      "i": 198,
+      "sc": 526
+    },
+    "projectID6352c322828fb": {
+      "i": 856,
+      "sc": 79,
+      "b": 1
+    },
+    "projectID63538a7ea9e98": {
+      "sc": 45,
+      "i": 140
+    },
+    "projectID63564c2139a50": {
+      "f": 31,
+      "i": 451,
+      "sc": 7
+    },
+    "projectID635a2a6a50fd5": {
+      "i": 381,
+      "sc": 791
+    },
+    "projectID635b846689d9e": {
+      "i": 27
+    },
+    "projectID635d2f6868e61": {
+      "sc": 11,
+      "i": 14
+    },
+    "projectID6369c3c4591b6": {
+      "i": 20,
+      "sc": 13
+    },
+    "projectID6372733dd3088": {
+      "sc": 118,
+      "i": 392
+    },
+    "projectID637885d10f22a": {
+      "i": 3,
+      "sc": 1
+    },
+    "projectID639c88078ca55": {
+      "sc": 2,
+      "i": 59
+    },
+    "projectID63a518508f738": {
+      "sc": 10,
+      "i": 10
+    },
+    "projectID63a5e627b8f7c": {
+      "sc": 232,
+      "i": 1607,
+      "f": 4
+    },
+    "projectID63aebe2841066": {
+      "i": 566,
+      "sc": 29
+    },
+    "projectID63b4e1e68a96d": {
+      "sc": 31,
+      "i": 1656,
+      "b": 13
+    },
+    "projectID63d812d70799f": {
+      "sc": 87,
+      "i": 298
+    },
+    "projectID63d85a522ca1f": {
+      "i": 181,
+      "sc": 150
+    },
+    "projectID6401b235539dd": {
+      "sc": 232,
+      "i": 1073,
+      "b": 188
+    },
+    "projectID6415fed521aa5": {
+      "sc": 43,
+      "i": 1453
+    },
+    "projectID6425be32e5169": {
+      "i": 222,
+      "sc": 28
+    },
+    "projectID64362013dc978": {
+      "sc": 33,
+      "i": 2
+    },
+    "projectID6439ebda1461d": {
+      "sc": 12,
+      "i": 20,
+      "b": 9
+    },
+    "projectID643ab41f2b9e6": {
+      "i": 38
+    },
+    "projectID643eab65b2c4f": {
+      "sc": 1,
+      "i": 21
+    },
+    "projectID6444e503f11ce": {
+      "sc": 29,
+      "i": 59
+    },
+    "projectID6451031a6923e": {
+      "i": 2883,
+      "sc": 4664
+    },
+    "projectID6463d75c75170": {
+      "sc": 266,
+      "i": 423,
+      "g": 2
+    },
+    "projectID647e0ad783817": {
+      "sc": 40,
+      "i": 274
+    },
+    "projectID6489c4e9d4e74": {
+      "sc": 42,
+      "i": 352,
+      "g": 1,
+      "b": 10
+    },
+    "projectID6489f50c6b654": {
+      "sc": 1,
+      "i": 119
+    },
+    "projectID6491e60e8e8e6": {
+      "i": 93,
+      "sc": 34
+    },
+    "projectID6491e911978ac": {
+      "sc": 37,
+      "i": 215
+    },
+    "projectID649321d768a25": {
+      "i": 75,
+      "sc": 30
+    },
+    "projectID64a479f51ce5b": {
+      "i": 1188,
+      "sc": 328,
+      "b": 6
+    },
+    "projectID64b6ce17e9084": {
+      "sc": 54,
+      "i": 436
+    },
+    "projectID64bc4aa085f85": {
+      "sc": 1309,
+      "i": 305
+    },
+    "projectID64cbdc6747603": {
+      "sc": 39,
+      "i": 80
+    },
+    "projectID64cbe124766d7": {
+      "i": 38,
+      "sc": 21,
+      "b": 542
+    },
+    "projectID64f752fd000e3": {
+      "sc": 197,
+      "i": 203
+    },
+    "projectID6500a743e5eb8": {
+      "sc": 134,
+      "i": 210,
+      "b": 73
+    },
+    "projectID650104c60a5a1": {
+      "i": 215,
+      "sc": 7
+    },
+    "projectID65045b2cec551": {
+      "sc": 80,
+      "i": 56
+    },
+    "projectID65045ec2a5d55": {
+      "b": 2,
+      "sc": 15,
+      "i": 15
+    },
+    "projectID6516d7708ce0a": {
+      "sc": 117,
+      "i": 269
+    },
+    "projectID651aab6848ed2": {
+      "i": 724,
+      "sc": 21
+    },
+    "projectID651b1af9b4cf5": {
+      "i": 129,
+      "sc": 5
+    },
+    "projectID6539627c06089": {
+      "i": 30,
+      "sc": 17
+    },
+    "projectID654f9c263a5aa": {
+      "i": 5,
+      "sc": 1
+    },
+    "projectID655b98fce74c6": {
+      "i": 68,
+      "sc": 72
+    },
+    "projectID656e21c1e73b8": {
+      "i": 7424,
+      "g": 2,
+      "f": 11,
+      "sc": 82
+    },
+    "projectID657550412c8dc": {
+      "i": 1419,
+      "sc": 744,
+      "b": 1066
+    },
+    "projectID657e0bfb33ef6": {
+      "i": 3240,
+      "sc": 1,
+      "b": 1
+    },
+    "projectID65832f6fc0f3b": {
+      "i": 112
+    },
+    "projectID65ab7f65ddcfc": {
+      "i": 23
+    },
+    "projectID65c03018e2eaf": {
+      "i": 250,
+      "sc": 6
+    },
+    "projectID65c10d77eec1e": {
+      "i": 88,
+      "sc": 19
+    },
+    "projectID65e44031ded47": {
+      "sc": 27,
+      "i": 65
+    },
+    "projectID66242527771de": {
+      "i": 20,
+      "sc": 10
+    },
+    "projectID663989b5dea68": {
+      "sc": 50,
+      "i": 92
+    },
+    "projectID6644d7736baab": {
+      "sc": 86,
+      "i": 256
+    },
+    "projectID6647dd9fc7153": {
+      "i": 621,
+      "sc": 298
+    },
+    "projectID664f668c85197": {
+      "i": 101,
+      "sc": 2
+    },
+    "projectID665d0630f2d6a": {
+      "sc": 259,
+      "i": 154,
+      "b": 1
+    },
+    "projectID666e213515aa3": {
+      "i": 1,
+      "b": 27
+    },
+    "projectID667043307956f": {
+      "i": 592,
+      "b": 3,
+      "sc": 130
+    },
+    "projectID667fc231b44b9": {
+      "i": 112,
+      "sc": 12,
+      "b": 2
+    },
+    "projectID668116dba8762": {
+      "sc": 2,
+      "i": 6
+    },
+    "projectID66812847b47f7": {
+      "sc": 47,
+      "i": 46
+    },
+    "projectID66896887eced0": {
+      "i": 3,
+      "sc": 2
+    },
+    "projectID66a04cbbf1f6a": {
+      "i": 6,
+      "sc": 43
+    },
+    "projectID66a178f9a3b96": {
+      "i": 10,
+      "sc": 18
+    },
+    "projectID66abf93e9ef70": {
+      "sc": 182,
+      "i": 300,
+      "b": 1
+    },
+    "projectID66b4e51dbe3af": {
+      "i": 485,
+      "sc": 25,
+      "b": 97
+    },
+    "projectID66beddd2314e4": {
+      "i": 1682,
+      "sc": 126
+    },
+    "projectID66eb285b27be1": {
+      "sc": 43,
+      "i": 238
+    },
+    "projectID6714e7ba25242": {
+      "sc": 1,
+      "i": 19
+    },
+    "projectID671cd7eccb19a": {
+      "i": 129,
+      "sc": 21
+    },
+    "projectID671da35d80adc": {
+      "i": 71,
+      "sc": 1
+    },
+    "projectID671f2fa87d007": {
+      "b": 5,
+      "i": 78,
+      "sc": 9
+    },
+    "projectID6720f0bb13681": {
+      "i": 189,
+      "sc": 2
+    },
+    "projectID672240f1380d5": {
+      "i": 183,
+      "sc": 1
+    },
+    "projectID6722a2ac3d26e": {
+      "i": 138,
+      "sc": 59
+    },
+    "projectID6727b97720409": {
+      "i": 2270,
+      "sc": 24,
+      "b": 24
+    },
+    "projectID67343e168d7bd": {
+      "sc": 106,
+      "i": 532
+    },
+    "projectID673cd4c091c6a": {
+      "i": 153,
+      "sc": 9,
+      "b": 5
+    },
+    "projectID6741cc96e9016": {
+      "i": 168
+    },
+    "projectID6743882c91aa0": {
+      "sc": 48,
+      "i": 971
+    },
+    "projectID674618d8ac147": {
+      "i": 246,
+      "sc": 60
+    },
+    "projectID6764fa6501c4c": {
+      "i": 18,
+      "sc": 3
+    },
+    "projectID67657a56ec0f1": {
+      "sc": 26,
+      "i": 28
+    },
+    "projectID6768aa3df249f": {
+      "sc": 192,
+      "i": 78
+    },
+    "projectID6768b9cfe785b": {
+      "i": 73,
+      "sc": 2
+    },
+    "projectID676addf5e1395": {
+      "i": 63,
+      "sc": 45
+    },
+    "projectID67742d057484d": {
+      "i": 1128,
+      "sc": 76
+    },
+    "projectID677581234eac1": {
+      "sc": 36,
+      "i": 193,
+      "b": 2055
+    },
+    "projectID6778e8b8c552d": {
+      "sc": 24,
+      "i": 128
+    },
+    "projectID677c9c82f3d25": {
+      "i": 87,
+      "sc": 187
+    },
+    "projectID677ef84e66ede": {
+      "i": 7,
+      "sc": 34
+    },
+    "projectID678006530b3c1": {
+      "i": 84,
+      "sc": 1
+    },
+    "projectID67840fcd42330": {
+      "sc": 40,
+      "i": 187,
+      "b": 709
+    },
+    "projectID67950facae24a": {
+      "sc": 11,
+      "i": 1
+    },
+    "projectID6797a18216400": {
+      "b": 1,
+      "i": 15
+    },
+    "projectID67a80fde44d34": {
+      "i": 18
+    },
+    "projectID67ab737391ded": {
+      "sc": 38,
+      "i": 221
+    },
+    "projectID67ada216248c9": {
+      "sc": 29,
+      "i": 197
+    },
+    "projectID67af827499fb9": {
+      "sc": 135,
+      "i": 88
+    },
+    "projectID67b1ef7719fb8": {
+      "sc": 8,
+      "i": 34
+    },
+    "projectID67ba37cba77b8": {
+      "i": 326,
+      "sc": 120
+    },
+    "projectID67bf88cb7a1df": {
+      "i": 2257,
+      "sc": 26,
+      "b": 688
+    },
+    "projectID67d1b23c7c642": {
+      "sc": 59,
+      "i": 195
+    },
+    "projectID67ef01a6c5ed9": {
+      "sc": 2,
+      "i": 105
+    },
+    "projectID680667ca78f0c": {
+      "i": 3,
+      "sc": 9
+    },
+    "projectID6808f89399a36": {
+      "i": 37
+    },
+    "projectID680bd16933ecb": {
+      "sc": 3,
+      "i": 5,
+      "b": 2
+    },
+    "projectID6814e35a6b014": {
+      "i": 249,
+      "sc": 26
+    },
+    "projectID681609e70fe3a": {
+      "i": 255,
+      "sc": 109
+    },
+    "projectID682b81a232008": {
+      "i": 57,
+      "sc": 166
+    },
+    "projectID682f8aaccdcc7": {
+      "i": 157,
+      "sc": 7,
+      "f": 2
+    },
+    "projectID6842d82992dbc": {
+      "i": 2
+    },
+    "projectID68462b8165a4b": {
+      "i": 26,
+      "sc": 5
+    },
+    "projectID6847613b86a69": {
+      "sc": 19,
+      "i": 104
+    },
+    "projectID68540ed9339e4": {
+      "i": 131
+    },
+    "projectID686193a0b3e79": {
+      "i": 5,
+      "sc": 1
+    },
+    "projectID68658d72319cb": {
+      "b": 1,
+      "i": 9
+    },
+    "projectID68658fb9bdc7d": {
+      "i": 87,
+      "b": 3,
+      "sc": 1
+    },
+    "projectID68683eff293db": {},
+    "projectID686d84456c30d": {
+      "i": 8
+    },
+    "projectID687fa33eaf9c6": {
+      "i": 15
+    },
+    "projectID688e5e5fcf48b": {
+      "sc": 10,
+      "i": 164
+    },
+    "projectID6894d64089588": {
+      "sc": 21,
+      "i": 306
+    },
+    "projectID6897614e6c502": {
+      "i": 41,
+      "sc": 2
+    },
+    "projectID68a1f5977ef5f": {
+      "i": 31,
+      "sc": 1
+    },
+    "projectID68a7b417c11d6": {
+      "i": 35,
+      "sc": 2
+    },
+    "projectID68a86e26d4714": {
+      "i": 31,
+      "sc": 36
+    },
+    "projectID68abc81304cd5": {
+      "sc": 82,
+      "i": 891
+    },
+    "projectID68ae09147dae9": {
+      "sc": 9,
+      "i": 37
+    },
+    "projectID68b1a4a2b3830": {
+      "i": 192,
+      "sc": 292
+    },
+    "projectID68b4448db95fc": {
+      "i": 160,
+      "sc": 21
+    },
+    "projectID68bae4f45b359": {
+      "i": 110,
+      "sc": 249
+    },
+    "projectID68bc7c5178eb2": {
+      "sc": 4,
+      "i": 56,
+      "b": 3
+    },
+    "projectID68cd8bd790a52": {
+      "b": 1,
+      "i": 81,
+      "sc": 2
+    },
+    "projectID68d027c6d32c2": {
+      "i": 114,
+      "sc": 40
+    },
+    "projectID68d028b8ad177": {
+      "i": 2
+    },
+    "projectID68d283095a17f": {
+      "sc": 135,
+      "i": 344
+    },
+    "projectID68e337f925d55": {
+      "i": 274,
+      "sc": 14,
+      "b": 4
+    },
+    "projectID68eaadbec1ca3": {
+      "b": 1,
+      "i": 2946
+    },
+    "projectID68f01105d8245": {
+      "sc": 119,
+      "i": 100
+    },
+    "projectID69027d8333570": {
+      "sc": 11,
+      "i": 21
+    },
+    "projectID6904bd9bc9ee7": {
+      "i": 1
+    },
+    "projectID6904bf671a7cf": {
+      "sc": 47,
+      "i": 55
+    },
+    "projectID690bf1e952ef1": {
+      "sc": 25,
+      "i": 172
+    },
+    "projectID690de46b07181": {
+      "sc": 7,
+      "i": 105
+    },
+    "projectID690e13bd9e592": {
+      "i": 3,
+      "sc": 7
+    },
+    "projectID6914d765e9170": {
+      "b": 1,
+      "i": 32
+    },
+    "projectID6915d4d586120": {
+      "sc": 50,
+      "i": 48
+    },
+    "projectID691670bcd4af8": {
+      "sc": 23,
+      "i": 189,
+      "f": 1
+    },
+    "projectID69179731b6949": {
+      "b": 1,
+      "i": 31
+    },
+    "projectID691799282c3ab": {
+      "b": 1,
+      "i": 74
+    },
+    "projectID691cf5f9a8a12": {
+      "sc": 46,
+      "i": 1
+    },
+    "projectID692464674e66f": {
+      "b": 1,
+      "i": 100
+    },
+    "projectID69287386e7f4f": {
+      "sc": 1,
+      "i": 38
+    },
+    "projectID6939d320d854b": {
+      "sc": 16,
+      "i": 122
+    },
+    "projectID6939d5478964a": {
+      "b": 1,
+      "i": 673
+    },
+    "projectID6945dba84d34c": {
+      "sc": 42,
+      "i": 75
+    },
+    "projectID69506eee5b067": {
+      "i": 335,
+      "sc": 4
+    },
+    "projectID6952c8634d86a": {
+      "i": 168,
+      "sc": 24
+    },
+    "projectID6952d8e9799cd": {
+      "i": 55,
+      "sc": 4
+    },
+    "projectID69552b98c1777": {
+      "b": 1,
+      "i": 6
+    },
+    "projectID6955e9dcb9a72": {
+      "i": 464,
+      "sc": 37
+    },
+    "projectID69565d996c992": {
+      "i": 155,
+      "sc": 77
+    },
+    "projectID6957f7c485523": {
+      "sc": 338,
+      "i": 1288,
+      "b": 18
+    },
+    "projectID6959abf4bf0d2": {
+      "sc": 31,
+      "i": 128
+    },
+    "projectID695e94315f018": {
+      "i": 110,
+      "sc": 2
+    },
+    "projectID6966120ed7220": {
+      "i": 328,
+      "sc": 32
+    },
+    "projectID696ec323e8d3b": {
+      "sc": 21,
+      "i": 141
+    },
+    "projectID697ac260ab94f": {
+      "i": 349,
+      "sc": 41
+    },
+    "projectID697ebb2e82418": {
+      "sc": 5,
+      "i": 223
+    },
+    "projectID6982598c1983a": {
+      "sc": 1,
+      "i": 8
+    },
+    "projectID6993392fab3b5": {
+      "i": 369,
+      "sc": 106
+    },
+    "projectID6994d12c64940": {
+      "i": 15,
+      "sc": 1
+    },
+    "projectID69a35d0517954": {
+      "sc": 176,
+      "i": 78
+    },
+    "projectID69a663dbc6925": {
+      "i": 267,
+      "sc": 17,
+      "b": 192
+    },
+    "projectID69a7ae84cf684": {
+      "i": 28,
+      "b": 1
+    },
+    "projectID69bd67857b182": {
+      "i": 15,
+      "sc": 7
+    },
+    "projectID69c1524e674df": {
+      "i": 3,
+      "sc": 1
+    },
+    "projectID69c2fb9ce6d62": {
+      "i": 92,
+      "sc": 777
+    },
+    "projectID69c56eaa8a1f7": {
+      "i": 53,
+      "sc": 33,
+      "b": 7
+    },
+    "projectID69c9c049c1152": {
+      "sc": 14,
+      "i": 116
+    },
+    "projectID69d16553de4c9": {
+      "sc": 5,
+      "i": 29
+    },
+    "projectID69dc3c30e756b": {
+      "sc": 13,
+      "i": 126
+    },
+    "projectID69e49aa46fcfd": {
+      "sc": 12,
+      "i": 107,
+      "f": 1
+    },
+    "projectID69f0ec8ac1275": {
+      "i": 6,
+      "sc": 68
+    },
+    "projectID69f9e7a7d2536": {
+      "i": 144
+    },
+    "projectID69f9e8f48c14c": {
+      "i": 232
+    },
+    "projectID69fc028942c44": {
+      "i": 260,
+      "sc": 136,
+      "b": 241
+    },
+    "projectID6a0d88ea871a2": {
+      "b": 1,
+      "i": 26
+    },
+    "projectID6a780b7294bd4": {}
+  }
+}

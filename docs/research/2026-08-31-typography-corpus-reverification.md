@@ -40,6 +40,9 @@ shipped repositories, and the model literature. None of them saw the 2026-08-21 
 agreement and disagreement with it are both meaningful. Corpus counts were then re-measured directly
 against the live mounts. All counts describe the 2026-08-31 UTC snapshot.
 
+The raw findings and the measurement scripts behind every number are kept in
+`docs/research/evidence/2026-08-31-typography-reverification/`.
+
 ## Evidence
 
 ## The earlier method reproduces; only the snapshot aged

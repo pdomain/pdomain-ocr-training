@@ -1,0 +1,24 @@
+whitespace tokens total            17,541,544
+tokens with any style                 399,260
+uniformly styled whole words          318,522
+
+MIXED, loose (incl. punctuation)       80,738   research said 22,164 on a 3.4x smaller corpus
+MIXED, strict (inside word core)       14,639   audit agent said 1,507
+  of which punctuation-only edge       66,099
+
+top strict combos:
+   i|plain                         7,947
+   b|plain                         2,429
+   plain|sc                        1,972
+   plain|sup                       1,420
+   i|sc                              477
+   plain|sub                         195
+   b|b+sub                            62
+   i|i+sup                            56
+top loose combos:
+   i|plain                        60,557
+   plain|sc                       11,873
+   b|plain                         5,388
+   plain|sup                       1,455
+   f|plain                           578
+   i|plain|sc                        481
