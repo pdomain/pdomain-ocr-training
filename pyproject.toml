@@ -55,6 +55,7 @@ required-version = ">=0.11.16"
 
 [tool.uv.sources]
 pdomain-book-tools = { index = "pdomain-index-pip" }
+pdomain-book-contracts = { index = "pdomain-index-pip" }
 
 [dependency-groups]
 # The dev group installs the `train` extra so the full test suite (which
