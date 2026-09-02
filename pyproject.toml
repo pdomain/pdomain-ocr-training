@@ -78,6 +78,10 @@ dev = [
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+# Preserved research evidence: these scripts are archived exactly as they were
+# run, so a number in a findings document can be reproduced. Reformatting or
+# rewriting them would defeat that. They are artifacts, not maintained code.
+extend-exclude = ["docs/research/evidence"]
 
 [tool.ruff.lint]
 select = [
