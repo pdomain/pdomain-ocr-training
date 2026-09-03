@@ -29,6 +29,7 @@ How documentation is organized in this repo.
 
 Empty folders are intentional and tracked via `.gitkeep`.
 
-Active docs map to GitHub issues — see this repo's issue tracker for status.
+Active issues live in `docs/issues/` as governed, evidence-bearing reports. The GitHub issue
+tracker is no longer used for status.
 This layout is workspace-standard; see
 `/workspaces/ocr-container/docs/README.md` for the master.
