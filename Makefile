@@ -19,7 +19,7 @@ $(_goals):
 else
 
 
-.PHONY: help setup lint lint-check format format-check typecheck test ci build clean \
+.PHONY: help setup install-hooks lint lint-check format format-check typecheck test ci build clean \
         pre-commit-check update-hooks upgrade-deps \
         local-setup local-dev local-check local-upgrade-deps \
         dev-local \
@@ -33,8 +33,21 @@ help: ## Show this help message
 
 setup: ## Install dependencies (idempotent)
 	uv sync --group dev
-	@HOOKS_PATH="$$(git config core.hooksPath 2>/dev/null || echo '.git/hooks')"; \
-	  [ -f "$$HOOKS_PATH/pre-commit" ] || uv run pre-commit install --hook-type pre-commit --hook-type commit-msg
+	@$(MAKE) --no-print-directory install-hooks
+
+install-hooks: ## (Re)install pre-commit hooks (repairs a stale interpreter path)
+	@# `pre-commit install` bakes an absolute interpreter path into .git/hooks.
+	@# A hook written against a different environment name, or against a worktree
+	@# that has since been deleted, keeps failing until it is rewritten — and a
+	@# "skip if the file exists" guard never rewrites it. Rewriting costs ~0.2s,
+	@# so do it every time this repo owns its hooks directory.
+	@if [ -f .git ]; then \
+	  echo "hooks: worktree checkout — the canonical repo owns them, skipping"; \
+	elif [ -n "$$(git config --get core.hooksPath 2>/dev/null)" ]; then \
+	  echo "hooks: core.hooksPath is set — leaving it alone, skipping"; \
+	else \
+	  uv run pre-commit install --hook-type pre-commit --hook-type commit-msg; \
+	fi
 
 lint: ## Run linting (auto-fix)
 	uv run ruff check --select I --fix
