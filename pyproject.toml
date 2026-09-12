@@ -46,6 +46,9 @@ source = "vcs"
 [tool.hatch.build.targets.wheel]
 packages = ["pdomain_ocr_training"]
 
+[tool.hatch.build.targets.sdist]
+exclude = ["**/.venv", "**/.venv-container"]
+
 [[tool.uv.index]]
 name = "pdomain-index-pip"
 url = "https://pdomain.github.io/pdomain-index-pip/simple/"
