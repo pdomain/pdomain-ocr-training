@@ -87,6 +87,7 @@ The interchange format is JSON Lines for inspection and Parquet for training. Al
 type Sha256 = str
 type GraphemeIndex = int
 
+
 class ArtifactRef(BaseModel):
     source: Literal["pgdp_f2", "gutenberg", "standard_ebooks", "human", "synthetic"]
     source_url: str | None
@@ -95,6 +96,7 @@ class ArtifactRef(BaseModel):
     sha256: Sha256
     version: str
     license_ref: str | None
+
 
 class TextIdentity(BaseModel):
     work_id: str
@@ -107,16 +109,19 @@ class TextIdentity(BaseModel):
     image_artifact: ArtifactRef
     text_artifacts: list[ArtifactRef]
 
+
 class SourceSlice(BaseModel):
     artifact_sha256: Sha256
     byte_start: int
     byte_end: int
+
 
 class Grapheme(BaseModel):
     index: GraphemeIndex
     text: str
     source_slices: list[SourceSlice]
     normalized_from: str | None
+
 
 class StyleSpan(BaseModel):
     label: str
@@ -130,6 +135,7 @@ class StyleSpan(BaseModel):
     semantic_reason: str | None
     warnings: list[str]
 
+
 class OcrTokenRef(BaseModel):
     token_id: str
     text: str
@@ -139,6 +145,7 @@ class OcrTokenRef(BaseModel):
     grapheme_start: GraphemeIndex
     grapheme_end: GraphemeIndex
     alignment_id: str
+
 
 class AlignmentEvidence(BaseModel):
     alignment_id: str
@@ -154,6 +161,7 @@ class AlignmentEvidence(BaseModel):
     margin: float | None
     alternatives: list[dict[str, object]]
     accepted: bool
+
 
 class TypographyPageRecord(BaseModel):
     schema_version: Literal["1.0"]

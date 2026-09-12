@@ -63,10 +63,12 @@ from pdomain_ocr_training import (
     TrainingEvent,
 )
 
+
 # Type dependency-injection seams without importing torch:
 def run_training(runner: ITrainingRunner, cfg: DetectionConfig) -> None:
     for event in runner.train_detection("my-run", cfg):
         print(event.kind, event.message)
+
 
 def run_eval(runner: IEvalRunner, cfg: RecognitionEvalConfig) -> None:
     result = runner.evaluate_recognition("eval-001", cfg)
