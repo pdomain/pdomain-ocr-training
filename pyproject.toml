@@ -193,8 +193,11 @@ known-first-party = ["pdomain_ocr_training"]
 # is idiomatic GPU tensor reassignment), RET506/RET504 (cosmetic return style),
 # PLW1508 (os.environ.get integer defaults), LOG015 (root logger calls),
 # PLW0603 (global statement for shared step counter). All pre-existing debt.
-"pdomain_ocr_training/detect.py" = ["ANN", "D", "BLE", "S", "PLW2901", "RET506", "PLW1508", "LOG015", "PLW0603", "RET504"]
-"pdomain_ocr_training/recog.py" = ["ANN", "D", "BLE", "S", "PLW2901", "RET506", "PLW1508", "LOG015", "PLW0603", "RET504"]
+# PLR0917 (too many positional arguments) joined them when ruff 0.16.7 stabilised
+# the rule. These training entry points take up to 21 positional parameters, so
+# fixing it means reshaping their signatures — a rewrite this move rules out.
+"pdomain_ocr_training/detect.py" = ["ANN", "D", "BLE", "S", "PLW2901", "RET506", "PLW1508", "LOG015", "PLW0603", "RET504", "PLR0917"]
+"pdomain_ocr_training/recog.py" = ["ANN", "D", "BLE", "S", "PLW2901", "RET506", "PLW1508", "LOG015", "PLW0603", "RET504", "PLR0917"]
 
 [tool.basedpyright]
 include = ["pdomain_ocr_training", "tests"]
@@ -223,9 +226,13 @@ failOnWarnings = true
 # Actual import order issues surface as runtime ImportErrors.
 reportImportCycles = "none"
 
-# Tell basedpyright where the venv is so it finds third-party stubs.
-venvPath = "."
-venv = ".venv"
+# venvPath/venv are deliberately unset. This workspace names its environment
+# ".venv-container" via UV_PROJECT_ENVIRONMENT, so a hardcoded ".venv" silently
+# resolves a stale environment: after any merge that changes uv.lock, every new
+# third-party symbol reports as a missing attribute until .venv is re-synced.
+# Run under `uv run` and basedpyright resolves from the active interpreter.
+# Matches pdomain-book-tools, pdomain-ocr-labeler-spa and pdomain-pgdp-measure,
+# which unset these for the same reason.
 
 # Per-execution-environment overrides: tests get more leniency.
 [[tool.basedpyright.executionEnvironments]]
