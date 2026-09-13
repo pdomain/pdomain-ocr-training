@@ -1439,10 +1439,10 @@ requires-dist = [
     { name = "numpy", marker = "extra == 'train'" },
     { name = "pdomain-book-contracts", specifier = ">=0.2.0", index = "https://pdomain.github.io/pdomain-index-pip/simple/" },
     { name = "pdomain-book-tools", specifier = ">=0.28.0", index = "https://pdomain.github.io/pdomain-index-pip/simple/" },
-    { name = "pydantic", specifier = ">=2.5" },
+    { name = "pydantic", specifier = ">=2.13" },
     { name = "python-doctr", marker = "extra == 'train'" },
-    { name = "tomli", specifier = ">=2.0" },
-    { name = "tomli-w", specifier = ">=1.0" },
+    { name = "tomli", specifier = ">=2.4" },
+    { name = "tomli-w", specifier = ">=1.2" },
     { name = "torch", marker = "extra == 'train'" },
     { name = "torchvision", marker = "extra == 'train'" },
 ]
@@ -1450,15 +1450,15 @@ provides-extras = ["train"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "basedpyright", specifier = ">=1.39.4" },
+    { name = "basedpyright", specifier = ">=1.40.1" },
     { name = "gitlint", specifier = ">=0.19.1" },
     { name = "pdomain-ocr-training", extras = ["train"] },
-    { name = "pre-commit", specifier = ">=4.2.0" },
-    { name = "pytest", specifier = ">=8.3" },
-    { name = "pytest-asyncio", specifier = ">=0.24" },
-    { name = "pytest-cov", specifier = ">=6.2.1" },
+    { name = "pre-commit", specifier = ">=4.6.2" },
+    { name = "pytest", specifier = ">=9.1" },
+    { name = "pytest-asyncio", specifier = ">=1.4" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
     { name = "pytest-xdist", specifier = ">=3.8.0" },
-    { name = "ruff", specifier = ">=0.15.13" },
+    { name = "ruff", specifier = ">=0.16.7" },
 ]
 
 [[package]]
