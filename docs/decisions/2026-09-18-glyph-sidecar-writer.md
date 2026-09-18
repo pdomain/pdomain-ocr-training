@@ -55,7 +55,11 @@ annotation side second-hand.
   crop id rather than by iteration index is what makes the join survive any
   filtering or reordering of the val set.
 - `ligatures` holds kind strings and is sliced per kind. They are never lumped
-  into one bucket.
+  into one bucket. They are the producer's own `LigatureKind` enum values,
+  uppercase, emitted verbatim: `FI`, `LONG_ST` and so on. `_emit_glyph_slices`
+  treats them as opaque and normalizes nothing, so a slice is named after the
+  string exactly as given. Lowercasing on either side would split one ligature
+  kind into two slices that never meet.
 - **An absent crop means unknown, not feature-free.** `_emit_glyph_slices`
   excludes an absent crop from both the positive and the negative set of every
   feature. So only a word somebody actually reviewed gets an entry. Writing

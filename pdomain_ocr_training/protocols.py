@@ -279,8 +279,13 @@ class GlyphFeatureSet(BaseModel):
 
     Attributes:
         ligatures: Ligature kind strings present in this word, e.g.
-            ``["fi", "long_st"]``.  Per-kind slicing is done on these values;
+            ``["FI", "LONG_ST"]``.  Per-kind slicing is done on these values;
             they are never lumped into a single ``"ligatures-present"`` bucket.
+            These are the producer's own ``LigatureKind`` enum values, emitted
+            verbatim and uppercase. Nothing here normalizes case, and a slice
+            is named after the string as given, so lowercasing them on either
+            side would split one ligature kind into two slices that never
+            meet. See ``docs/decisions/2026-09-18-glyph-sidecar-writer.md``.
         long_s: ``True`` when the word contains one or more long-s glyphs.
         swash: ``True`` when the word contains one or more swash glyphs.
     """
