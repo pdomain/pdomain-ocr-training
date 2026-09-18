@@ -29,11 +29,13 @@ Last verified: 2026-07-14
 
 ## Needs owner decision
 
-- **Glyph sidecar writer ownership.** Decide whether dataset export or the
-  trainer SPA writes the glyph-feature JSON sidecar. Either producer must use
-  basenames matching DocTR validation labels. Evidence:
-  `pdomain_ocr_training/_eval_backend.py`, `tests/test_glyph_slice_emission.py`,
-  and commits `fccc594` and `ad904c3`.
+Nothing is waiting on an owner. Glyph sidecar writer ownership was the last
+entry here and was decided on 2026-09-18: `pdomain-ocr-labeler-spa`'s dataset
+export writes the sidecar, because that is the only place a word's human glyph
+annotations and its recognition crop filename exist at the same moment. The
+contract the producer must honour, including that an absent crop means unknown
+rather than feature-free, is in
+`docs/decisions/2026-09-18-glyph-sidecar-writer.md`.
 
 ## Legacy-unverified sweep
 

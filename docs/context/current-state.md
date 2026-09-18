@@ -33,8 +33,11 @@ The 2026-07-14 baseline `make ci` run passed all hooks, Ruff, basedpyright, and
 
 ## Current risks
 
-The upstream owner of the glyph-feature sidecar remains undecided. The contract
-and required key format are recorded in [`intent-map.md`](intent-map.md).
+The glyph-feature sidecar now has an owner, decided 2026-09-18:
+`pdomain-ocr-labeler-spa`'s dataset export writes it. The contract and required
+key format are recorded in [`intent-map.md`](intent-map.md) and the reasoning in
+[the ADR](../decisions/2026-09-18-glyph-sidecar-writer.md). Until that export
+ships the file, `slice_glyph_features` has still never run on real data.
 
 Master branch protection requires status contexts that predate the repo's
 rename from `pd-ocr-training` to `pdomain-ocr-training`, so no pull request —
