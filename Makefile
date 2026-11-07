@@ -72,11 +72,9 @@ test: ## Run tests with parallelization
 pre-commit-check: ## Run all pre-commit hooks against all files (read-only check)
 	uv run pre-commit run --all-files
 
-update-hooks: ## Bump pinned pre-commit hook revisions in .pre-commit-config.yaml
+update-hooks: ## Bump hooks to their latest releases, frozen to commit SHAs
 	@echo "⬆️  Updating pinned pre-commit hook revisions..."
-	@# The hook exits non-zero when it rewrites the config, which is the success
-	@# case here, so its status is not the target's status.
-	-@uv run pre-commit run pre-commit-update --all-files --hook-stage manual
+	uv run pre-commit autoupdate --freeze
 	@echo "✅ Hook revisions updated — review the .pre-commit-config.yaml diff."
 
 ci: ## Run complete CI pipeline (setup, pre-commit, lint-check, format-check, typecheck, test)
