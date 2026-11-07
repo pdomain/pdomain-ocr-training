@@ -4,7 +4,7 @@ Two install modes
 -----------------
 ``pip install pdomain-ocr-training``
     Torch-free base install. Exposes the typed config models
-    (``DetectionConfig``, ``RecognitionConfig``, ``TrainingEvent``,
+    (``DetectionConfig``, ``RecognitionConfig``, ``LayoutConfig``, ``TrainingEvent``,
     ``DetectionEvalConfig``, ``RecognitionEvalConfig``, ``EvalSlice``,
     ``DetectionEvalResult``, ``RecognitionEvalResult``) and the
     ``ITrainingRunner`` / ``IEvalRunner`` Protocols. Suitable for a
@@ -32,6 +32,8 @@ from __future__ import annotations
 from importlib.metadata import PackageNotFoundError, version
 from typing import TYPE_CHECKING
 
+from pdomain_ocr_training.layout import LayoutModel
+from pdomain_ocr_training.layout_regions import load_layout_export
 from pdomain_ocr_training.protocols import (
     DetectionConfig,
     DetectionEvalConfig,
@@ -39,7 +41,9 @@ from pdomain_ocr_training.protocols import (
     EvalSlice,
     GlyphFeatureSet,
     IEvalRunner,
+    ILayoutTrainingRunner,
     ITrainingRunner,
+    LayoutConfig,
     RecognitionConfig,
     RecognitionEvalConfig,
     RecognitionEvalResult,
@@ -62,13 +66,17 @@ __all__ = [
     "EvalSlice",
     "GlyphFeatureSet",
     "IEvalRunner",
+    "ILayoutTrainingRunner",
     "ITrainingRunner",
+    "LayoutConfig",
+    "LayoutModel",
     "LocalEvalRunner",
     "LocalTrainingRunner",
     "RecognitionConfig",
     "RecognitionEvalConfig",
     "RecognitionEvalResult",
     "TrainingEvent",
+    "load_layout_export",
 ]
 
 

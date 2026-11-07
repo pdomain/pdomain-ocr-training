@@ -202,6 +202,16 @@ class RecognitionConfig(BaseModel):
     name: str | None = None
 
 
+class LayoutConfig(BaseModel):
+    """Export directories that contain regions/labels.json and detection images."""
+
+    train_path: str | Path
+    val_path: str | Path
+    epochs: int = 10
+    output_dir: str | Path = Field(default=".")
+    name: str | None = None
+
+
 # ---------------------------------------------------------------------------
 # ITrainingRunner Protocol
 # ---------------------------------------------------------------------------
@@ -209,7 +219,7 @@ class RecognitionConfig(BaseModel):
 
 @runtime_checkable
 class ITrainingRunner(Protocol):
-    """Contract for running DocTR detection and recognition training.
+    """Contract for running detection and recognition training.
 
     Implementations yield ``TrainingEvent`` objects so callers can stream
     progress without polling.  Concrete implementations (e.g.
@@ -257,6 +267,19 @@ class ITrainingRunner(Protocol):
             ``TrainingEvent`` objects during training; the final event has
             ``kind="done"`` on success or ``kind="error"`` on failure.
         """
+        ...
+
+
+@runtime_checkable
+class ILayoutTrainingRunner(Protocol):
+    """Contract for layout training over a labeler region export."""
+
+    def train_layout(
+        self,
+        profile: str,
+        config: LayoutConfig,
+    ) -> Iterator[TrainingEvent]:
+        """Run a layout training job and stream progress events."""
         ...
 
 

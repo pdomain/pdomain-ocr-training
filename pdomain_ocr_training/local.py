@@ -62,8 +62,10 @@ from collections.abc import Callable, Mapping
 from typing import TYPE_CHECKING, Protocol, TypedDict
 
 from pdomain_ocr_training.detect import detect_from_config
+from pdomain_ocr_training.layout import train_layout_from_config
 from pdomain_ocr_training.protocols import (
     DetectionConfig,
+    LayoutConfig,
     RecognitionConfig,
     TrainingEvent,
 )
@@ -71,6 +73,8 @@ from pdomain_ocr_training.recog import train_from_config
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
+
+    from pdomain_ocr_training.layout import LayoutModel
 
 # Sentinel placed on the queue by the worker thread to signal completion.
 _DONE = object()
@@ -129,6 +133,18 @@ class _RecognitionKwargs(TypedDict):
     device: int | None
     pretrained: bool
     name: str
+    progress_hook: ProgressHook
+
+
+class _LayoutKwargs(TypedDict):
+    """Typed keyword arguments for :func:`train_layout_from_config`."""
+
+    train_path: str
+    val_path: str
+    epochs: int
+    output_dir: str
+    name: str
+    model: LayoutModel | None
     progress_hook: ProgressHook
 
 
@@ -224,7 +240,7 @@ def _translate_event(raw: RawEvent) -> TrainingEvent:
 
 def _run_in_thread(
     fn: _TrainingCallable,
-    kwargs: _DetectionKwargs | _RecognitionKwargs,
+    kwargs: _DetectionKwargs | _RecognitionKwargs | _LayoutKwargs,
     event_queue: queue.Queue[object],
 ) -> None:
     """Launch ``fn(**kwargs)`` in a background thread.
@@ -380,6 +396,24 @@ def _build_recognition_kwargs(
     }
 
 
+def _build_layout_kwargs(
+    profile: str,
+    config: LayoutConfig,
+    model: LayoutModel | None,
+    hook: ProgressHook,
+) -> _LayoutKwargs:
+    """Build the kwargs dict for ``train_layout_from_config``."""
+    return {
+        "train_path": str(config.train_path),
+        "val_path": str(config.val_path),
+        "epochs": config.epochs,
+        "output_dir": str(config.output_dir),
+        "name": config.name if config.name is not None else profile,
+        "model": model,
+        "progress_hook": hook,
+    }
+
+
 class LocalTrainingRunner:
     """Concrete ``ITrainingRunner`` that runs training locally.
 
@@ -399,6 +433,10 @@ class LocalTrainingRunner:
     so it will not block process exit, but it holds the GPU until then.
     **Callers should drain the iterator fully.**
 
+    Layout training delegates to ``layout.train_layout_from_config``. Pass
+    ``layout_model`` to supply the model. With no model, the run refuses to
+    download DocTR or PP-DocLayout weights.
+
     Example::
 
         runner = LocalTrainingRunner()
@@ -406,6 +444,10 @@ class LocalTrainingRunner:
         for event in runner.train_detection("my-run", cfg):
             print(event.kind, event.message)
     """
+
+    def __init__(self, *, layout_model: LayoutModel | None = None) -> None:
+        """Store the layout model ``train_layout`` will call."""
+        self._layout_model = layout_model
 
     def train_detection(
         self,
@@ -491,6 +533,26 @@ class LocalTrainingRunner:
         )
         worker.start()
 
+        yield from _drain_queue(event_queue, worker)
+
+    def train_layout(
+        self,
+        profile: str,
+        config: LayoutConfig,
+    ) -> Iterator[TrainingEvent]:
+        """Run a layout training job locally and stream progress events."""
+        event_queue: queue.Queue[object] = queue.Queue()
+
+        def hook(raw: RawEvent) -> None:
+            event_queue.put(_translate_event(raw))
+
+        kwargs = _build_layout_kwargs(profile, config, self._layout_model, hook)
+        worker = threading.Thread(
+            target=_run_in_thread,
+            args=(train_layout_from_config, kwargs, event_queue),
+            daemon=True,
+        )
+        worker.start()
         yield from _drain_queue(event_queue, worker)
 
 

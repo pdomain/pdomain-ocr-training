@@ -2,12 +2,20 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-07-14
+Last verified: 2026-11-06
 ---
 
 # Changelog
 
 ## [Unreleased]
+
+### Added in Unreleased
+
+- `LayoutConfig` and `ILayoutTrainingRunner.train_layout` read the labeler's
+  `regions/labels.json` export (`pdomain.layout-regions` version 1) and
+  pair each page with `detection/images/{prefix}_{page_index}.png`.
+  The caller supplies the model. The task does not download DocTR or
+  PP-DocLayout weights.
 
 ## [0.2.1] - 2026-05-22
 

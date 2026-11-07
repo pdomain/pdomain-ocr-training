@@ -2,13 +2,13 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-07-14
+Last verified: 2026-11-06
 Kind: process
 ---
 
 # CLAUDE — pdomain-ocr-training
 
-DocTR OCR model training pipeline (detection + recognition) for the `pdomain-*`
+DocTR OCR model training pipeline (detection, recognition, and layout) for the `pdomain-*`
 suite. Extracted from the legacy `pd-ocr-trainer` repo.
 
 ## Why a separate package
@@ -29,7 +29,7 @@ pip install pdomain-ocr-training            # base — torch-free
 pip install 'pdomain-ocr-training[train]'   # full training stack
 ```
 
-The base install exposes `DetectionConfig`, `RecognitionConfig`,
+The base install exposes `DetectionConfig`, `RecognitionConfig`, `LayoutConfig`,
 `TrainingEvent`, `ITrainingRunner`, `IEvalRunner`, all eval config models
 (`DetectionEvalConfig`, `RecognitionEvalConfig`), result models (`EvalSlice`,
 `DetectionEvalResult`, `RecognitionEvalResult`), and `LocalEvalRunner`.
@@ -51,6 +51,8 @@ pdomain_ocr_training/
     local_eval.py    # LocalEvalRunner — synchronous eval wrapper (strict-lint-compliant)
     detect.py        # Verbatim-moved DocTR detection training (legacy; per-file-ignores active)
     recog.py         # Verbatim-moved DocTR recognition training (legacy; per-file-ignores active)
+    layout_regions.py  # Reader for the labeler's regions/labels.json export
+    layout.py        # Layout training loop; the caller supplies the model
     datasets.py      # ExportManager (legacy; per-file-ignores active)
     utils.py         # Shared training utilities (legacy; per-file-ignores active)
 ```
@@ -58,7 +60,7 @@ pdomain_ocr_training/
 `detect.py`, `recog.py`, `datasets.py`, and `utils.py` are verbatim moves from
 the legacy repo. They carry `ANN`, `D`, `BLE`, and `S` per-file-ignores in
 `pyproject.toml` pending an annotation follow-up pass. `protocols.py`,
-`local.py`, and `local_eval.py` are new, strict-lint-compliant code.
+`local.py`, `local_eval.py`, `layout.py`, and `layout_regions.py` are strict-lint-compliant code.
 
 ## Ops-style contract
 

@@ -108,8 +108,12 @@ def test_torch_free_public_names_importable() -> None:
             EvalSlice,
             GlyphFeatureSet,
             IEvalRunner,
+            ILayoutTrainingRunner,
             ITrainingRunner,
+            LayoutConfig,
+            LayoutModel,
             RecognitionConfig,
+            load_layout_export,
             RecognitionEvalConfig,
             RecognitionEvalResult,
             TrainingEvent,
@@ -119,6 +123,12 @@ def test_torch_free_public_names_importable() -> None:
         cfg = DetectionConfig(train_path="data/train", val_path="data/val")
         assert str(cfg.train_path) == "data/train"
         assert hasattr(ITrainingRunner, "train_detection")
+        assert hasattr(ILayoutTrainingRunner, "train_layout")
+        assert not hasattr(ITrainingRunner, "train_layout")
+        layout_cfg = LayoutConfig(train_path="data/train", val_path="data/val")
+        assert str(layout_cfg.train_path) == "data/train"
+        assert load_layout_export is not None
+        assert LayoutModel is not None
         assert hasattr(IEvalRunner, "evaluate_detection")
         assert hasattr(IEvalRunner, "evaluate_recognition")
         assert RecognitionConfig is not None and TrainingEvent is not None

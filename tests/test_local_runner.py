@@ -16,7 +16,9 @@ import pytest
 from pdomain_ocr_training.local import LocalTrainingRunner
 from pdomain_ocr_training.protocols import (
     DetectionConfig,
+    ILayoutTrainingRunner,
     ITrainingRunner,
+    LayoutConfig,
     RecognitionConfig,
     TrainingEvent,
 )
@@ -77,7 +79,9 @@ def _make_raising_recog(exc: Exception) -> Callable[..., None]:
 
 def test_local_runner_satisfies_protocol() -> None:
     """LocalTrainingRunner is an instance of ITrainingRunner (runtime_checkable)."""
-    assert isinstance(LocalTrainingRunner(), ITrainingRunner)
+    runner = LocalTrainingRunner()
+    assert isinstance(runner, ITrainingRunner)
+    assert isinstance(runner, ILayoutTrainingRunner)
 
 
 # ---------------------------------------------------------------------------
@@ -130,6 +134,27 @@ def test_train_recognition_final_event_is_done(monkeypatch: pytest.MonkeyPatch) 
     events = list(LocalTrainingRunner().train_recognition("run-001", cfg))
 
     assert events[-1].kind == "done"
+
+
+def test_train_layout_yields_done_event(monkeypatch: pytest.MonkeyPatch) -> None:
+    """train_layout yields a final done event when the layout function returns."""
+    monkeypatch.setattr("pdomain_ocr_training.local.train_layout_from_config", _make_noop_recog())
+    cfg = LayoutConfig(train_path="/tmp/train", val_path="/tmp/val")
+
+    events = list(LocalTrainingRunner().train_layout("layout-demo", cfg))
+
+    assert events[-1].kind == "done"
+
+
+def test_train_layout_without_a_model_yields_an_error() -> None:
+    """A layout run with no model reports an error and does not finish as done."""
+    cfg = LayoutConfig(train_path="/tmp/missing-train", val_path="/tmp/missing-val")
+
+    events = list(LocalTrainingRunner().train_layout("layout-demo", cfg))
+
+    assert events[-1].kind == "error"
+    assert "weights" in events[-1].message
+    assert all(event.kind != "done" for event in events)
 
 
 # ---------------------------------------------------------------------------

@@ -4,7 +4,9 @@ from collections.abc import Iterator
 
 from pdomain_ocr_training.protocols import (
     DetectionConfig,
+    ILayoutTrainingRunner,
     ITrainingRunner,
+    LayoutConfig,
     RecognitionConfig,
     TrainingEvent,
 )
@@ -55,6 +57,14 @@ def test_recognition_config_defaults() -> None:
     assert cfg.vocab == "french"
 
 
+def test_layout_config_points_at_export_directories() -> None:
+    """LayoutConfig names two region-export directories and no weight source."""
+    cfg = LayoutConfig(train_path="/tmp/train", val_path="/tmp/val")
+    assert cfg.epochs == 10
+    assert str(cfg.output_dir) == "."
+    assert cfg.name is None
+
+
 # ---------------------------------------------------------------------------
 # ITrainingRunner Protocol — runtime_checkable
 # ---------------------------------------------------------------------------
@@ -90,6 +100,26 @@ def test_protocol_missing_method_not_instance() -> None:
         ) -> Iterator[TrainingEvent]: ...
 
     assert not isinstance(IncompleteStub(), ITrainingRunner)
+
+
+def test_detection_and_recognition_runner_stays_an_itraining_runner() -> None:
+    """Adding layout does not drop a detection and recognition runner from ITrainingRunner."""
+
+    class DetectionAndRecognition:
+        def train_detection(
+            self,
+            profile: str,
+            config: DetectionConfig,
+        ) -> Iterator[TrainingEvent]: ...
+
+        def train_recognition(
+            self,
+            profile: str,
+            config: RecognitionConfig,
+        ) -> Iterator[TrainingEvent]: ...
+
+    assert isinstance(DetectionAndRecognition(), ITrainingRunner)
+    assert not isinstance(DetectionAndRecognition(), ILayoutTrainingRunner)
 
 
 def test_protocol_missing_both_methods_not_instance() -> None:

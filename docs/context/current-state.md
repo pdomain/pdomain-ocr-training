@@ -37,6 +37,7 @@ No later red or flaky test is recorded here.
 
 ## Shipped work and the open list
 
-Shipped detection training, recognition training, and synchronous evaluation are in
-[Architecture: pdomain-ocr-training](../architecture/00-overview.md). Open items are
+Shipped detection training, recognition training, layout training, and synchronous
+evaluation are in [Architecture: pdomain-ocr-training](../architecture/00-overview.md).
+Layout training reads the labeler's `regions/labels.json` export. Open items are
 the [remaining-work list](../ROADMAP.md).

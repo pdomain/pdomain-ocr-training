@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-07-14
+Last verified: 2026-11-06
 Kind: architecture
 ---
 
@@ -12,11 +12,11 @@ Kind: architecture
 
 - **Kind:** architecture
 - **Status:** active
-- **Last verified:** 2026-07-14
+- **Last verified:** 2026-11-06
 - **Read when:** understanding shipped training, evaluation, and torch-free boundaries.
 - **Search terms:** OCR training architecture, DocTR evaluation, runner protocols, glyph slices.
 
-**Status:** Current as of 2026-07-14.
+**Status:** Current as of 2026-11-06.
 
 ## Purpose
 
@@ -38,6 +38,8 @@ pdomain_ocr_training/
     _eval_backend.py Real DocTR detection and recognition evaluation
     detect.py        Verbatim-moved DocTR detection training (legacy; per-file-ignores)
     recog.py         Verbatim-moved DocTR recognition training (legacy; per-file-ignores)
+    layout_regions.py  Reader for the labeler's regions/labels.json export
+    layout.py        Layout training loop; the caller supplies the model
     datasets.py      ExportManager — on-disk dataset layout manager (legacy)
     utils.py         Shared training utilities (legacy)
 ```
@@ -77,6 +79,16 @@ Supported methods:
 - `train_detection(profile, config) -> Iterator[TrainingEvent]`
 - `train_recognition(profile, config) -> Iterator[TrainingEvent]`
 
+`ILayoutTrainingRunner` is a separate protocol. An existing detection and
+recognition runner stays an `ITrainingRunner`. The layout protocol has one method:
+
+- `train_layout(profile, config) -> Iterator[TrainingEvent]`
+
+`train_layout` reads `regions/labels.json` from a labeler export directory.
+Each page's image is `detection/images/{prefix}_{page_index}.png` in that
+same directory. The caller passes the model. The run does not download
+DocTR or PP-DocLayout weights.
+
 ### IEvalRunner
 
 Eval is a single synchronous forward pass — no epoch loop, no progress stream.
@@ -114,6 +126,7 @@ All models live in `protocols.py` and are Pydantic v2 `BaseModel`s.
 
 - `DetectionConfig` — train/val paths + DocTR hyperparameters
 - `RecognitionConfig` — train/val paths + DocTR hyperparameters
+- `LayoutConfig` — train/val export directories for layout training
 - `TrainingEvent` — streaming event (`kind`, `message`, optional metrics)
 
 **Eval:**
