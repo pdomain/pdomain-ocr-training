@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-08-21
-Last verified: 2026-09-01
+Last verified: 2026-11-07
 Kind: research
 ---
 
@@ -15,13 +15,20 @@ The available corpora can support a fine-grained typography model, but F2 must b
 - **Kind:** research
 - **Status:** active
 - **Owner:** CT
-- **Last verified:** 2026-09-01
+- **Last verified:** 2026-11-07
 - **Read when:** designing or auditing typography labels, corpus matching, weak supervision, or model choices.
 - **Search terms:** typography, F2, italics, small caps, superscript, grapheme spans, Gutenberg, Standard Ebooks.
 
 ## Scope and conclusion
 
-This research covers the live local PGDP, Project Gutenberg, and Standard Ebooks corpora. It also covers official source guidance and primary model literature. The companion [design](../specs/2026-08-21-fine-grained-typography-model-design.md) turns the findings into a system. The [implementation plan](../plans/2026-08-21-fine-grained-typography-model.md) defines test-first work. It does not authorize implementation.
+This research covers the dated local PGDP, Project Gutenberg, and Standard Ebooks snapshots below. It also covers official source guidance and primary model literature. The companion [design](../specs/2026-08-21-fine-grained-typography-model-design.md) turns the findings into a system. The [implementation plan](../plans/2026-08-21-fine-grained-typography-model.md) defines test-first work. It does not authorize implementation.
+
+The 2026-11-07 verification date records a code-relevance check. Canonical span
+types now live in `pdomain-book-contracts`, with compatibility imports in
+`pdomain-book-tools`. The source-data package has a silver-tier alignment and
+style-projection helper; this training package has no typography model yet.
+Corpus counts and external literature remain dated evidence. They were not
+remeasured or revalidated against upstream sources in this code check.
 
 The recommended first production experiment is a text-conditioned visual encoder. Recognized graphemes query word or short-line image features. Independent sigmoid heads predict overlapping style labels per grapheme. A whole-word auxiliary head preserves the simple case.
 
@@ -33,7 +40,7 @@ Determine whether the mounted corpora and current technical evidence support a s
 
 ## Method
 
-The audit inspected the three mounted corpora, applicable repositories, current OCR contracts, and official upstream documentation. Independent research tracks covered PGDP rules, external artifact semantics, model architecture, historical fonts, shaping, and synthetic-to-real training. All local counts describe the 2026-08-21 UTC snapshot.
+The audit inspected the three mounted corpora, applicable repositories, OCR contracts, and official upstream documentation. Independent research tracks covered PGDP rules, external artifact semantics, model architecture, historical fonts, shaping, and synthetic-to-real training. The initial audit used the 2026-08-21 UTC snapshot. The sections below identify measurements updated from the 2026-08-31 re-verification. The remaining measurements retain their original snapshot date.
 
 ## Evidence
 
@@ -47,7 +54,7 @@ All three requested mounts were available. The counts below describe the 2026-08
 | Project Gutenberg | `/workspaces/gutenberg-corpus` | 48 GiB | 61,750 ebook directories |
 | Standard Ebooks | `/workspaces/standardebooks-corpus` | 34 GiB | 1,511 Git repositories, 52,620 XHTML files |
 
-The 79 F2 files contain 30,191,475 Unicode code points and 5,020,667 whitespace-delimited tokens before linguistic tokenization. Removing known inline tags and `[** ...]` notes leaves 29,812,369 visible code points. It leaves 23,712,617 non-whitespace code points. These are parser-audit counts, not final training counts.
+In the original 2026-08-21 snapshot, 79 F2 files contained 30,191,475 Unicode code points and 5,020,667 whitespace-delimited tokens before linguistic tokenization. Removing known inline tags and `[** ...]` notes left 29,812,369 visible code points. It left 23,712,617 non-whitespace code points. These are historical parser-audit counts, not totals for the expanded August 31 corpus or final training counts.
 
 Every PGDP metadata record has a Project Gutenberg ebook number, and all 286 match a local Gutenberg directory. Those directories do contain HTML: 93 percent of matched books carry `<i>`, 87 percent carry small-caps spans with supporting CSS, and 89 percent carry `id="Page_N"` page anchors. Gutenberg is therefore a candidate typography source, though the anchors have not been tested against scan-image page boundaries. Standard Ebooks cites 1,792 distinct Gutenberg source IDs, of which exactly one intersects a PGDP project. Three-way matched-book evaluation remains unsupported.
 
@@ -63,17 +70,17 @@ The F2 snapshot contains these opening-tag counts before validation. Re-verified
 | `<f>` | 1,138 | 11 | project-defined font change, with mutually inverse uses; reject unless comments resolve it |
 | `<g>` | 9 | 5 | letter spacing; too few positives to train |
 
-The audit found 399,260 whitespace tokens with at least one styled visible character, of which 318,522 are uniformly styled. Mixed-style counts depend on where the boundary may fall: 80,738 tokens change label anywhere, 14,639 change among their word characters, and 3,999 change between two adjacent letters with no punctuation at the seam. Nested openings occur, so the representation must permit overlapping labels.
+The 2026-08-31 audit found 399,260 whitespace tokens with at least one styled visible character, of which 318,522 are uniformly styled. Mixed-style counts depend on where the boundary may fall: 80,738 tokens change label anywhere, 14,639 change among their word characters, and 3,999 change between two adjacent letters with no punctuation at the seam. Nested openings occur, so the representation must permit overlapping labels.
 
-One page has an unclosed `<sc>` at end of page: `projectID62930b71a45bb/p3640.png`. The remaining known inline tags balance globally. The parser must still validate each page independently because PGDP requires page-local closure.
+The original 2026-08-21 audit found one page with an unclosed `<sc>` at end of page: `projectID62930b71a45bb/p3640.png`. The remaining known inline tags balanced globally in that audit. The parser must still validate each page independently because PGDP requires page-local closure.
 
-The corpus contains 4,254 `[** ...]` notes on 2,934 pages. Of these notes, 1,441 contain at least one question mark, with 1,482 question marks in total. Notes are review evidence, not visible text or negative labels.
+The 2026-08-21 snapshot contained 4,254 `[** ...]` notes on 2,934 pages. Of these notes, 1,441 contained at least one question mark, with 1,482 question marks in total. Notes are review evidence, not visible text or negative labels.
 
-Superscript syntax appears 594 times by raw pattern count: 147 braced spans and 447 single-character forms. Subscript appears 32 times: 23 braced spans and 9 single-character forms. These raw counts need parser validation because a caret or underscore can be ordinary text in malformed or project-specific cases.
+In the 2026-08-21 snapshot, superscript syntax appeared 594 times by raw pattern count: 147 braced spans and 447 single-character forms. Subscript appeared 32 times: 23 braced spans and 9 single-character forms. These raw counts need parser validation because a caret or underscore can be ordinary text in malformed or project-specific cases.
 
-Project Comments exist for 79 of 80 projects and contain 96,361 characters. Seven explicitly discuss small caps. None mentions `drop cap`, `drop-cap`, or `letter spacing`. Comments must be retained and versioned because they override default instructions and can define `<f>`.
+In the 2026-08-21 snapshot, Project Comments existed for 79 of 80 projects and contained 96,361 characters. Seven explicitly discussed small caps. None mentioned `drop cap`, `drop-cap`, or `letter spacing`. Comments must be retained and versioned because they override default instructions and can define `<f>`.
 
-All 80 projects list English. Difficulty is `average` for 69, `easy` for 10, and `hard` for 1. The largest image-source groups are TIA 43, TIA_AL 15, HathiTrust 10, `_internal` 5, TIA_CAN 2, and DL_VILL_U 2. ICE, NLS, and missing source metadata account for one project each. The leading genres are General Fiction 9, Non-Fiction 6, Mystery 6, Instructional 5, Juvenile 4, Travel 4, Historical Fiction 3, History 3, Cooking 3, and Short Story 3.
+All 80 projects in the 2026-08-21 snapshot listed English. Difficulty was `average` for 69, `easy` for 10, and `hard` for 1. The largest image-source groups were TIA 43, TIA_AL 15, HathiTrust 10, `_internal` 5, TIA_CAN 2, and DL_VILL_U 2. ICE, NLS, and missing source metadata accounted for one project each. The leading genres were General Fiction 9, Non-Fiction 6, Mystery 6, Instructional 5, Juvenile 4, Travel 4, Historical Fiction 3, History 3, Cooking 3, and Short Story 3.
 
 This snapshot cannot measure language diversity, reliable publication period, font family, or scan quality from PGDP metadata alone. Those fields need enrichment from title pages, catalog metadata, source scans, and computed image-quality features. Controlled evaluation splits must not claim coverage before that enrichment exists.
 
@@ -114,7 +121,7 @@ The official inline tags are `<i>`, `<b>`, `<sc>`, `<g>`, and project-defined `<
 
 Underlining normally becomes `<i>` because it historically marks emphasis, though Project Comments can request `<u>`. A model trained from F2 cannot distinguish printed italics from underlining unless another source supplies that distinction. [Formatting Guidelines](https://www.pgdp.net/wiki/DP_Official_Documentation%3AFormatting/Formatting_Guidelines)
 
-Spaced text uses `<g>` after removing inter-letter spaces. The rule describes a historical emphasis practice common in German. This corpus has no `<g>` positives, so letter spacing needs another PGDP snapshot, matched external artifacts, manual labels, or synthetic supplements. [Formatting Guidelines](https://www.pgdp.net/wiki/DP_Official_Documentation%3AFormatting/Formatting_Guidelines)
+Spaced text uses `<g>` after removing inter-letter spaces. The rule describes a historical emphasis practice common in German. The August 21 snapshot had no `<g>` positives; the August 31 audit found nine across five projects. That later count is still too small for training, so letter spacing needs more real examples, matched external artifacts, manual labels, or synthetic supplements. [Formatting Guidelines](https://www.pgdp.net/wiki/DP_Official_Documentation%3AFormatting/Formatting_Guidelines)
 
 Small-cap transcription is not a literal case record. Mixed small caps use mixed case within `<sc>`, while all-small-cap text remains all caps within `<sc>`. Headings and captions that only resemble small caps because of relative size are not tagged. Opening chapter words in caps or small caps are normalized to mixed case without tags. Small-cap negatives therefore need context. They cannot be inferred only from missing `<sc>`. [Formatting Guidelines](https://www.pgdp.net/wiki/DP_Official_Documentation%3AFormatting/Formatting_Guidelines)
 
@@ -246,7 +253,7 @@ Synthetic augmentation is accepted only when immutable real-scan validation show
 
 ## Evidence limits
 
-The measured counts describe the mounted snapshot on 2026-08-21 UTC. They are not immutable corpus facts. The final data-preparation command must write its own version, input hashes, and timestamp.
+The measured counts describe the dated August 21 and August 31 snapshots identified above. They are not current or immutable corpus facts. No corpus was remeasured during the 2026-11-07 documentation correction. The final data-preparation command must write its own version, input hashes, and timestamp.
 
 The mixed-style and malformed counts come from an audit parser, not the proposed production parser. Acceptance tests must lock representative pages before any count becomes a release gate.
 

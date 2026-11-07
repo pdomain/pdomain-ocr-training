@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-14
-Last verified: 2026-11-06
+Last verified: 2026-11-07
 ---
 
 # Current state
@@ -10,7 +10,7 @@ Last verified: 2026-11-06
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-07
 - **Read when:** starting repository work or checking current operational risk.
 - **Search terms:** current state, CI, OCR training, active risks.
 
@@ -31,9 +31,15 @@ plans remain drafts with every step unchecked.
 
 ## Last recorded full make ci passed
 
-The last recorded full `make ci` is the 2026-07-14 run. It passed the hooks, Ruff,
-basedpyright, and 129 tests. This documentation pass did not re-run that suite.
-No later red or flaky test is recorded here.
+The latest full `make ci` passed on 2026-11-07: hooks, formatting, Ruff,
+basedpyright, and all 139 tests. The previous recorded run on 2026-07-14 passed
+129 tests. No later red or flaky test is recorded here.
+
+On 2026-11-07, a code-validation pass ran `uv run pytest -q -n 2`: all
+139 tests passed. That was a test-suite run, not a full `make ci` run.
+The import tests confirm that the public API does not load Torch. They do not
+prove a lightweight installation: `uv.lock` shows Torch and DocTR coming through
+the required `pdomain-book-tools` dependency.
 
 ## Shipped work and the open list
 

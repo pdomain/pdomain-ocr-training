@@ -2,20 +2,32 @@
 Status: draft
 Owner: CT
 Created: 2026-08-21
-Last verified: 2026-09-01
+Last verified: 2026-11-07
 Kind: spec
 ---
 
 # Fine-grained typography model design
 
-The system should add a typography task beside OCR recognition and page-region labeling, with shared canonical spans in `pdomain-book-tools`, training in `pdomain-ocr-training`, and shared source-data preparation in `pdomain-source-data`.
+The system should add a typography task beside OCR recognition and page-region labeling, with shared canonical spans in `pdomain-book-contracts`, training in `pdomain-ocr-training`, and shared source-data preparation in `pdomain-source-data`.
+
+The contracts package now owns the shared typography types and PGDP readers.
+`pdomain-book-tools` retains compatibility imports and image-processing operations.
+Earlier file maps in this design describe the original package layout; resolve
+their paths against the extracted packages before implementation.
+
+Code validation on 2026-11-07 confirmed these contract boundaries against the
+contracts package and its compatibility exports. The source-data package now
+has silver-tier token alignment and style projection, but that helper does not
+extract pixel crops. This training package still has no typography model or
+formatting runner. The architecture below remains a proposed design; its corpus
+figures retain the August snapshot dates in the linked research.
 
 ## Agent Index
 
 - **Kind:** spec
 - **Status:** draft
 - **Owner:** CT
-- **Last verified:** 2026-09-01
+- **Last verified:** 2026-11-07
 - **Read when:** implementing fine-grained typography parsing, datasets, training, inference, or evaluation.
 - **Search terms:** typography model, grapheme styles, F2 parser, alignment, split manifest, weak supervision.
 
@@ -182,7 +194,7 @@ class TypographyPageRecord(BaseModel):
     guideline_version: str
 ```
 
-The production types belong in `pdomain-book-tools`. The raw corpus record should not be embedded into `Word`. Inference projects final trusted spans into a new typed `TypographyAnnotations` side channel. `Character.text_style_labels` remains a compatibility projection when character boxes exist.
+The production types belong in `pdomain-book-contracts`, with compatibility exports in `pdomain-book-tools`. The raw corpus record should not be embedded into `Word`. Inference projects final trusted spans into a typed `TypographyAnnotations` side channel. `Character.text_style_labels` remains a compatibility projection when character boxes exist.
 
 `TypographyAnnotations` preserves `None` for unknown or unrun inference and an empty object for reviewed regular text. It contains whole-word labels, grapheme spans, source, model version, confidence, calibration version, and review metadata.
 
@@ -299,7 +311,11 @@ Each error artifact contains crop, page thumbnail, OCR text, source text, ground
 
 ## Repository boundaries keep responsibilities clear
 
-`pdomain-book-tools` owns durable parsing and interchange contracts because it already owns `PGDPExport`, OCR words, characters, geometry, review metadata, and glyph side channels.
+`pdomain-book-contracts` owns durable parsing and interchange contracts, including
+PGDP readers, OCR words, characters, geometry, review metadata, and glyph side
+channels. `pdomain-book-tools` retains compatibility exports and image-processing
+operations. The file map below records the original layout before extraction;
+use the contracts package for canonical types and PGDP readers.
 
 Recommended additions:
 
@@ -404,7 +420,7 @@ pdomain-ocr-synth/
   tests/typography/
 ```
 
-The synthetic output implements the same canonical labels and grapheme indexing as `pdomain-book-tools`, through a torch-free local mirror rather than a dependency, because that package requires a full training stack. It adds `render_method`, `font_lineage_id`, axes, feature ranges, stage seeds, clean-render hash, and final-image hash. Font binaries remain user-provided or separately fetched under reviewed licenses. The repository never bundles an unreviewed font.
+The synthetic output uses the canonical labels and grapheme indexing from `pdomain-book-contracts`. That package has no Torch dependency, so the renderer can reuse the shared types directly. Pin its released version and test the serialized spans at the renderer boundary. A local mirror is no longer needed to avoid the training stack. The output adds `render_method`, `font_lineage_id`, axes, feature ranges, stage seeds, clean-render hash, and final-image hash. Font binaries remain user-provided or separately fetched under reviewed licenses. The repository never bundles an unreviewed font.
 
 Model inference should later enter `pdomain-book-tools` through a provider protocol. The heavy Torch implementation remains in a deployment package or optional adapter. This preserves the torch-free public contracts of `pdomain-ocr-training`. It does not make `pdomain-book-tools` torch-free: that package already requires torch, torchvision, torchaudio, transformers, and python-doctr.
 

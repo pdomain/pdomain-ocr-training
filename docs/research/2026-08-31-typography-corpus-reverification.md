@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-08-31
-Last verified: 2026-08-31
+Last verified: 2026-11-07
 Kind: research
 ---
 
@@ -16,13 +16,25 @@ factor of three, and six of its findings now point the design somewhere differen
 - **Kind:** research
 - **Status:** active
 - **Owner:** CT
-- **Last verified:** 2026-08-31
+- **Last verified:** 2026-11-07
 - **Read when:** acting on the 2026-08-21 typography research, design, or plan, or before starting
   phase two.
 - **Search terms:** typography re-verification, corpus growth, mixed-style words, F2 tag counts,
   Gutenberg HTML, guideline history, monotonic alignment.
 
 ## Goal
+
+The 2026-11-07 verification date records a code-relevance check of this historical
+August 31 report. Its corpus measurements and literature claims retain their
+original dates; this check did not rerun those audits or upstream research.
+
+Current code supersedes two implementation observations below. Canonical spans
+and PGDP readers now live in Torch-free `pdomain-book-contracts`, so a renderer
+can reuse them directly. In `pdomain-source-data`, `tasks/typography/crops.py`
+now calls `align_tokens` and `project_style_span`, producing silver-tier token
+and span records from supplied OCR geometry. It does not extract pixel images.
+The training package still has no typography model. The sections below preserve
+what the August 31 audit observed; the phase-two plan carries current work.
 
 Re-verify the [2026-08-21 research](2026-08-21-fine-grained-typography-model-research.md) against
 the corpora as they stand on 2026-08-31 UTC, and record every finding that changes a design

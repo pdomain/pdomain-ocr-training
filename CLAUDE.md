@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-11-06
+Last verified: 2026-11-07
 Kind: process
 ---
 
@@ -13,29 +13,33 @@ suite. Extracted from the legacy `pd-ocr-trainer` repo.
 
 ## Why a separate package
 
-`torch` and `DocTR` are heavy ML dependencies. Isolating them here keeps every
-other `pdomain-*` SPA backend torch-free. Only the future `pdomain-ocr-trainer-spa`
-depends on this package.
+`torch` and `DocTR` are heavy ML dependencies. This package keeps their imports
+out of its public configuration and runner interfaces. That allows web processes
+to import those interfaces without loading the training runtime.
 
-## Install modes — torch is an optional extra
+## Install modes — optional extra and transitive dependencies
 
 `torch` / `python-doctr` / `matplotlib` are **not** in `[project.dependencies]`.
-They live in the `train` optional extra. This lets `pdomain-ocr-trainer-spa`'s
+They are declared in the `train` optional extra. The required `pdomain-book-tools`
+dependency also installs them transitively; `uv.lock` records that dependency path.
+The base installation therefore includes heavy dependencies even without the extra.
+The import boundary still lets `pdomain-ocr-trainer-spa`'s
 long-lived web process import the torch-free half (config models + Protocol)
 without dragging multi-GB torch into the web process.
 
 ```bash
-pip install pdomain-ocr-training            # base — torch-free
+pip install pdomain-ocr-training            # base API; heavy transitive dependencies
 pip install 'pdomain-ocr-training[train]'   # full training stack
 ```
 
 The base install exposes `DetectionConfig`, `RecognitionConfig`, `LayoutConfig`,
-`TrainingEvent`, `ITrainingRunner`, `IEvalRunner`, all eval config models
+`TrainingEvent`, `ITrainingRunner`, `ILayoutTrainingRunner`, `LayoutModel`,
+`load_layout_export`, `IEvalRunner`, all eval config models
 (`DetectionEvalConfig`, `RecognitionEvalConfig`), result models (`EvalSlice`,
 `DetectionEvalResult`, `RecognitionEvalResult`), and `LocalEvalRunner`.
 `LocalTrainingRunner` is exported lazily via `__init__.__getattr__` — `import
-pdomain_ocr_training` never imports torch. Accessing `LocalTrainingRunner` without
-the `[train]` extra raises a helpful `ImportError`. `LocalEvalRunner` is
+pdomain_ocr_training` never imports torch. Accessing `LocalTrainingRunner` when
+the training dependencies are unavailable raises a helpful `ImportError`. `LocalEvalRunner` is
 importable without the extra; its evaluation backend loads torch and DocTR only
 when evaluation runs. The `dev` dependency-group pulls in `[train]` so `make ci`
 exercises the full stack; the torch-free import contract is covered separately by

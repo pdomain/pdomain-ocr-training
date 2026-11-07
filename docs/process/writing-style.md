@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-28
-Last verified: 2026-07-14
+Last verified: 2026-11-07
 Kind: process
 ---
 
@@ -12,7 +12,7 @@ Kind: process
 
 - **Kind:** process
 - **Status:** active
-- **Last verified:** 2026-07-14
+- **Last verified:** 2026-11-07
 - **Read when:** writing or reviewing reader-facing prose.
 - **Search terms:** writing style, readable output, documentation clarity.
 

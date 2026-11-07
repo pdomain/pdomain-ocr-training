@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-07-14
+Last verified: 2026-11-07
 ---
 
 # pdomain-ocr-training
@@ -14,37 +14,40 @@ history in [`CHANGELOG.md`](CHANGELOG.md).
 
 DocTR OCR model training and evaluation pipeline for the `pdomain-*` OCR suite.
 
-This package owns all torch/DocTR training code — detection and recognition model fine-tuning, dataset management, model export, and evaluation. Isolating torch here keeps every other `pdomain-*` SPA backend (e.g. `pdomain-ocr-labeler-spa`, `pdomain-prep-for-pgdp`) torch-free and deployment-lightweight.
+This package owns detection and recognition model fine-tuning, layout training, dataset management, model export, and evaluation. Its public configuration and runner interfaces import without loading Torch, so a web process can use those interfaces without loading the training runtime.
 
 Supersedes the legacy `pd-ocr-trainer` repo.
 
 ## Install modes
 
-The heavy training stack (torch / DocTR / matplotlib) is an **optional extra**,
-so the base install stays torch-free.
+The heavy training stack (torch / DocTR / matplotlib) is declared in the
+`train` optional extra. However, the required `pdomain-book-tools` dependency
+also installs that stack, as recorded in `uv.lock`. The base API imports without
+loading Torch; the base installation is not free of Torch dependencies.
 
 ```bash
-# Base — torch-free. Exposes the typed config models, ITrainingRunner,
+# Base API — imports without loading Torch. Exposes config models, ITrainingRunner,
 # IEvalRunner, and LocalEvalRunner. Use this in a long-lived web process
 # (e.g. pdomain-ocr-trainer-spa) that injects the runners but does not train.
 pip install pdomain-ocr-training
 
-# Full training stack — adds torch / DocTR / matplotlib and makes
+# Explicit training extra — declares torch / DocTR / matplotlib and makes
 # LocalTrainingRunner usable. Use this in the training worker process.
 pip install 'pdomain-ocr-training[train]'
 ```
 
 ## Protocols and concrete runners
 
-Two sibling Protocols, each with a concrete implementation:
+Three runner Protocols have concrete implementations:
 
 | Protocol | Concrete | Install mode |
 |---|---|---|
-| `ITrainingRunner` | `LocalTrainingRunner` | `[train]` extra required |
+| `ITrainingRunner` | `LocalTrainingRunner` | training dependencies required; declared by `[train]` |
+| `ILayoutTrainingRunner` | `LocalTrainingRunner` with a caller-supplied `LayoutModel` | training dependencies required to import the runner |
 | `IEvalRunner` | `LocalEvalRunner` | base API; `[train]` dependencies required when evaluation runs |
 
 `LocalTrainingRunner` is exported lazily — importing `pdomain_ocr_training` does
-**not** pull in torch. Accessing it without the `[train]` extra raises a clear
+**not** load torch. Accessing it when training dependencies are unavailable raises a clear
 `ImportError`. `LocalEvalRunner` is importable in the base install. Its real
 evaluation entry points load DocTR only when evaluation runs, so callers need
 the `[train]` dependencies for an actual evaluation.
@@ -85,6 +88,31 @@ cfg = DetectionConfig(train_path="data/train", val_path="data/val")
 for event in runner.train_detection("my-run", cfg):
     print(event.kind, event.message)
 ```
+
+### Layout training usage (`[train]` extra)
+
+Layout training reads schema `pdomain.layout-regions` version 1 from each export's
+`regions/labels.json`. It pairs pages with `detection/images/{prefix}_{page_index}.png`
+from the same export and fails if an image is missing. The caller supplies a model
+that implements `LayoutModel.train_batch`, `validate_batch`, and `save`.
+
+```python
+from pdomain_ocr_training import (
+    ILayoutTrainingRunner,
+    LayoutConfig,
+    LayoutModel,
+    LocalTrainingRunner,
+)
+
+
+def run_layout(model: LayoutModel) -> None:
+    runner: ILayoutTrainingRunner = LocalTrainingRunner(layout_model=model)
+    cfg = LayoutConfig(train_path="exports/train", val_path="exports/val")
+    for event in runner.train_layout("layout-run", cfg):
+        print(event.kind, event.message)
+```
+
+The task saves the supplied model's checkpoint. It does not download model weights.
 
 ### Eval usage
 

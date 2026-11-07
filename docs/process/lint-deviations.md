@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-22
-Last verified: 2026-07-14
+Last verified: 2026-11-07
 Kind: process
 ---
 
@@ -12,7 +12,7 @@ Kind: process
 
 - **Kind:** process
 - **Status:** active
-- **Last verified:** 2026-07-14
+- **Last verified:** 2026-11-07
 - **Read when:** adding, removing, or auditing a Ruff or basedpyright suppression.
 - **Search terms:** lint suppressions, noqa, pyright ignore, per-file ignores.
 
@@ -239,7 +239,7 @@ commit would conflate migration with refactoring.
 **Files:** `pdomain_ocr_training/detect.py`, `pdomain_ocr_training/recog.py`
 
 **Rules suppressed:** `ANN`, `D`, `BLE`, `S`, `PLW2901`, `RET506`,
-`PLW1508`, `LOG015`, `PLW0603`, `RET504`.
+`PLW1508`, `LOG015`, `PLW0603`, `RET504`, `PLR0917`.
 
 **Justification.** Same rationale as §18 (verbatim move). Additional
 families were required by patterns in the DocTR training entrypoints:
@@ -253,6 +253,8 @@ families were required by patterns in the DocTR training entrypoints:
 - `LOG015` — root logger calls (`logging.info(...)` vs `logger.info(...)`)
   are pre-existing in the original code.
 - `PLW0603` — global statement for a shared step counter is pre-existing.
+- `PLR0917` — the legacy entrypoints use many positional arguments. This rule
+  became stable in Ruff 0.16.7; the override preserves their existing signatures.
 
 These modules are also excluded from basedpyright type-checking for the same
 reason (see `[tool.basedpyright] exclude` in `pyproject.toml`).
@@ -261,14 +263,14 @@ reason (see `[tool.basedpyright] exclude` in `pyproject.toml`).
 
 ## Python — ruff (inline noqa)
 
-### 20. `BLE001` — `pdomain_ocr_training/local.py:248`
+### 20. `BLE001` — `pdomain_ocr_training/local.py:264`
 
 **Suppression:** `# noqa: BLE001 — must capture *all* exceptions from worker thread`
 
 **Justification.** The `LocalTrainingRunner` worker thread runs arbitrary
 user-supplied training code. Catching `BaseException` here is intentional:
 a bare `Exception` catch would miss `SystemExit`, `KeyboardInterrupt`, and
-other signals that should be surfaced as a `"fail"` training event rather
+other signals that should be surfaced as an `"error"` training event rather
 than silently swallowed or propagated past the thread boundary.
 
 ---
@@ -317,10 +319,15 @@ renaming it would diverge from all DocTR examples and documentation.
 
 ---
 
-### 25. `S603` — `scripts/update_github_actions.py:49`
+### 25. basedpyright JSON boundary — `pdomain_ocr_training/layout_regions.py`
 
-**Suppression:** `# noqa: S603 - resolved executable and fixed argument structure`
+**Suppressions:** `reportAny` in `_json_value` and
+`reportUnknownVariableType` in `_object_dict` and `_object_list`.
 
-**Justification.** The function resolves `gh` to an absolute executable path
-and constructs the remaining arguments internally. It never invokes a shell or
-accepts an executable from user input, so the list-form subprocess call is safe.
+**Justification.** `json.loads` returns `Any`. `_json_value` exposes it as
+`object`, and the parsers validate the fields before use. The collection helpers
+check the container type and dictionary keys before returning typed containers.
+These suppressions cover that JSON boundary, not unchecked application data.
+
+The former `S603` entry for `scripts/update_github_actions.py` was removed with
+the deleted script. Commit `3ec40d6` records its removal.

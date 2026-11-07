@@ -2,7 +2,7 @@
 Status: draft
 Owner: CT
 Created: 2026-08-21
-Last verified: 2026-08-21
+Last verified: 2026-11-07
 Kind: plan
 ---
 
@@ -12,7 +12,9 @@ Kind: plan
 
 **Goal:** Build a separate typography pipeline that predicts overlapping whole-word and grapheme-span styles from OCR crops, recognized text, and geometry.
 
-**Architecture:** `pdomain-book-tools` owns F2 parsing and canonical span contracts. A new `pdomain-source-data` repository owns shared ingestion, cross-source evidence, correction exchange, audit, materialization, and leakage-safe manifests. `pdomain-ocr-labeler-spa` creates and corrects OCR geometry. `pdomain-ocr-training` owns a contextual text-conditioned visual model and a separate formatting runner.
+**Architecture:** `pdomain-book-contracts` owns F2 parsing and canonical span contracts. `pdomain-book-tools` retains compatibility imports and image-processing operations.
+
+`pdomain-source-data` owns shared ingestion, cross-source evidence, correction exchange, audit, materialization, and leakage-safe manifests. `pdomain-ocr-labeler-spa` creates and corrects OCR geometry. `pdomain-ocr-training` is the planned owner of the contextual visual model and a separate formatting runner.
 
 **Tech Stack:** Python 3.11 through 3.13 by repository, Pydantic v2, `regex`, PyArrow, RapidFuzz or Edlib, HarfBuzz, FreeType, fontTools, Pillow/OpenCV, PyTorch, torchvision, pytest, Ruff, basedpyright, Docgraph.
 
@@ -26,7 +28,14 @@ Deliver a separately versioned typography data, training, and inference path wit
 
 ## Architecture
 
-Shared lossless parsing and annotations live in `pdomain-book-tools`. Cross-corpus preparation lives in a new owner-approved data repository. Synthetic rendering extends `pdomain-ocr-synth`. Model training and evaluation live in `pdomain-ocr-training`.
+Shared lossless parsing and annotations live in `pdomain-book-contracts`. Cross-corpus preparation lives in `pdomain-source-data`. Synthetic typography will extend `pdomain-ocr-synth`. Typography model training and evaluation remain planned work in `pdomain-ocr-training`.
+
+Code validation on 2026-11-07 confirmed the extracted contracts and the
+`pdomain-source-data` projection helper, `tasks/typography/crops.py:align_page`.
+That helper aligns supplied OCR words and projects style ranges. It does not
+write pixel crops or establish that a training dataset exists. This package
+still has no typography model or formatting runner. Historical task checkboxes
+remain unchanged; they are not a current cross-repository completion ledger.
 
 ## Tech Stack
 
@@ -38,7 +47,18 @@ Do not implement, create a repository, download fonts, train a model, commit, or
 
 ## File map and dependency order
 
-Work proceeds in this order:
+The task map below records the original August 21 ownership and checkpoints.
+Since then, shared span types and PGDP readers moved to the Torch-free
+`pdomain-book-contracts` package. `pdomain-book-tools` retains compatibility
+imports and image-processing operations. Before executing an old create-file or
+release step, check the current owner and reuse shipped contracts. The
+[phase-two plan](2026-08-31-fine-grained-typography-phase-two.md) records the
+remaining crop and model sequence. Unchecked steps here do not prove that a
+sibling repository's work is still unimplemented.
+
+The original August 21 sequence was as follows. These historical ownership and
+create-file steps are not current execution instructions; apply the owner check
+above and the phase-two sequence before resuming work.
 
 1. `pdomain-book-tools` adds lossless source, label, span, and annotation types.
 2. `pdomain-book-tools` adds the F2 tokenizer, parser, offset map, rules, and local OCR alignment.
@@ -342,7 +362,11 @@ Expected: each command reads the mounted corpus without modifying it and emits a
 
 Run: `uv run pdomain-source-data audit --task typography --config configs/local.toml --output /workspaces/pdomain-data/typography/audits/2026-08-21`
 
-Expected: JSON and Parquet summaries reproduce 80 projects, 79 F2 files, 21,353 F2 pages, tag counts `i=27460`, `sc=10090`, `b=1958`, `f=35`, `g=0`, 57 nested opens, and one known unclosed `<sc>`. If canonical grapheme rules change candidate counts, include an explicit parser-version migration note.
+Expected: JSON and Parquet summaries identify the input snapshot, hashes, and parser version.
+
+Only pinned August 21 inputs should reproduce 80 projects, 79 F2 files, 21,353 F2 pages, tag counts `i=27460`, `sc=10090`, `b=1958`, `f=35`, `g=0`, 57 nested opens, and one known unclosed `<sc>`.
+
+The August 31 snapshot instead had 286 projects, 285 F2 files, 73,103 F2 pages, and tag counts `i=102393`, `sc=30008`, `b=20734`, `f=1138`, `g=9`. Record later snapshots independently. If canonical grapheme rules change candidate counts, include an explicit parser-version migration note.
 
 - [ ] **Step 4: Add distribution enrichers**
 
@@ -376,7 +400,7 @@ Start with PG ebook number, then title, author, source URL, repository sources, 
 
 - [ ] **Step 3: Implement the edition gate**
 
-Require identifier lineage plus two independent signals from edition matter, DP credit, scan source, distinctive text, and high-margin alignment. Make thresholds configuration fields stored in the run manifest.
+Require identifier lineage plus two independent signals from edition matter, scan source, distinctive text, and high-margin alignment. The August 31 cohort has no usable DP-credit signal. Retain credit metadata when present, but do not require or count it as available for this cohort. Make thresholds configuration fields stored in the run manifest.
 
 - [ ] **Step 4: Implement global monotonic alignment**
 
@@ -390,7 +414,11 @@ Parse inherited CSS for `font-style`, `font-weight`, `font-variant`, `text-trans
 
 Run: `uv run pdomain-source-data match --task typography --config configs/local.toml --output /workspaces/pdomain-data/typography/matches/pg-v1 --dry-run`
 
-Expected: 80 PG candidates, 80 local text artifacts, zero local HTML artifacts for this cohort, and no automatic edition acceptance without evidence. The SE exact-ID join reports zero for the current 80 PGDP projects. A stratified human audit must approve precision before projection.
+Expected: report candidate counts and artifact coverage for the pinned input snapshot. Do not accept editions automatically without evidence.
+
+The original August 21 cohort had 80 PG candidates, 80 local text artifacts, zero local HTML artifacts, and zero SE exact-ID matches. These are historical results.
+
+By August 31, all 286 PGDP projects matched local Gutenberg directories. HTML carried italic tags in 93 percent of matched books, small-caps styling in 87 percent, and page anchors in 89 percent. The SE exact-ID intersection was one. Page anchors still require validation against scan boundaries. A stratified human audit must approve precision before projection.
 
 Rollback: retain candidate evidence, withdraw the promoted match manifest, and lower no threshold without a new version.
 
@@ -684,7 +712,7 @@ Padding must not change valid logits. Unknown labels contribute zero loss. Text 
 
 - [ ] **Step 3: Implement the model**
 
-Use a compact CNN or ViT encoder with a high-resolution target-word view and a short-line context view. Add learned grapheme and position embeddings, target-box and word-boundary embeddings, geometry and OCR-confidence projections, and two to four cross-attention blocks. Use independent sigmoid logits, a target-word mask, and a pooled whole-word head that compares target and neighbor features. Keep text decoding absent.
+Use a compact CNN or ViT encoder with a high-resolution target-word view and a short-line context view. Add learned grapheme and position embeddings, target-box and word-boundary embeddings, and geometry and OCR-confidence projections. Constrain query-to-image alignment to be monotonic and warm-start it from forced alignment. Test monotonic ordering and the warm start before training. Use independent sigmoid logits, a target-word mask, and a pooled whole-word head that compares target and neighbor features. Keep text decoding absent.
 
 - [ ] **Step 4: Implement confidence-weighted losses**
 

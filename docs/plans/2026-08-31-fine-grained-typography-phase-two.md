@@ -2,7 +2,7 @@
 Status: draft
 Owner: CT
 Created: 2026-08-31
-Last verified: 2026-08-31
+Last verified: 2026-11-07
 Kind: plan
 ---
 
@@ -25,7 +25,7 @@ This plan does not authorize implementation. Begin each task only after explicit
 - **Kind:** plan
 - **Status:** draft
 - **Owner:** CT
-- **Last verified:** 2026-08-31
+- **Last verified:** 2026-11-07
 - **Read when:** implementing typography crop production, the formatting model, or synthetic typography.
 - **Search terms:** typography phase two, formatting model, training crops, monotonic alignment, whole-word baseline.
 
@@ -52,9 +52,12 @@ baseline, and only then builds the contextual model.
 Four of its findings change this plan. Read [the corpus
 re-verification](../research/2026-08-31-typography-corpus-reverification.md) first.
 
-Training cannot start with the model. Nothing crops pixels from a page image, nothing calls the
-shipped alignment functions, and the labeler preparation stage emits geometry as absent. Crop
-production comes first and is the whole of Phase 2A.
+Training cannot start with the model. As of the 2026-11-07 code check,
+`pdomain-source-data` has an `align_page` helper in `tasks/typography/crops.py`.
+It calls the alignment and style-projection functions on supplied OCR words and
+records silver-tier evidence. It does not write pixel crops. The geometry-absent
+labeler preparation path also remains. Phase 2A must connect the existing helper
+to geometry acquisition, pixel extraction, and reproducible dataset manifests.
 
 The human labeler is not required for the baseline, but it is required for the contextual model.
 The existing recognition and page-region models can supply geometry directly, which yields
@@ -66,7 +69,8 @@ The recommended alignment is monotonic, warm-started from forced alignment, rath
 cross-attention.
 
 The synthetic renderer must not depend on `pdomain-book-tools`, because that package requires a full
-training stack. It carries a torch-free mirror of the span types instead.
+training stack. Shared typography types now live in the Torch-free `pdomain-book-contracts`
+package. Task C1 reuses those types directly instead of introducing a local mirror.
 
 Two tasks from that plan are deferred rather than dropped. Task 13, contextual stress tests and weak
 supervision, waits until the contextual model has a measured baseline to regress against. Task 15,
@@ -148,11 +152,16 @@ last decimals of confidence, which is why the device belongs in the configuratio
 
 ### Task A2: Project F2 spans onto OCR tokens and cut crops
 
+Code check on 2026-11-07: `crops.py:align_page` and `test_crops.py` already
+cover style projection onto supplied OCR words. Reuse and extend them. Pixel
+extraction, crop manifests, and a crop-production CLI command remain work for
+this task. Existing unit tests do not establish a real training dataset.
+
 **Files:**
 
-- Create: `/workspaces/pdomain/pdomain-source-data/pdomain_source_data/tasks/typography/crops.py`
+- Extend: `/workspaces/pdomain/pdomain-source-data/pdomain_source_data/tasks/typography/crops.py`
 - Extend: `/workspaces/pdomain/pdomain-source-data/pdomain_source_data/cli.py`
-- Create: `/workspaces/pdomain/pdomain-source-data/tests/tasks/typography/test_crops.py`
+- Extend: `/workspaces/pdomain/pdomain-source-data/tests/tasks/typography/test_crops.py`
 
 - [ ] **Step 1: Write projection tests against known pages**
 
@@ -407,28 +416,31 @@ Expected: existing runner implementations still satisfy their protocols.
 Start this only if Phase 2B shows a label whose real support is too thin to train. On current counts
 that is letter spacing, at nine positives, and possibly resolved font changes.
 
-### Task C1: Mirror the span contract without a training dependency
+### Task C1: Reuse the span contract without a training dependency
 
 **Files:**
 
-- Create: `/workspaces/pdomain/pdomain-ocr-synth/src/pdomain_ocr_synth/typography/spans.py`
+- Modify: `/workspaces/pdomain/pdomain-ocr-synth/pyproject.toml` and its lockfile
+- Create: `/workspaces/pdomain/pdomain-ocr-synth/src/pdomain_ocr_synth/typography/spans.py` as the renderer adapter
 - Create: `/workspaces/pdomain/pdomain-ocr-synth/tests/typography/test_spans.py`
 
-- [ ] **Step 1: Define a torch-free label and span mirror**
+- [ ] **Step 1: Reuse the torch-free label and span types**
 
-`pdomain-book-tools` requires Torch, torchvision, torchaudio, transformers, and python-doctr, so the
-renderer must not depend on it. Mirror the labels and half-open grapheme spans and test them against
-fixtures exported from the canonical package.
+Pin a released `pdomain-book-contracts` version and its resolved artifact in the lockfile.
+Import its canonical labels and half-open grapheme spans in the renderer adapter. Keep
+`pdomain-book-tools` and its training stack out of the renderer's dependency set.
 
 - [ ] **Step 2: Add a contract-drift test**
 
-Assert the mirrored label set matches a checked-in fixture of the canonical set, so divergence fails
-the build rather than the dataset.
+Test span serialization against the canonical package and assert that importing the adapter
+does not load Torch. Check the resolved dependency set also excludes Torch, so an import-only
+test cannot hide a heavy installation dependency.
 
 Run: `make ci AI=1`
 
-Expected: the renderer's dependency set is unchanged and still excludes Torch. Rollback deletes the
-`typography` package; the existing renderer is untouched.
+Expected: the renderer adds the shared contracts dependency and still excludes Torch. Rollback
+removes the adapter and restores the prior dependency and lockfile entries; the existing renderer
+is untouched.
 
 ### Task C2: Add the pinned font manifest and mixed-span renderer
 
@@ -512,5 +524,6 @@ authoritative until the typography gate passes.
 - The numeric quality, calibration, abstention, and latency gates, once Phase 2A publishes counts.
 - Whether `letter_spaced` waits for real positives or enters as a synthetic-only experimental label.
 - The controlled font-change vocabulary, now that `<f>` appears 1,138 times across 11 projects.
-- Whether the torch-free span mirror in the renderer is acceptable, or whether the dependency
-  boundary should be solved another way.
+
+The former span-mirror question is resolved by the extracted `pdomain-book-contracts` package.
+Task C1 still needs implementation and verification in the renderer repository.

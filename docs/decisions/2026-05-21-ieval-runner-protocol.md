@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-07-14
+Last verified: 2026-11-07
 Kind: decision
 ---
 
@@ -12,7 +12,7 @@ Kind: decision
 
 - **Kind:** decision
 - **Status:** active
-- **Last verified:** 2026-07-14
+- **Last verified:** 2026-11-07
 - **Read when:** evaluating why training and evaluation use separate protocols.
 - **Search terms:** IEvalRunner rationale, synchronous evaluation, torch-free eval.
 
@@ -79,7 +79,7 @@ handle (log, surface in the API response, etc.).
 `LocalEvalRunner` imports no torch or DocTR module at module import time. Its
 entry points load `_eval_backend` lazily and remain replaceable in tests. The
 class is importable in the base install, unlike `LocalTrainingRunner`, whose
-runtime implementation requires the training extra.
+runtime implementation requires the training dependencies.
 
 ## Consequences
 
@@ -88,9 +88,11 @@ runtime implementation requires the training extra.
   to its existing result schema.
 - M12 (typeface classifier) and M13 (glyph eval slicing) can populate
   `result.slices` without any Protocol changes.
-- The torch-free base install now exports all eval config / result models and
+- The base API exports all eval config / result models and
   `IEvalRunner`, enabling the SPA web process to type-check eval results
-  without pulling in the training stack.
+  without loading the training stack. Dependency installation is a separate
+  boundary: `pdomain-book-tools` currently installs Torch transitively, as recorded
+  in `uv.lock`.
 
 ## Supersedes / Superseded-by
 

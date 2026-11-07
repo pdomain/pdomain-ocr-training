@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-11-06
+Last verified: 2026-11-07
 Kind: architecture
 ---
 
@@ -12,18 +12,19 @@ Kind: architecture
 
 - **Kind:** architecture
 - **Status:** active
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-07
 - **Read when:** understanding shipped training, evaluation, and torch-free boundaries.
 - **Search terms:** OCR training architecture, DocTR evaluation, runner protocols, glyph slices.
 
-**Status:** Current as of 2026-11-06.
+**Status:** Validated against code and the local test suite on 2026-11-07.
 
 ## Purpose
 
 `pdomain-ocr-training` owns the reusable torch/DocTR OCR model-training and
 evaluation implementation for the `pdomain-*` suite. It keeps configuration,
-event, and runner contracts torch-free while isolating the heavy runtime behind
-the training extra. Consumers use those typed contracts at their boundaries.
+event, and runner contracts importable without loading Torch. The training extra
+declares the heavy runtime, but the required `pdomain-book-tools` dependency also
+installs it transitively. Consumers use those typed contracts at their boundaries.
 The trainer SPA's worker also instantiates `LocalTrainingRunner` as its concrete
 local implementation; torch remains outside the long-lived web process.
 
@@ -47,14 +48,16 @@ pdomain_ocr_training/
 ## Install modes
 
 ```bash
-pip install pdomain-ocr-training          # Torch-free base
-pip install 'pdomain-ocr-training[train]' # Adds torch / DocTR / matplotlib
+pip install pdomain-ocr-training          # Base API; heavy transitive dependencies
+pip install 'pdomain-ocr-training[train]' # Explicit training dependencies
 ```
 
-The base install exposes all typed models, both Protocols, and `LocalEvalRunner`.
+The base API exposes all typed models, three runner Protocols, and `LocalEvalRunner`.
 `LocalTrainingRunner` is available lazily — `import pdomain_ocr_training` never
-imports torch; accessing `LocalTrainingRunner` without `[train]` raises a clear
-`ImportError`.
+imports torch; accessing `LocalTrainingRunner` without the training dependencies raises a clear
+`ImportError`. The import tests block Torch and DocTR to validate that boundary;
+they do not prove that dependency installation excludes those packages. The
+base package's `pdomain-book-tools` dependency includes them in `uv.lock`.
 
 ## Protocols
 
@@ -145,7 +148,7 @@ All models live in `protocols.py` and are Pydantic v2 `BaseModel`s.
   `pdomain_ocr_training/protocols.py`
 - Tests: `tests/test_eval_backend_wiring.py`,
   `tests/test_glyph_slice_emission.py`, `tests/test_eval_protocols.py`
-- Verified: 2026-07-14 against the current source and tests
+- Verified: 2026-11-07 against the current source and the local test suite
 
 ## Legacy modules
 

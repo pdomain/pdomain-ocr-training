@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-09-18
-Last verified: 2026-09-18
+Last verified: 2026-11-07
 Kind: decision
 ---
 
@@ -12,7 +12,7 @@ Kind: decision
 
 - **Kind:** decision
 - **Status:** active
-- **Last verified:** 2026-09-18
+- **Last verified:** 2026-11-07
 - **Read when:** touching `_emit_glyph_slices`, `GlyphFeatureSet`,
   `RecognitionEvalConfig.glyph_annotations_path`, or asking where the
   glyph-feature sidecar comes from.
@@ -22,12 +22,16 @@ Kind: decision
 **Date:** 2026-09-18
 **Status:** Accepted
 
-## The decision
+## Decision
+
+### The decision
 
 `pdomain-ocr-labeler-spa`'s dataset export writes the glyph-feature JSON
 sidecar. This repository keeps consuming it and never produces it.
 
-## What was open
+## Context
+
+### What was open
 
 `docs/context/intent-map.md` carried this under "Needs owner decision": whether
 dataset export or the trainer SPA writes the sidecar. `docs/context/current-state.md`
@@ -35,7 +39,7 @@ listed it as a current risk. Recognition eval could slice CER and WER by
 ligature, long s and swash, and nothing anywhere wrote the file those slices
 need, so the capability had never run on real data.
 
-## Why the export
+### Why the export
 
 The export is the only place where both facts exist at the same moment: the
 person's glyph annotations for a word, and the recognition crop filename that
@@ -47,7 +51,9 @@ The trainer SPA was the alternative. It sees crops and metrics, not the
 labeling session where a person marked the glyphs, so it would be deriving the
 annotation side second-hand.
 
-## What the producer must honour
+## Consequences
+
+### What the producer must honour
 
 - The file is one JSON object, `dict[crop_id, GlyphFeatureSet]`, keyed by the
   DocTR recognition val-set label key. That is the per-crop filename or relative
@@ -66,13 +72,13 @@ annotation side second-hand.
   all-false for a word nobody looked at would assert the absence of something
   never checked, and would land that word in every feature's negative set.
 
-## What this does not decide
+### What this does not decide
 
 Nothing here makes this repository import `pdomain-book-tools`. `GlyphFeatureSet`
 stays the decoupled shape it is, carrying only the three facts recognition eval
 needs, and the labeler matches that shape by hand rather than by sharing a type.
 
-## Why now
+### Why now
 
 The labeler settled a related question the same day: it will not build a glyph
 predictor. The classifier this repository's predecessor `pd-ocr-trainer` was to
@@ -80,3 +86,7 @@ ship never existed, and that repository is retired. Glyph features therefore
 come from people, not models, for the foreseeable future — which makes it worth
 getting the marks people already make into eval. The labeler's reasoning is in
 its `docs/context/decisions.md`, two entries dated 2026-09-18.
+
+## Supersedes / Superseded-by
+
+No superseding or superseded ADR is recorded here.

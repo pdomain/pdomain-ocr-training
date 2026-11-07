@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-13
-Last verified: 2026-11-06
+Last verified: 2026-11-07
 ---
 
 # Intent map
@@ -10,11 +10,16 @@ Last verified: 2026-11-06
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-07
 - **Read when:** checking deferred work, blocked work, or an owner decision.
 - **Search terms:** intent map, deferred work, classifier runner, dep-refresh decision.
 
 ## Deferred work
+
+- **Synthetic typography contract integration.** The shared span types now live
+  in Torch-free `pdomain-book-contracts`. The phase-two plan uses that package
+  instead of a local mirror. Renderer integration and dependency verification
+  remain unimplemented in Task C1.
 
 - **Benchmark OCR and HTR alternatives.** Compare PP-OCRv5 through ONNX, HTR
   engines, and licensed historical datasets with the current DocTR baseline.

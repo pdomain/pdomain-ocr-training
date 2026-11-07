@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-14
-Last verified: 2026-07-14
+Last verified: 2026-11-07
 ---
 
 # Durable decisions
@@ -10,7 +10,7 @@ Last verified: 2026-07-14
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-07-14
+- **Last verified:** 2026-11-07
 - **Read when:** investigating changed direction, retired documents, or durable rationale.
 - **Search terms:** decisions, implementation deviations, tombstones, retirement.
 
@@ -86,3 +86,14 @@ Last verified: 2026-07-14
   [`docs/architecture/00-overview.md`](../architecture/00-overview.md);
   `tests/test_glyph_slice_emission.py`.
 - **Remaining work:** Decide upstream glyph sidecar writer ownership.
+
+### 2026-11-07 — Code validation of the existing decisions
+
+- The evaluation backend still uses the 0.50–0.95 IoU threshold sweep and lazy
+  imports. The local suite passed all 139 tests today.
+- The September 18 [glyph-sidecar ADR](../decisions/2026-09-18-glyph-sidecar-writer.md)
+  resolved the writer question left open in the July entries. The labeler's
+  `core/jobs/handlers/glyph_sidecar.py` writes reviewed-word entries; training's
+  `_eval_backend._emit_glyph_slices` consumes them and excludes missing crops.
+- The July entries remain historical records. Their pending writer item is
+  superseded by that existing ADR.
