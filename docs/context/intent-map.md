@@ -2,10 +2,17 @@
 Status: active
 Owner: CT
 Created: 2026-07-13
-Last verified: 2026-07-14
+Last verified: 2026-11-06
 ---
 
 # Intent map
+
+## Agent Index
+
+- **Status:** active
+- **Last verified:** 2026-11-06
+- **Read when:** checking deferred work, blocked work, or an owner decision.
+- **Search terms:** intent map, deferred work, classifier runner, dep-refresh decision.
 
 ## Deferred work
 
@@ -29,13 +36,27 @@ Last verified: 2026-07-14
 
 ## Needs owner decision
 
-Nothing is waiting on an owner. Glyph sidecar writer ownership was the last
-entry here and was decided on 2026-09-18: `pdomain-ocr-labeler-spa`'s dataset
-export writes the sidecar, because that is the only place a word's human glyph
-annotations and its recognition crop filename exist at the same moment. The
-contract the producer must honour, including that an absent crop means unknown
-rather than feature-free, is in
-`docs/decisions/2026-09-18-glyph-sidecar-writer.md`.
+- **Close or restore the dep-refresh issue.** The issue file stays open.
+  On 2026-11-06, `gh api repos/pdomain/pdomain-ocr-training/branches/master/protection`
+  returned HTTP 404, "Branch not protected". `.github/workflows` is absent.
+  Commit `736ebc6` deleted the CI, dep-refresh, nightly, release, and index-regen
+  workflows. Its message says branch protection is off. The same day's
+  `gh api repos/pdomain/pdomain-ocr-training/actions/permissions` returned
+  `enabled: false`. That does not prove the August defects were fixed as the
+  issue describes them. It does not prove GitHub CI should come back.
+  Owner: decide whether
+  [the issue](../issues/2026-08-08-dep-refresh-cannot-auto-land.md) is closed
+  by that removal, or whether Actions and branch protection should be restored.
+
+## Glyph sidecar writer
+
+Glyph sidecar writer ownership was decided on 2026-09-18.
+`pdomain-ocr-labeler-spa`'s dataset export writes the sidecar. It does that
+because it is the only place a word's human glyph annotations and its
+recognition crop filename exist at the same moment. The contract the producer
+must honour is in
+[the ADR](../decisions/2026-09-18-glyph-sidecar-writer.md). That contract
+includes this rule: an absent crop means unknown rather than feature-free.
 
 ## Legacy-unverified sweep
 

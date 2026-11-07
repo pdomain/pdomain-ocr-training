@@ -2,15 +2,17 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-07-14
+Last verified: 2026-11-06
 ---
 
 # docs/
 
-Start with the [current architecture](architecture/00-overview.md), [durable
-decisions](context/decisions.md), [current state](context/current-state.md), and
-[intent map](context/intent-map.md). Process references include the [writing
-style](process/writing-style.md) and [lint suppression catalogue](process/lint-deviations.md).
+Start with the [current architecture](architecture/00-overview.md) and the [remaining-work list](ROADMAP.md).
+
+- Durable rationale is in [decisions](context/decisions.md).
+- The [current state](context/current-state.md) and [intent map](context/intent-map.md) hold deferred work and open decisions.
+- Open issue files are indexed in [docs/issues/README.md](issues/README.md).
+- Process references include the [writing style](process/writing-style.md) and [lint suppression catalogue](process/lint-deviations.md).
 
 How documentation is organized in this repo.
 
