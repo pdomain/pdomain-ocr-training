@@ -12,7 +12,7 @@ license = { text = "MIT" }
 requires-python = ">=3.11,<3.14"
 dependencies = [
     "pdomain-book-tools>=0.28.0",
-    "pdomain-book-contracts>=0.2.0",
+    "pdomain-book-contracts>=0.2.1",
     "pydantic>=2.13",
     "tomli>=2.4",
     "tomli-w>=1.2",
