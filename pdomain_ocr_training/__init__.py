@@ -33,7 +33,7 @@ from importlib.metadata import PackageNotFoundError, version
 from typing import TYPE_CHECKING
 
 from pdomain_ocr_training.layout import LayoutModel
-from pdomain_ocr_training.layout_regions import load_layout_export
+from pdomain_ocr_training.layout_regions import load_layout_export, load_layout_structures
 from pdomain_ocr_training.protocols import (
     DetectionConfig,
     DetectionEvalConfig,
@@ -77,6 +77,7 @@ __all__ = [
     "RecognitionEvalResult",
     "TrainingEvent",
     "load_layout_export",
+    "load_layout_structures",
 ]
 
 

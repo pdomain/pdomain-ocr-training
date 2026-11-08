@@ -5,12 +5,19 @@ from __future__ import annotations
 import json
 import struct
 from pathlib import Path
-from typing import TypedDict
+from typing import TYPE_CHECKING, NotRequired, TypedDict
 
 from pdomain_book_contracts.annotation import RegionRole
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from pdomain_book_contracts.layout.text_hints import LayoutStructure
+
 LAYOUT_REGIONS_SCHEMA = "pdomain.layout-regions"
 LAYOUT_REGIONS_VERSION = 1
+LAYOUT_STRUCTURE_SCHEMA = "pdomain.layout-structure"
+LAYOUT_STRUCTURE_VERSION = 1
 LAYOUT_CLASS_NAMES: tuple[str, ...] = tuple(role.value for role in RegionRole)
 
 _CLASS_INDEX = {name: index for index, name in enumerate(LAYOUT_CLASS_NAMES)}
@@ -33,6 +40,7 @@ class LayoutRegionExample(TypedDict):
     class_id: int
     box: LayoutBox
     member_word_signatures: list[list[float | bool | None]]
+    structure: NotRequired[LayoutStructure]
 
 
 class LayoutPageExample(TypedDict):
@@ -65,7 +73,70 @@ def load_layout_export(export_dir: Path) -> list[LayoutPageExample]:
         seen_prefixes.add(page["prefix"])
         seen_images.add(image)
         pages.append(page)
+    structures = load_layout_structures(export_dir, pages=pages)
+    for page in pages:
+        for region in page["regions"]:
+            key = (page["prefix"], page["page_index"], region["region_id"])
+            structure = structures.get(key)
+            if structure is not None:
+                region["structure"] = structure
     return pages
+
+
+def load_layout_structures(
+    export_dir: Path,
+    *,
+    pages: Sequence[LayoutPageExample],
+) -> dict[tuple[str, int, str], LayoutStructure]:
+    """Load and validate optional reviewed structure beside a region export."""
+    path = export_dir / "regions" / "structure.json"
+    if not path.exists():
+        return {}
+    if not path.is_file():
+        raise ValueError(f"layout structure path is not a file: {path}")
+    from pdomain_book_contracts.layout.text_hints import LayoutStructure
+
+    records = _parse_structure_document(path)
+    target_counts: dict[tuple[str, int, str], int] = {}
+    for page in pages:
+        for region in page["regions"]:
+            key = (page["prefix"], page["page_index"], region["region_id"])
+            target_counts[key] = target_counts.get(key, 0) + 1
+    ambiguous_targets = [key for key, count in target_counts.items() if count > 1]
+    if ambiguous_targets:
+        raise ValueError(
+            f"layout structure file has an ambiguous duplicate region target {ambiguous_targets[0]!r}"
+        )
+    known_regions = set(target_counts)
+    structures: dict[tuple[str, int, str], LayoutStructure] = {}
+    for record in records:
+        mapping = _object_dict(record, "structure region")
+        key = (
+            _layout_str(
+                _required(mapping, "prefix", "structure region prefix"), "structure prefix"
+            ),
+            _layout_int(
+                _required(mapping, "page_index", "structure region page_index"),
+                "structure page_index",
+            ),
+            _layout_str(
+                _required(mapping, "region_id", "structure region region_id"),
+                "structure region_id",
+            ),
+        )
+        if key in structures:
+            raise ValueError(f"layout structure file has duplicate join key {key!r}")
+        if key not in known_regions:
+            raise ValueError(f"layout structure file has an unknown region join key {key!r}")
+        structure = _object_dict(
+            _required(mapping, "structure", "structure region structure"),
+            "structure region structure",
+        )
+        try:
+            structures[key] = LayoutStructure.from_dict(structure)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"layout structure {key!r} is invalid: {exc}") from exc
+    return structures
 
 
 def _json_value(text: str) -> object:
@@ -124,6 +195,22 @@ def _parse_document(path: Path) -> list[object]:
         return _object_list(raw.get("pages"), "pages")
     except ValueError as exc:
         raise ValueError("layout regions file has an unexpected schema") from exc
+
+
+def _parse_structure_document(path: Path) -> list[object]:
+    raw = _object_dict(_json_value(path.read_text(encoding="utf-8")), "structure file")
+    version = raw.get("version")
+    version_ok = (
+        isinstance(version, int)
+        and not isinstance(version, bool)
+        and version == LAYOUT_STRUCTURE_VERSION
+    )
+    if raw.get("schema") != LAYOUT_STRUCTURE_SCHEMA or not version_ok:
+        raise ValueError("layout structure file has an unexpected schema")
+    try:
+        return _object_list(raw.get("regions"), "structure regions")
+    except ValueError as exc:
+        raise ValueError("layout structure file has an unexpected schema") from exc
 
 
 def _image_name(prefix: str, page_index: int) -> str:
