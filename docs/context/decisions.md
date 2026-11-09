@@ -97,3 +97,16 @@ Last verified: 2026-11-07
   `_eval_backend._emit_glyph_slices` consumes them and excludes missing crops.
 - The July entries remain historical records. Their pending writer item is
   superseded by that existing ADR.
+
+### 2026-11-09 Retired: Fine-grained typography phase-one handoff (2026-08-21)
+
+- Old path: `docs/handoff/2026-08-21-115334-fine-grained-typography-phase-one.md`
+- Outcome: superseded
+- Superseded by: the [typography model design](../specs/2026-08-21-fine-grained-typography-model-design.md),
+  [current state](current-state.md) and [intent map](intent-map.md)
+- Removal commit: (fill after commit)
+- Rationale kept: Phase one shipped. `pdomain-book-contracts` holds the typography types and the F2
+  tokenizer, parser and project rules, released v0.1.0 through v0.3.0. `pdomain-source-data` exists,
+  and the labeler implements typography review. The design spec records the handoff's decisions and
+  rejected approaches. That covers per-field fusion, the four label states and model ordering.
+- Remaining work: training and synthesis, already in current state and the intent map

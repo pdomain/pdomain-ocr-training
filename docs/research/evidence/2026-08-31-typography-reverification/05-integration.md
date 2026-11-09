@@ -12,6 +12,7 @@ spec, and 15-task implementation plan for precisely this model:
 - `pdomain-ocr-training/docs/specs/2026-08-21-fine-grained-typography-model-design.md`
 - `pdomain-ocr-training/docs/plans/2026-08-21-fine-grained-typography-model.md`
 - `pdomain-ocr-training/docs/handoff/2026-08-21-115334-fine-grained-typography-phase-one.md`
+  (retired 2026-11-09; kept in Git history)
 
 The design's repository split is exactly the brief's four options, combined
 rather than chosen between: canonical F2 parsing and span types in
