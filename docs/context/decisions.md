@@ -104,7 +104,7 @@ Last verified: 2026-11-07
 - Outcome: superseded
 - Superseded by: the [typography model design](../specs/2026-08-21-fine-grained-typography-model-design.md),
   [current state](current-state.md) and [intent map](intent-map.md)
-- Removal commit: (fill after commit)
+- Removal commit: `3ae6a925`
 - Rationale kept: Phase one shipped. `pdomain-book-contracts` holds the typography types and the F2
   tokenizer, parser and project rules, released v0.1.0 through v0.3.0. `pdomain-source-data` exists,
   and the labeler implements typography review. The design spec records the handoff's decisions and
