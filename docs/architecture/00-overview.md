@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-11-07
+Last verified: 2026-11-12
 Kind: architecture
 ---
 
@@ -12,7 +12,7 @@ Kind: architecture
 
 - **Kind:** architecture
 - **Status:** active
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-12
 - **Read when:** understanding shipped training, evaluation, and torch-free boundaries.
 - **Search terms:** OCR training architecture, DocTR evaluation, runner protocols, glyph slices.
 
@@ -164,6 +164,10 @@ of unrelated tasks.
   so the streaming caller always gets a clean iterator.
 - `IEvalRunner`: exceptions propagate directly. The consumer decides how to
   surface them (API error response, log, etc.).
+
+## Boundaries
+
+This package does not own typography contracts, corpus preparation, scan measurement, or synthetic rendering. There is no formatting module. The current split, and which future work belongs in another repository, is in [Where training work lives](suite-boundaries.md).
 
 ## ADRs
 

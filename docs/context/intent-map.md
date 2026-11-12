@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-13
-Last verified: 2026-11-07
+Last verified: 2026-11-12
 ---
 
 # Intent map
@@ -10,22 +10,27 @@ Last verified: 2026-11-07
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-12
 - **Read when:** checking deferred work, blocked work, or an owner decision.
 - **Search terms:** intent map, deferred work, classifier runner, dep-refresh decision.
 
 ## Deferred work
 
-- **Synthetic typography contract integration.** The shared span types now live
-  in Torch-free `pdomain-book-contracts`. The phase-two plan uses that package
-  instead of a local mirror. Renderer integration and dependency verification
-  remain unimplemented in Task C1.
+Sequenced work lives in the [roadmap](../ROADMAP.md). The items below are
+explicitly not in the current phase.
 
-- **Benchmark OCR and HTR alternatives.** Compare PP-OCRv5 through ONNX, HTR
-  engines, and licensed historical datasets with the current DocTR baseline.
-  Require reproducible accuracy, runtime, model-size, and license evidence
-  before adding another training stack. Owner: pdomain-ocr-training, with
-  pdomain-book-tools for inference integration.
+- **Synthetic typography in `pdomain-ocr-synth`.** Shared span types now live
+  in Torch-free `pdomain-book-contracts`. The phase-two plan reuses that
+  package instead of a local mirror. Renderer integration and dependency
+  verification remain unimplemented in Task C1. Do this only after a real-scan
+  baseline exists.
+
+- **OCR and HTR comparison, in a new repository.** Compare PP-OCRv5 through
+  ONNX, HTR engines, and licensed historical datasets with the current DocTR
+  baseline. Require reproducible accuracy, runtime, model-size, and license
+  evidence before adding another training stack. Do not put that comparison
+  in this package. `pdomain-book-tools` remains the inference-integration
+  candidate only after that evidence exists.
 
 - **Optional real-dataset GPU evaluation smoke test.** The current backend is
   covered by GPU-free unit tests. Add a small real DocTR dataset smoke test only
@@ -34,10 +39,10 @@ Last verified: 2026-11-07
 ## Blocked work
 
 - **Classifier runner contract for trainer SPA.** Typeface and glyph training
-  need typed configuration and runner methods before trainer SPA can expose
-  them without local compatibility models. Owner: pdomain-ocr-training for the
-  runner contract; pdomain-ocr-trainer-spa for orchestration. Confirm the exact
-  classifier scope before implementation.
+  need a confirmed scope before any runner contract. If a classifier is built,
+  it belongs in a separate model package. This package would add a runner
+  contract only after that scope is confirmed. `pdomain-ocr-trainer-spa` would
+  orchestrate it. Do not extend `detect.py` or `recog.py` for it.
 
 ## Needs owner decision
 

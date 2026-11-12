@@ -2,12 +2,12 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-11-06
+Last verified: 2026-11-12
 ---
 
 # docs/
 
-Start with the [current architecture](architecture/00-overview.md) and the [remaining-work list](ROADMAP.md).
+Start with [Architecture: pdomain-ocr-training](architecture/00-overview.md), then [Where training work lives](architecture/suite-boundaries.md) and the [roadmap](ROADMAP.md).
 
 - Durable rationale is in [decisions](context/decisions.md).
 - The [current state](context/current-state.md) and [intent map](context/intent-map.md) hold deferred work and open decisions.

@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-14
-Last verified: 2026-11-07
+Last verified: 2026-11-12
 ---
 
 # Current state
@@ -10,7 +10,7 @@ Last verified: 2026-11-07
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-12
 - **Read when:** starting repository work or checking current operational risk.
 - **Search terms:** current state, CI, OCR training, active risks.
 
@@ -24,10 +24,12 @@ The dep-refresh issue is not closed. On 2026-11-06 master was not branch-protect
 The GitHub workflows were already removed. Actions was still disabled. See
 [dep-refresh cannot auto-land](../issues/2026-08-08-dep-refresh-cannot-auto-land.md).
 
-## No typography or formatting work is in flight
+## No formatting model is in this package
 
-No typography or formatting implementation is in this package. The two typography
-plans remain drafts with every step unchecked.
+This package has no formatting module. Crop production has not started. The
+August 21 plan is historical. The execution checklist is the phase-two plan,
+and the ordered list is the [roadmap](../ROADMAP.md). Ownership is in
+[Where training work lives](../architecture/suite-boundaries.md).
 
 ## Last recorded full make ci passed
 
@@ -46,4 +48,5 @@ the required `pdomain-book-tools` dependency.
 Shipped detection training, recognition training, layout training, and synchronous
 evaluation are in [Architecture: pdomain-ocr-training](../architecture/00-overview.md).
 Layout training reads the labeler's `regions/labels.json` export. Open items are
-the [remaining-work list](../ROADMAP.md).
+the [roadmap](../ROADMAP.md). On 2026-11-12, `pdomain-source-data` `align_page`
+still projects styles onto supplied words and does not write pixel crops.

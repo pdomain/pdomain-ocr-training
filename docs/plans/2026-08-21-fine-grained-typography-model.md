@@ -1,8 +1,8 @@
 ---
-Status: draft
+Status: superseded
 Owner: CT
 Created: 2026-08-21
-Last verified: 2026-11-07
+Last verified: 2026-11-12
 Kind: plan
 ---
 
@@ -20,7 +20,16 @@ Kind: plan
 
 ---
 
-This plan does not authorize implementation. Begin each task only after explicit approval. Commit steps are future checkpoints and must not run in this research session.
+This plan does not authorize implementation. It is superseded as the execution plan. Use the [phase-two plan](2026-08-31-fine-grained-typography-phase-two.md). Current ownership is in [Where training work lives](../architecture/suite-boundaries.md). The ordered list is the [roadmap](../ROADMAP.md).
+
+## Agent Index
+
+- **Kind:** plan
+- **Status:** superseded
+- **Owner:** CT
+- **Last verified:** 2026-11-12
+- **Read when:** checking the original August 21 task map. Do not execute from this file.
+- **Search terms:** typography plan history, superseded formatting plan, phase one checklist.
 
 ## Goal
 

@@ -16,7 +16,7 @@ Kind: process
 - **Read when:** looking up an open issue in this repo.
 - **Search terms:** issue index, open issues, dep-refresh, remaining work.
 
-Dep-refresh auto-land is the open issue. Shipped behavior is in [Architecture: pdomain-ocr-training](../architecture/00-overview.md). The full remaining-work list is [the roadmap](../ROADMAP.md).
+Dep-refresh auto-land is the open issue. Shipped behavior is in [Architecture: pdomain-ocr-training](../architecture/00-overview.md). Ownership of the surrounding work is in [Where training work lives](../architecture/suite-boundaries.md). The ordered list is [the roadmap](../ROADMAP.md).
 
 ## Dep-refresh auto-land
 

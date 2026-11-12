@@ -18,7 +18,7 @@ Kind: plan
 
 ---
 
-This plan does not authorize implementation. Begin each task only after explicit approval.
+This plan does not authorize implementation. Begin each task only after explicit approval. It is the execution checklist. Current ownership is in [Where training work lives](../architecture/suite-boundaries.md). The ordered list is the [roadmap](../ROADMAP.md). The August 21 plan is historical.
 
 ## Agent Index
 

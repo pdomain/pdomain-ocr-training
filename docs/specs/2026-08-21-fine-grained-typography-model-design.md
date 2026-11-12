@@ -2,7 +2,7 @@
 Status: draft
 Owner: CT
 Created: 2026-08-21
-Last verified: 2026-11-07
+Last verified: 2026-11-12
 Kind: spec
 ---
 
@@ -16,18 +16,21 @@ Earlier file maps in this design describe the original package layout; resolve
 their paths against the extracted packages before implementation.
 
 Code validation on 2026-11-07 confirmed these contract boundaries against the
-contracts package and its compatibility exports. The source-data package now
-has silver-tier token alignment and style projection, but that helper does not
-extract pixel crops. This training package still has no typography model or
-formatting runner. The architecture below remains a proposed design; its corpus
-figures retain the August snapshot dates in the linked research.
+contracts package and its compatibility exports. A 2026-11-12 checkout check
+found the same gap: `align_page` does not extract pixel crops, and this package
+still has no formatting runner. Current ownership is in
+[Where training work lives](../architecture/suite-boundaries.md). The ordered
+work is the [roadmap](../ROADMAP.md). The design below remains a proposal.
+Corpus figures in the August research keep that snapshot's dates. The
+[2026-08-31 re-verification](../research/2026-08-31-typography-corpus-reverification.md)
+replaces those counts.
 
 ## Agent Index
 
 - **Kind:** spec
 - **Status:** draft
 - **Owner:** CT
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-12
 - **Read when:** implementing fine-grained typography parsing, datasets, training, inference, or evaluation.
 - **Search terms:** typography model, grapheme styles, F2 parser, alignment, split manifest, weak supervision.
 

@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-14
-Last verified: 2026-11-07
+Last verified: 2026-11-12
 ---
 
 # Durable decisions
@@ -10,7 +10,7 @@ Last verified: 2026-11-07
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-12
 - **Read when:** investigating changed direction, retired documents, or durable rationale.
 - **Search terms:** decisions, implementation deviations, tombstones, retirement.
 
@@ -110,3 +110,23 @@ Last verified: 2026-11-07
   and the labeler implements typography review. The design spec records the handoff's decisions and
   rejected approaches. That covers per-field fusion, the four label states and model ordering.
 - Remaining work: training and synthesis, already in current state and the intent map
+
+### 2026-11-12 — The August 21 typography plan is no longer the execution plan
+
+- **Context:** The August 21 plan still had status `draft` after phase two
+  replaced its sequence and after contracts, source-data, and the labeler
+  absorbed the early tasks. The roadmap, current state, and intent map each
+  restated the same open list.
+- **Decision:** Keep the August 21 plan on disk as a historical checklist and
+  mark it `superseded`. Execute from the phase-two plan. Record current
+  ownership in `docs/architecture/suite-boundaries.md`. Keep one ordered list
+  in `docs/ROADMAP.md`. Leave deferred and blocked bets in the intent map.
+- **Rationale:** The plan's task steps are not current instructions. Deleting
+  them would drop the original file map. Copying the unbuilt model design into
+  architecture would describe work that is not shipped.
+- **Evidence:** Phase-two plan; `pdomain-book-contracts` 0.3.0;
+  `pdomain-source-data` `align_page` on master `4601095`, which does not write
+  pixel crops; no `formatting` module in this package. Read on 2026-11-12.
+- **Remaining work:** Crop production, then the formatting model. See the roadmap.
+- **Supersedes:** The treatment of `docs/plans/2026-08-21-fine-grained-typography-model.md`
+  as an active execution plan.

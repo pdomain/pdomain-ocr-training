@@ -10,6 +10,8 @@ Kind: research
 
 The available corpora can support a fine-grained typography model, but F2 must be parsed as noisy, page-local evidence rather than literal ground truth.
 
+Corpus counts in this file are the earlier snapshot. The [2026-08-31 re-verification](2026-08-31-typography-corpus-reverification.md) replaces those counts and records the corrections this file still needs.
+
 ## Agent Index
 
 - **Kind:** research
@@ -21,7 +23,7 @@ The available corpora can support a fine-grained typography model, but F2 must b
 
 ## Scope and conclusion
 
-This research covers the dated local PGDP, Project Gutenberg, and Standard Ebooks snapshots below. It also covers official source guidance and primary model literature. The companion [design](../specs/2026-08-21-fine-grained-typography-model-design.md) turns the findings into a system. The [implementation plan](../plans/2026-08-21-fine-grained-typography-model.md) defines test-first work. It does not authorize implementation.
+This research covers the dated local PGDP, Project Gutenberg, and Standard Ebooks snapshots below. It also covers official source guidance and primary model literature. The companion [design](../specs/2026-08-21-fine-grained-typography-model-design.md) turns the findings into a system. The [August 21 plan](../plans/2026-08-21-fine-grained-typography-model.md) is a historical checklist. The [phase-two plan](../plans/2026-08-31-fine-grained-typography-phase-two.md) is the execution plan. Neither plan authorizes implementation.
 
 The 2026-11-07 verification date records a code-relevance check. Canonical span
 types now live in `pdomain-book-contracts`, with compatibility imports in
