@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-11-07
+Last verified: 2026-11-13
 ---
 
 # pdomain-ocr-training
@@ -114,6 +114,12 @@ def run_layout(model: LayoutModel) -> None:
 
 The task saves the supplied model's checkpoint. It does not download model weights.
 
+If present, `regions/structure.json` supplies reviewed layout structures.
+The loader validates schema `pdomain.layout-structure` version 1 and joins
+records by `(prefix, page_index, region_id)`. Partial coverage is allowed;
+unknown or duplicate keys and invalid structures are rejected. Loaded
+structures reach the caller-supplied model with their regions.
+
 ### Eval usage
 
 ```python
@@ -124,6 +130,9 @@ cfg = RecognitionEvalConfig(val_path="data/val", model_path="checkpoints/best.pt
 result = runner.evaluate_recognition("eval-001", cfg)
 ```
 
-Recognition evaluation also supports an optional glyph-feature sidecar. It
-emits typed slices for ligatures, long s, and swashes without importing torch
-into the protocol models.
+The recognition backend supports an optional glyph-feature sidecar and typed
+slices for ligatures, long s, and swashes. The protocol models remain
+torch-free. `LocalEvalRunner` currently drops the sidecar path and slicing
+flag when rebuilding its backend configuration, so its public evaluation
+method does not enable those slices. See the
+[current evaluation limits](docs/architecture/00-overview.md#ievalrunner).

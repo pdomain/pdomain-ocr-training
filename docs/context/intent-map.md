@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-13
-Last verified: 2026-11-12
+Last verified: 2026-11-13
 ---
 
 # Intent map
@@ -10,7 +10,7 @@ Last verified: 2026-11-12
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** checking deferred work, blocked work, or an owner decision.
 - **Search terms:** intent map, deferred work, classifier runner, dep-refresh decision.
 
@@ -35,6 +35,15 @@ explicitly not in the current phase.
 - **Optional real-dataset GPU evaluation smoke test.** The current backend is
   covered by GPU-free unit tests. Add a small real DocTR dataset smoke test only
   when a stable fixture and GPU-capable CI lane exist. Status: deferred.
+
+- **Public-runner glyph slicing remains incomplete.** The backend already
+  emits slices, but `local_eval.py` does not forward
+  `slice_glyph_features` or `glyph_annotations_path`. The tests in
+  `tests/test_glyph_slice_emission.py` call the backend directly.
+  Relative-path keys allowed by the sidecar ADR also exceed the backend's
+  basename join. Preserve the labeler writer decision; any repair needs
+  runner-level and producer/consumer tests. This documentation pass does
+  not authorize that code work.
 
 ## Blocked work
 

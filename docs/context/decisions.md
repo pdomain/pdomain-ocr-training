@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-14
-Last verified: 2026-11-12
+Last verified: 2026-11-13
 ---
 
 # Durable decisions
@@ -10,7 +10,7 @@ Last verified: 2026-11-12
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** investigating changed direction, retired documents, or durable rationale.
 - **Search terms:** decisions, implementation deviations, tombstones, retirement.
 
@@ -130,3 +130,27 @@ Last verified: 2026-11-12
 - **Remaining work:** Crop production, then the formatting model. See the roadmap.
 - **Supersedes:** The treatment of `docs/plans/2026-08-21-fine-grained-typography-model.md`
   as an active execution plan.
+
+### 2026-11-13 — Architecture promotion and retirement review
+
+- **Outcome:** Three fresh read-only analyzers inspected all 25 indexed docs
+  against source, tests, and commits. No document qualified for retirement.
+  No declared lifecycle status changed.
+- **Promoted:** The [architecture overview](../architecture/00-overview.md)
+  now records the optional reviewed layout-structure loader shipped in
+  `5c5b835` and its validation and training-batch behavior.
+- **Evidence:** `pdomain_ocr_training/layout_regions.py`,
+  `pdomain_ocr_training/layout.py`, and
+  `tests/test_layout_regions.py`. The local baseline suite passed all
+  156 tests on 2026-11-13.
+- **Limits recorded:** `local_eval.py` does not forward glyph-slicing
+  options, and the backend joins only basename crop IDs. The sidecar
+  ownership ADR remains unchanged. The architecture and intent map record
+  the implementation gaps.
+- **Retained:** The draft typography spec has a recorded adversarial review,
+  but its model is unbuilt. The phase-two plan remains unfinished. The
+  superseded August 21 plan retains Task 9A and deferred Tasks 13 and 15,
+  which the phase-two plan still references. This preserves the November 12
+  decision rather than declaring the future model shipped.
+- **Remaining work:** Crop production, formatting models, runner slicing
+  integration, and the existing dep-refresh owner decision remain open.

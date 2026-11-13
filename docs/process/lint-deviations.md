@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-22
-Last verified: 2026-11-07
+Last verified: 2026-11-13
 Kind: process
 ---
 
@@ -12,13 +12,21 @@ Kind: process
 
 - **Kind:** process
 - **Status:** active
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-13
 - **Read when:** adding, removing, or auditing a Ruff or basedpyright suppression.
 - **Search terms:** lint suppressions, noqa, pyright ignore, per-file ignores.
 
 Standing suppressions and per-file rule overrides in this repo.
 Each entry records: the rule, the tool, the file(s) affected, and
 the justification. Update this file whenever a new suppression is added.
+
+## basedpyright import-cycle reporting
+
+`pyproject.toml` sets `[tool.basedpyright] reportImportCycles = "none"`
+for the project. Its existing rationale is that structural import cycles
+are resolved through `TYPE_CHECKING` guards; runtime import failures still
+surface as `ImportError`. This entry records the existing override and
+does not change the typecheck configuration.
 
 ---
 

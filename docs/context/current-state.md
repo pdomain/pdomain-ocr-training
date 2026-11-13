@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-07-14
-Last verified: 2026-11-12
+Last verified: 2026-11-13
 ---
 
 # Current state
@@ -10,7 +10,7 @@ Last verified: 2026-11-12
 ## Agent Index
 
 - **Status:** active
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** starting repository work or checking current operational risk.
 - **Search terms:** current state, CI, OCR training, active risks.
 
@@ -19,6 +19,13 @@ Last verified: 2026-11-12
 Glyph-feature slices still have no recorded run on real data. The labeler dataset
 export is the sidecar writer. That was decided on 2026-09-18. The contract is in
 [the ADR](../decisions/2026-09-18-glyph-sidecar-writer.md).
+
+The backend's slice support is not wired through `LocalEvalRunner`:
+`local_eval.py` drops `slice_glyph_features` and `glyph_annotations_path`
+when rebuilding the configuration. Sidecar keys must also match the
+backend's basename crop IDs. The
+[architecture overview](../architecture/00-overview.md#ievalrunner) records
+both limits. Existing slice tests exercise the backend directly.
 
 The dep-refresh issue is not closed. On 2026-11-06 master was not branch-protected.
 The GitHub workflows were already removed. Actions was still disabled. See
@@ -43,10 +50,19 @@ The import tests confirm that the public API does not load Torch. They do not
 prove a lightweight installation: `uv.lock` shows Torch and DocTR coming through
 the required `pdomain-book-tools` dependency.
 
+## The local gate now uses just
+
+Commit `3c0a88a` removed the Make shim after `c2d8708` added the justfile.
+Both `just ci` and `AI=1 just ci` passed 156 tests, build, hooks,
+typechecking, and strict docgraph during that migration on 2026-11-13.
+The architecture-review worktree also passed the 156-test suite before
+documentation edits. Those tests do not establish real-data GPU evaluation.
+
 ## Shipped work and the open list
 
 Shipped detection training, recognition training, layout training, and synchronous
 evaluation are in [Architecture: pdomain-ocr-training](../architecture/00-overview.md).
-Layout training reads the labeler's `regions/labels.json` export. Open items are
+Layout training reads the labeler's `regions/labels.json` export and optional
+reviewed `regions/structure.json` records, added in `5c5b835`. Open items are
 the [roadmap](../ROADMAP.md). On 2026-11-12, `pdomain-source-data` `align_page`
 still projects styles onto supplied words and does not write pixel crops.

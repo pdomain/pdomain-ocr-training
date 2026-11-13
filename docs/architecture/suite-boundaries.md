@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-11-12
-Last verified: 2026-11-12
+Last verified: 2026-11-13
 Kind: architecture
 ---
 
@@ -12,7 +12,7 @@ Kind: architecture
 
 - **Kind:** architecture
 - **Status:** active
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** deciding which repository owns a training, typography, measurement, or synthesis change.
 - **Search terms:** suite boundaries, formatting model, separate repository, pgdp-measure, book-contracts.
 
@@ -30,7 +30,11 @@ Shipped runner behavior is in [Architecture: pdomain-ocr-training](00-overview.m
 
 The modules on disk are detection training, recognition training, caller-supplied layout training, dataset export helpers, and synchronous detection and recognition evaluation.
 
-Evaluation can read a glyph-feature sidecar and emit per-feature slices. This package does not write that sidecar. The labeler does. The contract is the [glyph-sidecar ADR](../decisions/2026-09-18-glyph-sidecar-writer.md).
+The evaluation backend can read a glyph-feature sidecar and emit per-feature
+slices. The public runner currently drops the enabling configuration; the
+[architecture overview](00-overview.md#ievalrunner) records that limitation.
+This package does not write the sidecar. The labeler does. The contract is the
+[glyph-sidecar ADR](../decisions/2026-09-18-glyph-sidecar-writer.md).
 
 There is no `formatting` package and no `train_formatting` method. A search of the Python tree on 2026-11-12 found neither.
 

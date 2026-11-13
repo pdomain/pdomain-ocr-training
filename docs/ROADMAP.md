@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-11-06
-Last verified: 2026-11-12
+Last verified: 2026-11-13
 Kind: process
 ---
 
@@ -12,7 +12,7 @@ Kind: process
 
 - **Kind:** process
 - **Status:** active
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** choosing the next unfinished training or evaluation task.
 - **Search terms:** roadmap, typography crops, formatting model, separate repository, dep-refresh.
 
@@ -24,7 +24,7 @@ The [phase-two plan](plans/2026-08-31-fine-grained-typography-phase-two.md) is t
 
 ## Already in place
 
-- This package trains detection, recognition, and layout, and it evaluates detection and recognition. Glyph slices are read from a sidecar. They are not written here.
+- This package trains detection, recognition, and layout, and it evaluates detection and recognition. The recognition backend reads glyph slices from a sidecar. The public runner still drops the enabling configuration; see [the current limitation](architecture/00-overview.md#ievalrunner). Sidecars are not written here.
 - GitHub issue 4 is done on master. Commits `ee08319`, `fccc594`, and `ad904c3` (2026-05-22 to 2026-05-23) read a `GlyphFeatureSet` sidecar and fill recognition slices. The issue also asked this package to import `GlyphAnnotations`. That import was not added. The 2026-09-18 sidecar ADR keeps the local model instead.
 - `pdomain-book-contracts` 0.3.0 holds the typography types and the F2 reader. `pdomain-book-tools` re-exports them.
 - `pdomain-source-data` can align supplied OCR words and project styles. `align_page` does not write pixel crops.

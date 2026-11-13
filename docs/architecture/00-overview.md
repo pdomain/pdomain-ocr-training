@@ -2,7 +2,7 @@
 Status: active
 Owner: CT
 Created: 2026-05-21
-Last verified: 2026-11-12
+Last verified: 2026-11-13
 Kind: architecture
 ---
 
@@ -12,11 +12,11 @@ Kind: architecture
 
 - **Kind:** architecture
 - **Status:** active
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** understanding shipped training, evaluation, and torch-free boundaries.
 - **Search terms:** OCR training architecture, DocTR evaluation, runner protocols, glyph slices.
 
-**Status:** Validated against code and the local test suite on 2026-11-07.
+**Status:** Checked against source and 156 passing local tests on 2026-11-13.
 
 ## Purpose
 
@@ -92,6 +92,30 @@ Each page's image is `detection/images/{prefix}_{page_index}.png` in that
 same directory. The caller passes the model. The run does not download
 DocTR or PP-DocLayout weights.
 
+### Optional reviewed layout structures
+
+`load_layout_export` also reads `regions/structure.json` when it exists.
+The sidecar uses schema `pdomain.layout-structure`, version 1. Each record
+joins a region by `(prefix, page_index, region_id)`. The loader validates
+the payload with the shared `LayoutStructure.from_dict` contract and
+attaches the result as the region's optional `structure` field.
+
+The sidecar may cover only some regions. Without it, existing region
+exports still load. Duplicate or unknown join keys, ambiguous region
+targets, invalid schema versions, and malformed structures fail validation.
+The caller's model receives the structures in its training and validation
+batches; this loader does not infer new structure.
+
+Evidence:
+
+- Code: `pdomain_ocr_training/layout_regions.py` (`load_layout_structures`,
+  `load_layout_export`) and `pdomain_ocr_training/layout.py`.
+- Tests: `tests/test_layout_regions.py`, including
+  `test_load_allows_partial_structure_coverage` and the layout training tests.
+- Commits: `5c5b835` adds the loader; `bc7ed72` requires published layout
+  contracts 0.2.1.
+- Verified: 2026-11-13 by source inspection and the 156-test local suite.
+
 ### IEvalRunner
 
 Eval is a single synchronous forward pass — no epoch loop, no progress stream.
@@ -113,13 +137,32 @@ Supported methods:
 - `evaluate_recognition(profile, config) -> RecognitionEvalResult`
 
 The entry points load DocTR predictors, evaluate detection or recognition data,
-and return typed results. Recognition evaluation can load a glyph-feature JSON
+and return typed results. The recognition backend can load a glyph-feature JSON
 sidecar when the caller enables slicing. It joins sidecar entries to validation
 samples by basename crop id and emits one `EvalSlice` for `long_s`, `swash`,
 and each distinct `ligature:<kind>`. Samples without sidecar data are excluded
 from positive and negative denominators. CER and WER deltas are null when
 either side is empty, and a slice has low support when its positive count is
 less than 30.
+
+`LocalEvalRunner.evaluate_recognition` currently loses
+`slice_glyph_features` and `glyph_annotations_path` when it flattens and
+reconstructs the configuration in `local_eval.py`. The backend therefore
+receives the default slicing settings through that runner. The slice tests
+call `_eval_backend.evaluate_recognition_impl` directly; they do not prove
+sidecar slicing through the public runner.
+
+The backend uses basename crop IDs. Relative-path sidecar keys do not match
+unless they equal those basenames. The
+[sidecar ADR](../decisions/2026-09-18-glyph-sidecar-writer.md) allows filename
+or relative-path keys; that broader contract is not fully implemented.
+This limitation does not change the labeler's ownership of the sidecar or
+the rule that an absent crop means unknown.
+
+Detection evaluation reports precision, recall, and IoU at threshold 0.50.
+It also averages the IoU summaries across ten thresholds from 0.50 through
+0.95. This is the implemented threshold sweep, not a claim of COCO average
+precision.
 
 ## Config and result models
 
@@ -148,7 +191,8 @@ All models live in `protocols.py` and are Pydantic v2 `BaseModel`s.
   `pdomain_ocr_training/protocols.py`
 - Tests: `tests/test_eval_backend_wiring.py`,
   `tests/test_glyph_slice_emission.py`, `tests/test_eval_protocols.py`
-- Verified: 2026-11-07 against the current source and the local test suite
+- Verified: 2026-11-13 by source inspection and the 156-test local suite.
+  Runner forwarding of glyph-slicing options remains incomplete.
 
 ## Legacy modules
 
