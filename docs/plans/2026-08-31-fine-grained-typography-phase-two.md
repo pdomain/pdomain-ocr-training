@@ -130,7 +130,7 @@ prepare-labeler-book, materialize-labeler, import-corrections, promote, export-t
 Geometry produced this way is unreviewed. Mark it `silver` and never `gold`. The labeler exchange
 remains the only route to `gold`.
 
-Run: `cd /workspaces/pdomain/pdomain-source-data && make ci`
+Run: `cd /workspaces/pdomain/pdomain-source-data && just ci`
 
 Expected: geometry records for one book with hashes and model versions. Rollback removes the
 geometry output directory; nothing else consumes it yet.
@@ -221,7 +221,7 @@ manifest.
 Reserve poetry, tables, headings, captions, blackletter, poor scans, and slanted roman. The corpus
 remains single-language, so record the language challenge set as unavailable rather than empty.
 
-Run: `cd /workspaces/pdomain/pdomain-source-data && make ci`
+Run: `cd /workspaces/pdomain/pdomain-source-data && just ci`
 
 Expected: an immutable split manifest with its seed, grouping version, and input hashes.
 
@@ -253,7 +253,7 @@ Assert unknown and quarantine labels contribute zero loss and never become negat
 rare labels sample under a per-book cap, that confidence tiers apply weights, and that no test
 group reaches the training loader.
 
-Run: `cd /workspaces/pdomain/pdomain-ocr-training && make ci AI=1`
+Run: `cd /workspaces/pdomain/pdomain-ocr-training && AI=1 just ci`
 
 Expected: existing recognition and detection tests unchanged.
 
@@ -343,7 +343,7 @@ Run the whole-word baseline, word-only image queries, word-only text-conditioned
 two-view contextual model over the same groups and seeds. Make no claim before book-level confidence
 intervals exist.
 
-Run: `cd /workspaces/pdomain/pdomain-ocr-training && make ci AI=1`
+Run: `cd /workspaces/pdomain/pdomain-ocr-training && AI=1 just ci`
 
 Expected: all formatting and existing OCR tests pass. Rollback repoints the registry to the
 baseline.
@@ -407,7 +407,7 @@ or the recognition methods.
 
 Assert that importing the protocols and the formatting configuration does not import Torch.
 
-Run: `cd /workspaces/pdomain/pdomain-ocr-training && make ci AI=1`
+Run: `cd /workspaces/pdomain/pdomain-ocr-training && AI=1 just ci`
 
 Expected: existing runner implementations still satisfy their protocols.
 
@@ -436,7 +436,7 @@ Test span serialization against the canonical package and assert that importing 
 does not load Torch. Check the resolved dependency set also excludes Torch, so an import-only
 test cannot hide a heavy installation dependency.
 
-Run: `make ci AI=1`
+Run: `AI=1 just ci`
 
 Expected: the renderer adds the shared contracts dependency and still excludes Torch. Rollback
 removes the adapter and restores the prior dependency and lockfile entries; the existing renderer
@@ -461,7 +461,7 @@ Shape complete context with HarfBuzz before extracting crops. Record source rang
 cluster, contributing glyphs, and clipping for every grapheme. Ligature graphemes share one cluster
 and never receive invented character boxes.
 
-Run: `cd /workspaces/pdomain/pdomain-ocr-synth && make ci AI=1`
+Run: `cd /workspaces/pdomain/pdomain-ocr-synth && AI=1 just ci`
 
 Expected: deterministic renders under a fixed seed, with a manifest naming every font hash and
 feature used. Rollback removes the generated dataset directory; no real data is touched.

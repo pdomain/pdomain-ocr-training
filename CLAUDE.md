@@ -41,7 +41,7 @@ The base install exposes `DetectionConfig`, `RecognitionConfig`, `LayoutConfig`,
 pdomain_ocr_training` never imports torch. Accessing `LocalTrainingRunner` when
 the training dependencies are unavailable raises a helpful `ImportError`. `LocalEvalRunner` is
 importable without the extra; its evaluation backend loads torch and DocTR only
-when evaluation runs. The `dev` dependency-group pulls in `[train]` so `make ci`
+when evaluation runs. The `dev` dependency-group pulls in `[train]` so `just ci`
 exercises the full stack; the torch-free import contract is covered separately by
 `tests/test_torch_free_import.py` (subprocess with torch hidden).
 
@@ -82,24 +82,24 @@ for event in runner.train_detection("my-run", cfg):
 ## Dev commands
 
 ```bash
-make setup          # uv sync --group dev + install pre-commit hooks
-make lint           # ruff check --fix
-make lint-check     # ruff format --check + ruff check (CI-exact, no fix)
-make format         # ruff format pdomain_ocr_training tests
-make typecheck      # basedpyright pdomain_ocr_training --level error
-make test           # uv run pytest -n auto
-make ci             # setup → pre-commit → lint-check → typecheck → test
-make build          # uv build
-make clean          # rm dist .venv .pytest_cache .ruff_cache .ci-ai.log htmlcov
+just setup          # uv sync --locked --group dev + install pre-commit hooks
+just lint           # ruff check --fix
+just lint-check     # ruff format --check + ruff check (CI-exact, no fix)
+just format         # ruff format pdomain_ocr_training tests
+just typecheck      # basedpyright pdomain_ocr_training --level error
+just test           # uv run pytest -n auto
+just ci             # setup → pre-commit → lint-check → typecheck → test → build → docgraph
+just build          # uv build
+just clean          # rm dist .venv .pytest_cache .ruff_cache htmlcov
 
 # local-dev workflow (spec #362) — see ../docs/process/local-dev.md
-make local-setup        # clone any missing sibling pdomain-* repos
-make local-dev          # switch to local-dev mode (editable ../pdomain-book-tools + marker)
-make local-check        # print local-dev mode + per-sibling resolution
-make local-upgrade-deps # upgrade deps then restore editables (local-mode only)
+just local-setup        # clone any missing sibling pdomain-* repos
+just local-dev          # switch to local-dev mode (editable ../pdomain-book-tools + marker)
+just local-check        # print local-dev mode + per-sibling resolution
+just local-upgrade-deps # upgrade deps then restore editables (local-mode only)
 
 # sibling-dep refresh (spec #363) — see ../docs/process/update-pdomain-deps.md
-make update-pdomain-deps # bump pdomain-* sibling deps to registry latest; leaves diff for review
+just update-pdomain-deps # bump pdomain-* sibling deps to registry latest; leaves diff for review
 ```
 
 Run any command with `uv run` directly if preferred:
@@ -174,7 +174,7 @@ change any step below.
    worktree path + branch, use the `finishing-a-development-branch` skill to
    decide how to integrate.
 9. **TDD.** Write the failing test first where the plan calls for it.
-10. **Verify before committing.** Focused verification plus `make ci`.
+10. **Verify before committing.** Focused verification plus `just ci`.
 11. **Commit locally; do not push** without explicit say-so.
 
 <!-- workspace-process:end -->

@@ -98,5 +98,5 @@ cython_debug/
 # Local git worktrees
 .worktrees/
 
-# local-dev mode marker (written by make local-dev, spec #362)
+# local-dev mode marker (written by just local-dev, spec #362)
 .venv/.pdomain-local-mode
