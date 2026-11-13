@@ -11,8 +11,8 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11,<3.14"
 dependencies = [
-    "pdomain-book-tools>=0.28.0",
-    "pdomain-book-contracts>=0.2.1",
+    "pdomain-book-tools>=0.31.0",
+    "pdomain-book-contracts>=0.3.1",
     "pydantic>=2.13",
     "tomli>=2.4",
     "tomli-w>=1.2",
@@ -249,6 +249,10 @@ addopts = [
 ]
 testpaths = ["tests"]
 asyncio_mode = "auto"
+# pytest-asyncio 1.5 warns when this is unset, and filterwarnings=error
+# turns that warning into a collection failure. "fixture-scope" is the
+# current default: an async fixture uses its own scope.
+asyncio_default_fixture_loop_scope = "fixture-scope"
 filterwarnings = [
     "error",
     # defusedxml ships a DeprecationWarning on its cElementTree alias; it's a
