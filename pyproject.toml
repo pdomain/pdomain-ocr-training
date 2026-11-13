@@ -47,7 +47,27 @@ source = "vcs"
 packages = ["pdomain_ocr_training"]
 
 [tool.hatch.build.targets.sdist]
-exclude = ["**/.venv", "**/.venv-container"]
+exclude = [
+    "**/.docgraph/**",
+    "**/.worktrees/**",
+    "**/.venv/**",
+    "**/.venv-container/**",
+    "**/node_modules/**",
+    "**/.ci-ai.log",
+    "**/.coverage*",
+    "**/.pytest_cache/**",
+    "**/.ruff_cache/**",
+    "**/.mypy_cache/**",
+    "**/.cache/**",
+    "**/.tox/**",
+    "**/.nox/**",
+    "**/.hypothesis/**",
+    "**/.pyre/**",
+    "**/.pytype/**",
+    "**/htmlcov/**",
+    "**/__pycache__/**",
+    "**/*.py[cod]",
+]
 
 [[tool.uv.index]]
 name = "pdomain-index-pip"
