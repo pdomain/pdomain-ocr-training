@@ -11,7 +11,7 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11,<3.14"
 dependencies = [
-    "pdomain-book-tools>=0.31.0",
+    "pdomain-book-tools>=0.31.3",
     "pdomain-book-contracts>=0.3.1",
     "pydantic>=2.13",
     "tomli>=2.4",

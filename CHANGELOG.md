@@ -9,6 +9,13 @@ Last verified: 2026-11-06
 
 ## [Unreleased]
 
+### Changed in Unreleased
+
+- Require `pdomain-book-tools>=0.31.3`, which depends on `opencv-python` instead of
+  `opencv-contrib-python`. Environments now hold a single OpenCV distribution, so
+  `import cv2` no longer breaks when two packages write the same `cv2/` files.
+  A test checks the installed environment.
+
 ### Added in Unreleased
 
 - `LayoutConfig` and `ILayoutTrainingRunner.train_layout` read the labeler's
